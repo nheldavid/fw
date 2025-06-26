@@ -54,36 +54,91 @@
           <div id="content-container" style="display: none;">
             <!-- Customer Information Section - displays customer-related data -->
             <fw-card class="info-section">
-              <fw-label value="Customer Information" color="text-primary" size="large" slot="card-header"></fw-label>
-              <div class="info-grid">
-                <div class="info-item">
-                  <fw-label value="Customer Name:" color="text-secondary"></fw-label>
-                  <!-- Dynamic content: populated from cf_customer_name custom field -->
-                  <fw-label id="customer-name" value="-" color="text-primary"></fw-label>
-                </div>
-                <div class="info-item">
-                  <fw-label value="Order Number:" color="text-secondary"></fw-label>
-                  <!-- Dynamic content: populated from cf_order_number custom field -->
-                  <fw-label id="order-number" value="-" color="text-primary"></fw-label>
-                </div>
-              </div>
+              <!-- <fw-label value="Customer Information" color="text-primary" size="large" slot="card-header"></fw-label> -->
+              <fw-accordion style="--fw-accordion-border: 1px solid #ccc">
+                <fw-accordion-title style="--fw-accordion-title-background-color: #F5F7F9; --fw-accordion-title-expanded-icon-color: #2C5CC5; --fw-accordion-title-collapsed-icon-color: #264966; --fw-accordion-title-font-size: 12px; --fw-accordion-title-font-weight: 600; --fw-accordion-title-line-height: 20px;">Customer Information</fw-accordion-title>
+                <fw-accordion-body style="--fw-accordion-body-background-color: #FFFFFF">
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <fw-label value="Name:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_customer_name custom field -->
+                      <fw-label id="customer-name" value="-" color="text-primary"></fw-label>
+                      <!-- <fw-input id="customer-name" label="Customer Name"></fw-input> -->
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Email:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_delivery_date custom field -->
+                      <fw-label id="customer-email" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Billing Address:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_delivery_date custom field -->
+                      <fw-label id="billing-address" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Central Order Account:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_delivery_date custom field -->
+                      <fw-label id="central-order-account" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Communication:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_delivery_date custom field -->
+                      <fw-label id="communication" value="-" color="text-primary"></fw-label>
+                    </div>
+                  </div>
+              </fw-accordion-body>
+              </fw-accordion>
             </fw-card>
             
             <!-- Order Details Section - displays order-specific information -->
             <fw-card class="info-section">
-              <fw-label value="Order Details" color="text-primary" size="large" slot="card-header"></fw-label>
-              <div class="info-grid">
-                <div class="info-item">
-                  <fw-label value="Delivery Date:" color="text-secondary"></fw-label>
-                  <!-- Dynamic content: populated from cf_delivery_date custom field -->
-                  <fw-label id="delivery-date" value="-" color="text-primary"></fw-label>
-                </div>
-                <div class="info-item">
-                  <fw-label value="Order Status:" color="text-secondary"></fw-label>
-                  <!-- Dynamic content: populated from cf_order_status custom field, color changes based on status -->
-                  <fw-label id="order-status" value="-" color="success" class="status-badge"></fw-label>
-                </div>
-              </div>
+              <!-- <fw-label value="Order Details" color="text-primary" size="large" slot="card-header"></fw-label> -->
+               <fw-accordion style="--fw-accordion-border: 1px solid #ccc">
+                <fw-accordion-title style="--fw-accordion-title-background-color: #F5F7F9; --fw-accordion-title-expanded-icon-color: #2C5CC5; --fw-accordion-title-collapsed-icon-color: #264966; --fw-accordion-title-font-size: 12px; --fw-accordion-title-font-weight: 600; --fw-accordion-title-line-height: 20px;">Order Details</fw-accordion-title>
+                <fw-accordion-body style="--fw-accordion-body-background-color: #FFFFFF">
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <fw-label value="Order Number:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_order_number custom field -->
+                      <fw-label id="order-number" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="FDE Order Number:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_order_number custom field -->
+                      <fw-label id="fde-order-number" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Delivery Date:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_delivery_date custom field -->
+                      <fw-label id="delivery-date" value="-" color="text-primary"></fw-label>
+                      <!-- <fw-datepicker id="delivery-date" label="Delivery Date" color="text-primary"></fw-datepicker> -->
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Order Date:" color="text-secondary"></fw-label>
+                      <fw-label id="order-date" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Order Status:" color="text-secondary"></fw-label>
+                      <!-- Dynamic content: populated from cf_order_status custom field, color changes based on status -->
+                      <fw-label id="order-status" value="-" color="success" class="status-badge"></fw-label>
+                      <fw-input label="Order Status:" readonly></fw-input>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Total Amount:" color="text-secondary"></fw-label>
+                      <fw-label id="total-amount" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Payment Method, Voucher:" color="text-secondary"></fw-label>
+                      <fw-label id="payment-method" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <div class="info-item">
+                      <fw-label value="Order Comment/Note:" color="text-secondary"></fw-label>
+                      <fw-label id="total-amount" value="-" color="text-primary"></fw-label>
+                    </div>
+                    <fw-button size="small" onclick="showModal()">show modal</fw-button>
+                  </div>
+                </fw-accordion-body>
+              </fw-accordion>
             </fw-card>
           </div>
         </main>
