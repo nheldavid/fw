@@ -1,0 +1,192 @@
+/**
+ * Fleurop Freshdesk App - Custom Styles
+ * Using Crayons Design System CSS variables and components
+ */
+
+/* Global styles using Crayons design tokens */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:after,
+*::before {
+  box-sizing: inherit;
+}
+
+/* Main app container */
+#app {
+  width: 100%;
+  height: 100%;
+  font-family: var(--fw-font-family, 'Inter', sans-serif);
+  background-color: var(--fw-color-surface, #ffffff);
+}
+
+/* Sidebar container - fits within Freshdesk ticket sidebar */
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--fw-spacing-4, 16px);
+  background-color: var(--fw-color-surface, #ffffff);
+}
+
+/* Sidebar header */
+.sidebar-header {
+  margin-bottom: var(--fw-spacing-6, 24px);
+  padding-bottom: var(--fw-spacing-3, 12px);
+  border-bottom: 1px solid var(--fw-color-border, #e0e6ed);
+}
+
+/* Main content area */
+.sidebar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-spacing-4, 16px);
+}
+
+/* Loading state container */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fw-spacing-3, 12px);
+  padding: var(--fw-spacing-8, 32px) var(--fw-spacing-4, 16px);
+  text-align: center;
+}
+
+/* Error state container */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fw-spacing-3, 12px);
+  padding: var(--fw-spacing-6, 24px) var(--fw-spacing-4, 16px);
+  text-align: center;
+  background-color: var(--fw-color-surface-secondary, #f8f9fa);
+  border-radius: var(--fw-border-radius-8, 8px);
+  border: 1px solid var(--fw-color-border-warning, #ffc107);
+}
+
+/* Information sections using fw-card */
+.info-section {
+  margin-bottom: var(--fw-spacing-4, 16px);
+}
+
+/* Information grid layout */
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-spacing-3, 12px);
+  padding: var(--fw-spacing-4, 16px);
+}
+
+/* Individual information items */
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-spacing-1, 4px);
+}
+
+/* Status badge styling */
+.status-badge {
+  font-weight: var(--fw-font-weight-semibold, 600);
+  padding: var(--fw-spacing-1, 4px) var(--fw-spacing-2, 8px);
+  border-radius: var(--fw-border-radius-4, 4px);
+  background-color: var(--fw-color-surface-secondary, #f8f9fa);
+  border: 1px solid var(--fw-color-border, #e0e6ed);
+  display: inline-block;
+  width: fit-content;
+}
+
+/* Responsive design for smaller sidebar widths */
+@media (max-width: 320px) {
+  .sidebar-container {
+    padding: var(--fw-spacing-3, 12px);
+  }
+  
+  .info-grid {
+    padding: var(--fw-spacing-3, 12px);
+  }
+  
+  .sidebar-header {
+    margin-bottom: var(--fw-spacing-4, 16px);
+  }
+}
+
+/* Focus states for accessibility */
+fw-button:focus,
+fw-card:focus {
+  outline: 2px solid var(--fw-color-primary, #2c5aa0);
+  outline-offset: 2px;
+}
+
+fw-accordion {
+  border: 1px solid #ccc;
+}
+
+fw-accordion-title {
+  background-color: #F5F7F9; 
+  /* --fw-accordion-title-expanded-icon-color: #2C5CC5;  */
+  /* --fw-accordion-title-collapsed-icon-color: #264966; */
+  font-size: 14px; 
+  font-weight: 600; 
+  line-height: 20px;
+}
+
+fw-accordion-body {
+  background-color: #FFFFFF;
+}
+/* Custom scrollbar for overflow content */
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: var(--fw-color-surface-secondary, #f8f9fa);
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: var(--fw-color-border, #e0e6ed);
+  border-radius: 3px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: var(--fw-color-text-secondary, #6c757d);
+}
+
+/* Animation for state transitions */
+.loading-container,
+.error-container,
+#content-container {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Utility classes for spacing */
+.mb-2 {
+  margin-bottom: var(--fw-spacing-2, 8px);
+}
+
+.mb-3 {
+  margin-bottom: var(--fw-spacing-3, 12px);
+}
+
+.mb-4 {
+  margin-bottom: var(--fw-spacing-4, 16px);
+}
+
+.mt-2 {
+  margin-top: var(--fw-spacing-2, 8px);
+}
+
+.mt-3 {
+  margin-top: var(--fw-spacing-3, 12px);
+}
+
+.mt-4 {
+  margin-top: var(--fw-spacing-4, 16px);
+}

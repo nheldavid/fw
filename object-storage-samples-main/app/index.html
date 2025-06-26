@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Knowledge Base Files</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="styles/style.css" />
+  <script defer src="{{{appclient}}}"></script>
+  <script defer src="scripts/app.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
+  <script nomodule defer src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
+</head>
+<body>
+  <div class="main">
+    <h2>📁 Upload a New File</h2>
+    <fw-file-uploader-2 id="fileInput" description="We support .png, .jpeg, .jpg, .json, .csv, .xls, and .xlsx upto 5MB" max-file-size="5" accept=".png, .jpeg, .jpg, .json, .csv, .xls, .xlsx"></fw-file-uploader-2>
+    <fw-input type="text" id="descInput" placeholder="Description"></fw-input><br>
+    <fw-input type="text" id="tagInput" placeholder="Tag"></fw-input><br>
+    <fw-button class="text-with-margin" id="btnUploadFile" color="primary">Upload</fw-button>
+
+    <h2>📄 Uploaded Files</h2>
+    <div id="noFiles" style="display: none;">
+      <p>No files uploaded yet.</p>
+    </div>
+    <div id="filesTable" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Filename</th>
+            <th>Description</th>
+            <th>Size</th>
+            <th>Uploaded At</th>
+            <th>Tag</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="fileList">
+          <!-- Files will be listed here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
