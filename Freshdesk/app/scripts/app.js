@@ -608,3 +608,16 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing app...');
     initializeApp();
 });
+
+async function showModal() {
+  try {
+    const data = await appState.client.interface.trigger('showModal', {
+      title: 'Fleurop Order Information',
+      //template: 'index.html'
+      template: './views/modal.html'
+    });
+    console.log('Parent:InterfaceAPI:showModal', data);
+  } catch (error) {
+    console.log('Parent:InterfaceAPI:showModal', error);
+  }
+}
