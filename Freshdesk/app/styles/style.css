@@ -125,6 +125,7 @@ fw-card:focus {
   outline-offset: 2px;
 }
 
+<<<<<<< HEAD
 fw-accordion {
   border: 1px solid #ccc;
 }
@@ -141,6 +142,8 @@ fw-accordion-title {
 fw-accordion-body {
   background-color: #FFFFFF;
 }
+=======
+>>>>>>> 457f9217eac4c973f54958bf193bad808660deb8
 /* Custom scrollbar for overflow content */
 .sidebar-content::-webkit-scrollbar {
   width: 6px;
