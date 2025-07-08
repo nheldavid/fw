@@ -1,0 +1,17 @@
+{
+  "region": "US",
+  "data": {
+    "contact": {
+      "id": 480
+    },
+    "actor": {
+      "id": 0,
+      "name": "system",
+      "type": "system"
+    }
+  },
+  "account_id": "11010177632",
+  "domain": "sample.freshdesk.com",
+  "event": "onContactDelete",
+  "timestamp": 1641546510.351581
+}

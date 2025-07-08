@@ -1,0 +1,163 @@
+{
+  "region": "AUS",
+  "data": {
+    "article": {
+      "description_text": " new solution article ",
+      "published_by": 276,
+      "thumbs_up": 0,
+      "language_id": 6,
+      "description": "<p dir=\"ltr\">new solution article</p>",
+      "tags": [
+
+      ],
+      "outdated": false,
+      "draft_exists": 0,
+      "folder_visibility": 1,
+      "folder_id": 22,
+      "company_filters": [
+
+      ],
+      "contact_filters": [
+
+      ],
+      "id": 255,
+      "account_id": 13,
+      "modified_by": 276,
+      "approvers": [
+
+      ],
+      "hits": 0,
+      "language_code": "en",
+      "status": 2,
+      "modified_at": "2021-10-29T13:04:00Z",
+      "article_id": 813,
+      "approved_at": null,
+      "category_id": 622,
+      "created_at": "2021-10-29T13:04:00Z",
+      "draft_modified_by": null,
+      "title": "sdaf",
+      "type": 1,
+      "updated_at": "2021-10-29T13:04:00Z",
+      "approved_by": null,
+      "thumbs_down": 0,
+      "draft_status": 0,
+      "approval_status": null,
+      "company_ids": [
+
+      ],
+      "published_at": "2021-10-29T13:04:00Z",
+      "draft_modified_at": null,
+      "agent_id": 276,
+      "seo_data": {
+
+      }
+    },
+    "associations": {
+
+    },
+    "actor": {
+      "sanitized_phone": null,
+      "company_id": null,
+      "first_name": "Rachel",
+      "org_contact_id": null,
+      "org_agent_id": "360",
+      "last_seen_at": null,
+      "city": null,
+      "name": "Rachel",
+      "failed_login_count": 0,
+      "blocked_at": null,
+      "customer_id": null,
+      "email": "rachel@freshdesk.com",
+      "state": null,
+      "parent_id": 0,
+      "description": null,
+      "job_title": null,
+      "tags": [
+
+      ],
+      "current_login_ip": "13.222.333.555",
+      "timezone": "Asia/Kolkata",
+      "privileges": "1234567",
+      "whitelisted": false,
+      "visitor_id": null,
+      "twitter_id": null,
+      "country": null,
+      "user_role": null,
+      "current_login_at": "2021-10-29T09:28:20Z",
+      "fb_profile_id": null,
+      "last_login_at": "2021-10-28T17:43:05Z",
+      "other_emails": [
+
+      ],
+      "id": 276,
+      "account_id": 13,
+      "language": "en",
+      "last_name": null,
+      "second_email": null,
+      "last_login_ip": "13.222.333.555",
+      "other_company_ids": [
+
+      ],
+      "extn": null,
+      "login_count": 10,
+      "preferences": {
+        "agent_preferences": {
+          "field_service": {
+            "dismissed_sample_scheduling_dashboard": false
+          },
+          "shortcuts_mapping": [
+
+          ],
+          "gdpr_acceptance": false,
+          "falcon_ui": false,
+          "show_onBoarding": true,
+          "notification_timestamp": null,
+          "undo_send": false,
+          "show_monthly_to_annual_notification": false,
+          "focus_mode": true,
+          "search_settings": {
+            "tickets": {
+              "include_attachment_names": true,
+              "include_description": true,
+              "include_notes": true,
+              "include_other_properties": true,
+              "archive": true,
+              "include_subject": true
+            }
+          },
+          "gdpr_admin_id": 510,
+          "show_loyalty_upgrade": false,
+          "shortcuts_enabled": true
+        },
+        "user_preferences": {
+          "was_agent": false,
+          "agent_deleted_forever": false,
+          "marked_for_hard_delete": false
+        }
+      },
+      "delta": true,
+      "external_id": null,
+      "address": null,
+      "blocked": false,
+      "created_at": "2021-09-21T17:09:29Z",
+      "import_id": null,
+      "posts_count": 1,
+      "type": "agent",
+      "helpdesk_agent": true,
+      "updated_at": "2021-09-21T17:10:33Z",
+      "mobile": null,
+      "deleted_at": null,
+      "time_zone": "Chennai",
+      "deleted": false,
+      "phone": null,
+      "unique_external_id": null,
+      "sanitized_mobile": null,
+      "active": true
+    }
+  },
+  "account_id": "13",
+  "domain": "sample.freshdesk.com",
+  "event": "onArticleCreate",
+  "timestamp": 1635512640.3316212,
+  "version": "1.0.12"
+}

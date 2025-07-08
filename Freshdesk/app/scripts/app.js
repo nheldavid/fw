@@ -47,9 +47,7 @@ const CUSTOM_FIELD_CONFIG = {
     refundAmount: 'cf_refund_amount', // Number field
     creditNote: 'cf_credit_note', // Single line text field
     complaintStatus: 'cf_complaint_status', // Dropdown field
-    centralNumber: 'cf_central_number', // Single line text field
-    deliveryDate: 'cf_delivery_date', // Date field
-    orderStatus: 'cf_order_status' // Dropdown field
+    centralNumber: 'cf_central_number' // Single line text field
 };
 
 // Field display names for logging and debugging

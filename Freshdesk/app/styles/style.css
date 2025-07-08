@@ -106,11 +106,11 @@ html {
 /* Responsive design for smaller sidebar widths */
 @media (max-width: 320px) {
   .sidebar-container {
-    padding: var(--fw-spacing-3, 12px);
+    padding: var(--fw-spacing-3, 1px);
   }
   
   .info-grid {
-    padding: var(--fw-spacing-3, 12px);
+    padding: var(--fw-spacing-3, 4px);
   }
   
   .sidebar-header {
@@ -125,25 +125,6 @@ fw-card:focus {
   outline-offset: 2px;
 }
 
-<<<<<<< HEAD
-fw-accordion {
-  border: 1px solid #ccc;
-}
-
-fw-accordion-title {
-  background-color: #F5F7F9; 
-  /* --fw-accordion-title-expanded-icon-color: #2C5CC5;  */
-  /* --fw-accordion-title-collapsed-icon-color: #264966; */
-  font-size: 14px; 
-  font-weight: 600; 
-  line-height: 20px;
-}
-
-fw-accordion-body {
-  background-color: #FFFFFF;
-}
-=======
->>>>>>> 457f9217eac4c973f54958bf193bad808660deb8
 /* Custom scrollbar for overflow content */
 .sidebar-content::-webkit-scrollbar {
   width: 6px;

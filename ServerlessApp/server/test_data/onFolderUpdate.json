@@ -1,0 +1,148 @@
+{
+  "region": "AUS",
+  "data": {
+    "folder": {
+      "name": "updated ReceiptsFolder asdadsf",
+      "language_id": 6,
+      "description": "folder to store receipts asdfdsa",
+      "folder_id": 115,
+      "id": 59,
+      "account_id": 13,
+      "article_order": 1,
+      "language_code": "en",
+      "category_id": 16,
+      "created_at": "2021-10-29T13:46:04Z",
+      "updated_at": "2021-10-29T13:46:14Z",
+      "visibility": 1
+    },
+    "associations": {
+
+    },
+    "actor": {
+      "sanitized_phone": null,
+      "company_id": null,
+      "first_name": "Rachel",
+      "org_contact_id": null,
+      "org_agent_id": "188",
+      "last_seen_at": null,
+      "city": null,
+      "name": "Rachel",
+      "failed_login_count": 0,
+      "blocked_at": null,
+      "customer_id": null,
+      "email": "rachel@freshdesk.com",
+      "state": null,
+      "parent_id": 0,
+      "description": null,
+      "job_title": null,
+      "tags": [
+
+      ],
+      "current_login_ip": "11.222.555.666",
+      "timezone": "Asia/Kolkata",
+      "privileges": "1234567",
+      "whitelisted": false,
+      "visitor_id": null,
+      "twitter_id": null,
+      "country": null,
+      "user_role": null,
+      "current_login_at": "2021-10-29T09:28:20Z",
+      "fb_profile_id": null,
+      "last_login_at": "2021-10-28T17:43:05Z",
+      "other_emails": [
+
+      ],
+      "id": 127,
+      "account_id": 13,
+      "language": "en",
+      "last_name": null,
+      "second_email": null,
+      "last_login_ip": "10.333.555.111",
+      "other_company_ids": [
+
+      ],
+      "extn": null,
+      "login_count": 10,
+      "preferences": {
+        "agent_preferences": {
+          "field_service": {
+            "dismissed_sample_scheduling_dashboard": false
+          },
+          "shortcuts_mapping": [
+
+          ],
+          "gdpr_acceptance": false,
+          "falcon_ui": false,
+          "show_onBoarding": true,
+          "notification_timestamp": null,
+          "undo_send": false,
+          "show_monthly_to_annual_notification": false,
+          "focus_mode": true,
+          "search_settings": {
+            "tickets": {
+              "include_attachment_names": true,
+              "include_description": true,
+              "include_notes": true,
+              "include_other_properties": true,
+              "archive": true,
+              "include_subject": true
+            }
+          },
+          "gdpr_admin_id": 510,
+          "show_loyalty_upgrade": false,
+          "shortcuts_enabled": true
+        },
+        "user_preferences": {
+          "was_agent": false,
+          "agent_deleted_forever": false,
+          "marked_for_hard_delete": false
+        }
+      },
+      "delta": true,
+      "external_id": null,
+      "address": null,
+      "blocked": false,
+      "created_at": "2021-09-21T17:09:29Z",
+      "import_id": null,
+      "posts_count": 1,
+      "type": "agent",
+      "helpdesk_agent": true,
+      "updated_at": "2021-09-21T17:10:33Z",
+      "mobile": null,
+      "deleted_at": null,
+      "time_zone": "Chennai",
+      "deleted": false,
+      "phone": null,
+      "unique_external_id": null,
+      "sanitized_mobile": null,
+      "active": true
+    },
+    "changes": {
+      "model_changes": {
+        "name": [
+          "ReceiptsFolder",
+          "updated ReceiptsFolder asdadsf"
+        ],
+        "description": [
+          "folder to store receipts",
+          "updated folder to store receipts asdfdsa"
+        ],
+        "updated_at": [
+          "2021-10-29T13:46:04Z",
+          "2021-10-29T13:46:14Z"
+        ]
+      },
+      "system_changes": {
+
+      },
+      "misc_changes": {
+
+      }
+    }
+  },
+  "account_id": "13",
+  "domain": "sample.freshdesk.com",
+  "event": "onFolderUpdate",
+  "timestamp": 1635515174.08058,
+  "version": "1.0.6"
+}

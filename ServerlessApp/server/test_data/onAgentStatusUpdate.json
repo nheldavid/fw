@@ -1,0 +1,40 @@
+{
+  "data": {
+    "agent_status": {
+      "account_id": 11010311044,
+      "created_at": "2022-06-09T04:15:32Z",
+      "default": false,
+      "icon": 9749,
+      "id": 447245,
+      "name": "Test Changed",
+      "state": "on",
+      "type": "busy",
+      "updated_at": "2022-06-09T04:18:40Z"
+    },
+    "associations": {},
+    "changes": {
+      "misc_changes": {},
+      "model_changes": {
+        "name": [
+          "Test One",
+          "Test Changed"
+        ],
+        "updated_at": [
+          "2022-06-09T04:15:32Z",
+          "2022-06-09T04:18:40Z"
+        ]
+      },
+      "system_changes": {}
+    },
+    "actor": {
+      "id": "48013277568",
+      "name": "Bob",
+      "type": "agent"
+    }
+  },
+  "account_id": "11010311044",
+  "domain": "test.freshdesk.com",
+  "event": "agent_status_update",
+  "timestamp": 1654748131.818,
+  "version": "1.0.1"
+}

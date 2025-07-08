@@ -1,0 +1,99 @@
+{
+  "data": {
+    "agent_availability": {
+      "account_id": "100",
+      "status_id": 232,
+      "status_updated_at": "2022-06-09T04:26:07Z",
+      "channel_availability": [
+        {
+          "channel": "freshdesk",
+          "available": true,
+          "channel_account_id": "100",
+          "agent_id": "32938"
+        },
+        {
+          "channel": "freshchat",
+          "available": false,
+          "channel_account_id": "293829-sc38983u4-3u3ru38",
+          "agent_id": "3282"
+        },
+        {
+          "channel": "freshcaller",
+          "available": false,
+          "channel_account_id": "432",
+          "agent_id": "432"
+        }
+      ],
+      "id": 32323 ,
+      "logged_in": true,
+      "email": "rachel@freshworks.com",
+      "name": "Rachel",
+      "created_at": "2022-06-09T04:15:32Z",
+      "updated_at": "2022-06-09T04:18:41Z"
+    },
+    "associations": {
+      "status": {
+        "id": 232,
+        "name": "Unavailable"
+      }
+    },
+    "changes": {
+      "model_changes": {
+        "status_id": [123, 232],
+        "status_updated_at": ["2022-06-09T02:18:41Z", "2022-06-09T04:18:41Z"],
+        "channel_availability": [
+          [
+            {
+              "channel": "freshdesk",
+              "available": true,
+              "channel_account_id": "432",
+              "agent_id": "32938"
+            },
+            {
+              "channel": "freshchat",
+              "available": true,
+              "channel_account_id": "293829-sc38983u4-3u3ru38",
+              "agent_id": "3282"
+            },
+            {
+              "channel": "freshcaller",
+              "available": true,
+              "channel_account_id": "432",
+              "agent_id": "432"
+            }
+          ],
+          [
+            {
+              "channel": "freshdesk",
+              "available": true,
+              "channel_account_id": "432",
+              "agent_id": "32938"
+            },
+            {
+              "channel": "freshchat",
+              "available": false,
+              "channel_account_id": "293829-sc38983u4-3u3ru38",
+              "agent_id": "3282"
+            },
+            {
+              "channel": "freshcaller",
+              "available": false,
+              "channel_account_id": "432",
+              "agent_id": "432"
+            }
+          ]
+        ]
+      }
+    },
+    "actor": {
+      "id": "48013277568",
+      "name": "Bob",
+      "type": "agent"
+    }
+  },
+  "account_id": "11010311044",
+  "domain": "test.freshdesk.com",
+  "event": "agent_availability_update",
+  "timestamp": 1654748131.818,
+  "version": "1.0.0"
+}

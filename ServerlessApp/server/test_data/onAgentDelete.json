@@ -1,0 +1,218 @@
+{
+  "region": "AUS",
+  "data": {
+    "agent": {
+      "sanitized_phone": null,
+      "last_seen_at": null,
+      "name": "Rachel",
+      "failed_login_count": 0,
+      "active_since": null,
+      "blocked_at": null,
+      "customer_id": null,
+      "email": "rachel@freshdesk.com",
+      "freshid_uuid": null,
+      "last_active_at": null,
+      "parent_id": 0,
+      "description": null,
+      "job_title": null,
+      "current_login_ip": null,
+      "timezone": "Asia/Kolkata",
+      "privileges": "0",
+      "whitelisted": false,
+      "status_id": null,
+      "signature_html": "<div>agent signature</div>",
+      "twitter_id": null,
+      "signature": null,
+      "groups": [
+
+      ],
+      "user_role": null,
+      "ticket_permission": {
+        "id": 1,
+        "permission": "all_tickets"
+      },
+      "contribution_groups": [
+
+      ],
+      "current_login_at": null,
+      "user_id": 555,
+      "occasional": false,
+      "fb_profile_id": null,
+      "google_viewer_id": null,
+      "last_login_at": null,
+      "status_updated_at": null,
+      "points": null,
+      "id": 222,
+      "account_id": 13,
+      "language": "en",
+      "second_email": null,
+      "last_login_ip": null,
+      "extn": null,
+      "login_count": 0,
+      "preferences": {
+        "agent_preferences": {
+          "field_service": {
+            "dismissed_sample_scheduling_dashboard": false
+          },
+          "shortcuts_mapping": [
+
+          ],
+          "falcon_ui": false,
+          "show_onBoarding": true,
+          "notification_timestamp": null,
+          "undo_send": false,
+          "show_monthly_to_annual_notification": false,
+          "focus_mode": true,
+          "search_settings": {
+            "tickets": {
+              "include_attachment_names": true,
+              "include_description": true,
+              "include_notes": true,
+              "include_other_properties": true,
+              "archive": true,
+              "include_subject": true
+            }
+          },
+          "show_loyalty_upgrade": false,
+          "shortcuts_enabled": true
+        },
+        "user_preferences": {
+          "was_agent": true,
+          "agent_deleted_forever": false,
+          "marked_for_hard_delete": false
+        }
+      },
+      "delta": true,
+      "user_updated_at": "2021-09-17T15:46:20Z",
+      "external_id": null,
+      "address": null,
+      "available": false,
+      "blocked": false,
+      "created_at": "2021-09-17T15:46:20Z",
+      "import_id": null,
+      "user_created_at": "2021-09-17T15:46:20Z",
+      "agent_type": {
+        "id": 1,
+        "name": "support_agent"
+      },
+      "posts_count": 0,
+      "helpdesk_agent": false,
+      "updated_at": "2021-09-21T09:25:10Z",
+      "mobile": null,
+      "deleted_at": null,
+      "time_zone": "Chennai",
+      "scoreboard_level_id": null,
+      "deleted": false,
+      "phone": null,
+      "unique_external_id": null,
+      "sanitized_mobile": null,
+      "active": false
+    },
+    "associations": {
+
+    },
+    "actor": {
+      "sanitized_phone": null,
+      "company_id": null,
+      "first_name": "Minerva",
+      "org_contact_id": null,
+      "org_agent_id": "256",
+      "last_seen_at": null,
+      "city": null,
+      "name": "Minerva",
+      "failed_login_count": 0,
+      "blocked_at": null,
+      "customer_id": null,
+      "email": "minerva@freshdesk.com",
+      "state": null,
+      "parent_id": 0,
+      "description": null,
+      "job_title": null,
+      "tags": [
+
+      ],
+      "current_login_ip": "13.234.555.222",
+      "timezone": "Asia/Kolkata",
+      "privileges": "5444456789",
+      "whitelisted": false,
+      "visitor_id": null,
+      "twitter_id": null,
+      "country": null,
+      "user_role": null,
+      "current_login_at": "2021-09-21T06:30:34Z",
+      "fb_profile_id": null,
+      "last_login_at": "2021-09-21T05:38:45Z",
+      "other_emails": [
+
+      ],
+      "id": 51,
+      "account_id": 13,
+      "language": "en",
+      "last_name": null,
+      "second_email": null,
+      "last_login_ip": "13.222.333.555",
+      "other_company_ids": [
+
+      ],
+      "extn": null,
+      "login_count": 360,
+      "preferences": {
+        "agent_preferences": {
+          "field_service": {
+            "dismissed_sample_scheduling_dashboard": false
+          },
+          "shortcuts_mapping": [
+
+          ],
+          "falcon_ui": true,
+          "show_onBoarding": false,
+          "notification_timestamp": "2018-01-03T13:32:24Z",
+          "undo_send": false,
+          "show_monthly_to_annual_notification": false,
+          "focus_mode": false,
+          "search_settings": {
+            "tickets": {
+              "include_attachment_names": true,
+              "include_description": true,
+              "include_notes": true,
+              "include_other_properties": true,
+              "archive": true,
+              "include_subject": true
+            }
+          },
+          "show_loyalty_upgrade": false,
+          "shortcuts_enabled": true
+        },
+        "user_preferences": {
+          "was_agent": false,
+          "agent_deleted_forever": false,
+          "marked_for_hard_delete": false
+        },
+        "password_expiry_date": "2117-11-04 07:36:12 UTC"
+      },
+      "delta": true,
+      "external_id": null,
+      "address": null,
+      "blocked": false,
+      "created_at": "2017-11-28T07:35:26Z",
+      "import_id": null,
+      "posts_count": 0,
+      "type": "agent",
+      "helpdesk_agent": true,
+      "updated_at": "2020-12-07T20:39:47Z",
+      "mobile": null,
+      "deleted_at": null,
+      "time_zone": "Chennai",
+      "deleted": false,
+      "phone": null,
+      "unique_external_id": null,
+      "sanitized_mobile": null,
+      "active": true
+    }
+  },
+  "account_id": "13",
+  "domain": "sample.freshdesk.com",
+  "event": "onAgentDelete",
+  "timestamp": 1632216315.305841,
+  "version": "1.3.6"
+}
