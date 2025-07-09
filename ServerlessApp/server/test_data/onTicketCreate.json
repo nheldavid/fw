@@ -13,8 +13,14 @@
       "fr_due_by": "2021-11-08T13:45:13Z",
       "fr_escalated": false,
       "is_escalated": false,
-      "fwd_emails": ["ram@freshdesk.com", "diana@freshdesk.com"],
-      "reply_cc_emails": ["ram@freshdesk.com", "diana@freshdesk.com"],
+      "fwd_emails": [
+        "ram@freshdesk.com",
+        "diana@freshdesk.com"
+      ],
+      "reply_cc_emails": [
+        "ram@freshdesk.com",
+        "diana@freshdesk.com"
+      ],
       "email_config_id": null,
       "id": 165,
       "group_id": null,
@@ -25,21 +31,15 @@
       "status": 2,
       "priority": 1,
       "type": null,
-      "tags": [
-
-      ],
+      "tags": [],
       "spam": false,
       "source": 3,
       "tweet_id": null,
-      "cc_emails": [
-
-      ],
+      "cc_emails": [],
       "to_emails": null,
       "created_at": "2021-11-05T12:45:13Z",
       "updated_at": "2021-11-05T12:45:13Z",
-      "attachments": [
-
-      ],
+      "attachments": [],
       "custom_fields": {
         "cf_aefds_11010177632": null,
         "cf_sda_11010177632": null,
@@ -58,15 +58,11 @@
       "internal_agent_id": null,
       "internal_group_id": null,
       "outbound_email": false,
-      "watchers": [
-
-      ],
+      "watchers": [],
       "urgent": false,
       "trained": false,
       "deleted": false,
-      "group_users": [
-
-      ],
+      "group_users": [],
       "import_id": null,
       "on_state_time": null,
       "source_additional_info": null,
@@ -76,9 +72,7 @@
       "nr_escalated": null,
       "next_response_reminded": false,
       "nr_due_by": null,
-      "attachment_ids": [
-
-      ],
+      "attachment_ids": [],
       "first_assign_by_bhrs": 0,
       "first_response_id": null,
       "first_response_group_id": null,
@@ -107,24 +101,16 @@
       "first_response_time": null,
       "first_assigned_at": "2021-11-05T12:45:13Z",
       "assigned_at": "2021-11-05T12:45:13Z",
-      "bcc_emails": [
-
-      ],
-      "tkt_cc": [
-
-      ],
+      "bcc_emails": [],
+      "tkt_cc": [],
       "associates": null,
       "associates_rdb": null,
       "parent_id": null,
       "support_email": null,
       "internal_agent_uid": null,
       "responder_uid": "246574923996993384",
-      "watchers_uid_list": [
-
-      ],
-      "group_users_uid_list": [
-
-      ],
+      "watchers_uid_list": [],
+      "group_users_uid_list": [],
       "requester_responded_at": null,
       "agent_responded_at": null
     },
@@ -145,9 +131,7 @@
       "parent_id": 0,
       "description": null,
       "job_title": null,
-      "tags": [
-
-      ],
+      "tags": [],
       "current_login_ip": "100.25.62.61",
       "timezone": "America/New_York",
       "privileges": "193248897710135786048173323961003191631436058972055363553917057189806079",
@@ -159,18 +143,14 @@
       "current_login_at": "2021-11-05T12:43:09Z",
       "fb_profile_id": null,
       "last_login_at": "2021-11-05T12:42:56Z",
-      "other_emails": [
-
-      ],
+      "other_emails": [],
       "id": 48,
       "account_id": 13,
       "language": "en",
       "last_name": null,
       "second_email": null,
       "last_login_ip": "13.222.333.555",
-      "other_company_ids": [
-
-      ],
+      "other_company_ids": [],
       "extn": null,
       "login_count": 1371,
       "preferences": {
@@ -178,9 +158,7 @@
           "field_service": {
             "dismissed_sample_scheduling_dashboard": false
           },
-          "shortcuts_mapping": [
-
-          ],
+          "shortcuts_mapping": [],
           "falcon_ui": false,
           "show_onBoarding": true,
           "notification_timestamp": null,

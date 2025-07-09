@@ -31,3 +31,1191 @@ Require stack:
 2025-07-08 14:13:29.378 +0800 [debug] ([34mcreate.js[0m) [31mInitializing template "your_first_serverless_app" for "freshdesk".[0m
 2025-07-08 14:13:29.480 +0800 [info] A new Freshdesk app was successfully created from template "your_first_serverless_app" with the following files.
 
+2025-07-08 14:15:15.203 +0800 [debug] ([34mconfigs.js[0m) [31mloaded default configs as "{"updates":{"manifest_url":"https://cdn.freshdev.io/assets/fdk/updates.json","period":24},"log":{"level":"info"},"javascript":{"ecma_version":2020},"request":{"timeout":15000},"global_apps":{"enabled":false},"easel":{"enabled":false},"job":{"timeout":120000}}"[0m
+2025-07-08 14:15:15.206 +0800 [debug] ([34mfile.js[0m) [31mError while requiring C:\Users\AXND\.fdk\configs.json: Cannot find module 'C:\Users\AXND\.fdk\configs.json'
+Require stack:
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\utils\file.js
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\configs.js
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\logger.js
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\index.js[0m
+2025-07-08 14:15:15.206 +0800 [debug] ([34mconfigs.js[0m) [31mloaded global configs as "{}"[0m
+2025-07-08 14:15:15.206 +0800 [debug] ([34mconfigs.js[0m) [31mloaded local configs as "{"request":{"timeout":15000},"job":{"timeout":120000}}"[0m
+2025-07-08 14:15:15.207 +0800 [debug] ([34mconfigs.js[0m) [31mloaded env configs as "{"updates":{},"log":{},"javascript":{},"request":{"timeout":15000},"job":{"timeout":120000}}"[0m
+2025-07-08 14:15:15.207 +0800 [debug] ([34mconfigs.js[0m) [31mloaded resolved configs as "{"updates":{"manifest_url":"https://cdn.freshdev.io/assets/fdk/updates.json","period":24},"log":{"level":"info"},"javascript":{"ecma_version":2020},"request":{"timeout":15000},"global_apps":{"enabled":false},"easel":{"enabled":false},"job":{"timeout":120000}}"[0m
+2025-07-08 14:15:15.207 +0800 [debug] ([34mlogger.js[0m) [31mStarting FDK in node v18.17.1 on win32[0m
+2025-07-08 14:15:15.207 +0800 [debug] ([34msequelize.js[0m) [31msetting up sqilite at "C:\Users\AXND\Documents\GitHub\fw\ServerlessApp/.fdk/store.sqlite"[0m
+2025-07-08 14:15:15.207 +0800 [debug] ([34mdata.js[0m) [31mRead {"version_details":{"cli":{"deprecated":{"version":"<9","message":"This FDK version has been deprecated. There will be no further feature updates to this version. For a seamless app-building experience, ensure to move to the latest FDK version. For more information, see https://developers.freshworks.com/docs/app-sdk/v2.3/freshdesk/migration-guide/#migrate-to-the-latest-platform-version."},"forced":{"version":"7.0.0","command":"npm install https://dl.freshdev.io/cli/fdk-7.0.0.tgz -g","message":"Your FDK version has been forced updated to v7.0.0, please visit https://community.developers.freshworks.com/t/fdk-v7-0-announcing-node-js-v12-and-es6-support/3606 to know more"},"latest":{"version":"9.5.1","command":"npm install https://cdn.freshdev.io/fdk/latest.tgz -g","message":"You are on the latest FDK version. For information on the features available as part of this FDK version, see https://developers.freshworks.com/docs/?tab=modules."}},"addon":{"version":"2.1.0","url":"https://cdn.freshdev.io/assets/fdk/addons/addon.zip"}},"last_updated":{"time_stamp":1751869230968}}[0m
+2025-07-08 14:15:15.208 +0800 [debug] ([34mupdater.js[0m) [31mlast check less than 24 hours ago, not looking for updates[0m
+2025-07-08 14:15:15.216 +0800 [debug] ([34mindex.js[0m) [31mrunning with opts {}[0m
+2025-07-08 14:15:15.833 +0800 [debug] ([34mdata.js[0m) [31mRead {"version_details":{"cli":{"deprecated":{"version":"<9","message":"This FDK version has been deprecated. There will be no further feature updates to this version. For a seamless app-building experience, ensure to move to the latest FDK version. For more information, see https://developers.freshworks.com/docs/app-sdk/v2.3/freshdesk/migration-guide/#migrate-to-the-latest-platform-version."},"forced":{"version":"7.0.0","command":"npm install https://dl.freshdev.io/cli/fdk-7.0.0.tgz -g","message":"Your FDK version has been forced updated to v7.0.0, please visit https://community.developers.freshworks.com/t/fdk-v7-0-announcing-node-js-v12-and-es6-support/3606 to know more"},"latest":{"version":"9.5.1","command":"npm install https://cdn.freshdev.io/fdk/latest.tgz -g","message":"You are on the latest FDK version. For information on the features available as part of this FDK version, see https://developers.freshworks.com/docs/?tab=modules."}},"addon":{"version":"2.1.0","url":"https://cdn.freshdev.io/assets/fdk/addons/addon.zip"}},"last_updated":{"time_stamp":1751869230968}}[0m
+2025-07-08 14:15:15.837 +0800 [debug] ([34mmanifest.js[0m) [31mReloading manifest with {"platform-version":"2.3","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"engines":{"node":"18.17.1","fdk":"9.5.1"}}.[0m
+2025-07-08 14:15:15.837 +0800 [debug] ([34mmanifest.js[0m) [31mInferred db,backend as features.[0m
+2025-07-08 14:15:15.917 +0800 [debug] ([34mdata.js[0m) [31mRead {"version_details":{"cli":{"deprecated":{"version":"<9","message":"This FDK version has been deprecated. There will be no further feature updates to this version. For a seamless app-building experience, ensure to move to the latest FDK version. For more information, see https://developers.freshworks.com/docs/app-sdk/v2.3/freshdesk/migration-guide/#migrate-to-the-latest-platform-version."},"forced":{"version":"7.0.0","command":"npm install https://dl.freshdev.io/cli/fdk-7.0.0.tgz -g","message":"Your FDK version has been forced updated to v7.0.0, please visit https://community.developers.freshworks.com/t/fdk-v7-0-announcing-node-js-v12-and-es6-support/3606 to know more"},"latest":{"version":"9.5.1","command":"npm install https://cdn.freshdev.io/fdk/latest.tgz -g","message":"You are on the latest FDK version. For information on the features available as part of this FDK version, see https://developers.freshworks.com/docs/?tab=modules."}},"addon":{"version":"2.1.0","url":"https://cdn.freshdev.io/assets/fdk/addons/addon.zip"}},"last_updated":{"time_stamp":1751869230968}}[0m
+2025-07-08 14:15:16.581 +0800 [debug] ([34mfile.js[0m) [31mError while requiring C:\Users\AXND\Documents\GitHub\fw\ServerlessApp/.report.json: Cannot find module 'C:\Users\AXND\Documents\GitHub\fw\ServerlessApp/.report.json'
+Require stack:
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\utils\file.js
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\configs.js
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\logger.js
+- C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\index.js[0m
+2025-07-08 14:15:16.715 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\bigint-pivot.js"[0m
+2025-07-08 14:15:16.718 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\entity-field-choice.js"[0m
+2025-07-08 14:15:16.719 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\entity-field.js"[0m
+2025-07-08 14:15:16.721 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\entity.js"[0m
+2025-07-08 14:15:16.722 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\files.js"[0m
+2025-07-08 14:15:16.724 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\oauth-details.js"[0m
+2025-07-08 14:15:16.725 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\record.js"[0m
+2025-07-08 14:15:16.730 +0800 [debug] ([34mindex.js[0m) [31mloading model at "C:\Users\AXND\AppData\Roaming\npm\node_modules\fdk\lib\models\string-pivot.js"[0m
+2025-07-08 14:15:17.020 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.043 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.046 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.048 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.054 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.062 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.065 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.080 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.082 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.083 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.093 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.102 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.112 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.114 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.115 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:17.124 +0800 [debug] ([34mindex.js[0m) [31m'schema: ' [object Object][0m
+2025-07-08 14:15:18.108 +0800 [debug] ([34mdata.js[0m) [31mRead {"version_details":{"cli":{"deprecated":{"version":"<9","message":"This FDK version has been deprecated. There will be no further feature updates to this version. For a seamless app-building experience, ensure to move to the latest FDK version. For more information, see https://developers.freshworks.com/docs/app-sdk/v2.3/freshdesk/migration-guide/#migrate-to-the-latest-platform-version."},"forced":{"version":"7.0.0","command":"npm install https://dl.freshdev.io/cli/fdk-7.0.0.tgz -g","message":"Your FDK version has been forced updated to v7.0.0, please visit https://community.developers.freshworks.com/t/fdk-v7-0-announcing-node-js-v12-and-es6-support/3606 to know more"},"latest":{"version":"9.5.1","command":"npm install https://cdn.freshdev.io/fdk/latest.tgz -g","message":"You are on the latest FDK version. For information on the features available as part of this FDK version, see https://developers.freshworks.com/docs/?tab=modules."}},"addon":{"version":"2.1.0","url":"https://cdn.freshdev.io/assets/fdk/addons/addon.zip"}},"last_updated":{"time_stamp":1751869230968}}[0m
+2025-07-08 14:15:19.483 +0800 [debug] ([34mvalidate.js[0m) [31masked to skip the following validations, [0m
+2025-07-08 14:15:19.484 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator actions[0m
+2025-07-08 14:15:19.484 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator requests[0m
+2025-07-08 14:15:19.485 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator app-dir[0m
+2025-07-08 14:15:19.485 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator config-dir[0m
+2025-07-08 14:15:19.485 +0800 [debug] ([34mconfig-dir.js[0m) [31mChecking to see if C:\Users\AXND\Documents\GitHub\fw\ServerlessApp/config/ exists.[0m
+2025-07-08 14:15:19.485 +0800 [debug] ([34mconfig-dir.js[0m) [31mFetched the following config files iparams.json[0m
+2025-07-08 14:15:19.486 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator custom-objects[0m
+2025-07-08 14:15:19.486 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator event[0m
+2025-07-08 14:15:19.498 +0800 [debug] ([34mevent.js[0m) [31mFound ["onTicketCreateHandler"] as exported functions.[0m
+2025-07-08 14:15:19.499 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator iparam[0m
+2025-07-08 14:15:19.503 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator lint[0m
+2025-07-08 14:15:19.503 +0800 [debug] ([34mlint.js[0m) [31mpassed fix flag: undefined[0m
+2025-07-08 14:15:19.508 +0800 [debug] ([34mlint.js[0m) [31mRunning the following lints on the file server\lib\handle-response.js : no-eval,no-alert,no-debugger,no-unreachable,no-duplicate-imports,constructor-super,for-direction,no-class-assign,no-new-native-nonconstructor,valid-typeof,no-eq-null,no-var,require-await,no-unreachable-loop,no-redeclare,no-self-assign,no-setter-return,no-shadow-restricted-names,no-this-before-super,no-unsafe-finally,no-unsafe-optional-chaining,no-unused-vars,no-useless-catch,eqeqeq,prefer-const,require-yield,no-global-assign,no-caller,no-process-env,complexity,max-nested-callbacks,handle-callback-err,getter-return,no-async-promise-executor,no-case-declarations,no-compare-neg-zero,no-cond-assign,no-const-assign,no-constant-condition,no-control-regex,no-delete-var,no-dupe-args,no-dupe-class-members,no-dupe-else-if,no-dupe-keys,no-duplicate-case,no-empty,no-empty-character-class,no-empty-pattern,no-ex-assign,no-extra-boolean-cast,no-extra-semi,no-fallthrough,no-func-assign,no-import-assign,no-inner-declarations,no-invalid-regexp,no-irregular-whitespace,no-loss-of-precision,no-misleading-character-class,no-mixed-spaces-and-tabs,no-nonoctal-decimal-escape,no-obj-calls,no-octal,no-prototype-builtins,no-regex-spaces,no-sparse-arrays,no-unexpected-multiline,no-unsafe-negation,no-unused-labels,no-useless-backreference,no-useless-escape,no-with,use-isnan,no-unpkg-cdn,no-proxy-requests,no-unhandled-promise,no-logging-rejections,no-non-client-request-model,no-deprecated-apis,no-dependency-mismatch,no-empty-function[0m
+2025-07-08 14:15:19.645 +0800 [debug] ([34mlint.js[0m) [31mRunning the following lints on the file server\server.js : no-eval,no-alert,no-debugger,no-unreachable,no-duplicate-imports,constructor-super,for-direction,no-class-assign,no-new-native-nonconstructor,valid-typeof,no-eq-null,no-var,require-await,no-unreachable-loop,no-redeclare,no-self-assign,no-setter-return,no-shadow-restricted-names,no-this-before-super,no-unsafe-finally,no-unsafe-optional-chaining,no-unused-vars,no-useless-catch,eqeqeq,prefer-const,require-yield,no-global-assign,no-caller,no-process-env,complexity,max-nested-callbacks,handle-callback-err,getter-return,no-async-promise-executor,no-case-declarations,no-compare-neg-zero,no-cond-assign,no-const-assign,no-constant-condition,no-control-regex,no-delete-var,no-dupe-args,no-dupe-class-members,no-dupe-else-if,no-dupe-keys,no-duplicate-case,no-empty,no-empty-character-class,no-empty-pattern,no-ex-assign,no-extra-boolean-cast,no-extra-semi,no-fallthrough,no-func-assign,no-import-assign,no-inner-declarations,no-invalid-regexp,no-irregular-whitespace,no-loss-of-precision,no-misleading-character-class,no-mixed-spaces-and-tabs,no-nonoctal-decimal-escape,no-obj-calls,no-octal,no-prototype-builtins,no-regex-spaces,no-sparse-arrays,no-unexpected-multiline,no-unsafe-negation,no-unused-labels,no-useless-backreference,no-useless-escape,no-with,use-isnan,no-unpkg-cdn,no-proxy-requests,no-unhandled-promise,no-logging-rejections,no-non-client-request-model,no-deprecated-apis,no-dependency-mismatch,no-empty-function[0m
+2025-07-08 14:15:19.653 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator manifest[0m
+2025-07-08 14:15:19.653 +0800 [debug] ([34mvalidate.js[0m) [31mskipping validator manifest-dependency[0m
+2025-07-08 14:15:19.653 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator oauth[0m
+2025-07-08 14:15:19.654 +0800 [debug] ([34mvalidate.js[0m) [31mskipping validator pkgsize[0m
+2025-07-08 14:15:19.654 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator schema[0m
+2025-07-08 14:15:19.654 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator version-check[0m
+2025-07-08 14:15:19.654 +0800 [debug] ([34mvalidate.js[0m) [31mrunning validator app-settings[0m
+2025-07-08 14:15:19.658 +0800 [debug] ([34mwatcher.js[0m) [31mPreparing to watch the following files ./config,./manifest.json[0m
+2025-07-08 14:15:19.665 +0800 [debug] ([34minstall.js[0m) [31mdependency installer called with {}[0m
+2025-07-08 14:15:19.666 +0800 [debug] ([34mdata.js[0m) [31mRead {}[0m
+2025-07-08 14:15:19.667 +0800 [debug] ([34mcustom-objects.js[0m) [31mto force or not? undefined[0m
+2025-07-08 14:15:19.667 +0800 [debug] ([34mcustom-objects.js[0m) [31mbeginning to re-sync db[0m
+2025-07-08 14:15:19.848 +0800 [debug] ([34mdata.js[0m) [31mRead {}[0m
+2025-07-08 14:15:19.849 +0800 [debug] ([34mcustom-objects.js[0m) [31mupdated local store with latest entity hash[0m
+2025-07-08 14:15:19.849 +0800 [debug] ([34mrun.js[0m) [31mmigrate stored oauth configs from localstore to sqlite[0m
+2025-07-08 14:15:19.850 +0800 [debug] ([34mdata.js[0m) [31mRead {}[0m
+2025-07-08 14:15:19.851 +0800 [debug] ([34mdata.js[0m) [31mRead {}[0m
+2025-07-08 14:15:19.851 +0800 [debug] ([34moauth.js[0m) [31mapp without oauth configs, skipping oauth configs migration[0m
+2025-07-08 14:15:19.851 +0800 [debug] ([34mdata.js[0m) [31mRead {}[0m
+2025-07-08 14:15:19.852 +0800 [debug] ([34moauth.js[0m) [31mempty json, setting oauth migration flag to true[0m
+2025-07-08 14:15:19.852 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:19.854 +0800 [info] Starting local testing server at http://*:10001/    
+Append 'dev=true' to your Freshdesk account URL to start testing    
+e.g. https://domain.freshdesk.com/a/tickets/1?dev=true    
+Quit the server with Control-C.
+2025-07-08 14:15:19.855 +0800 [info] 
+To simulate product, app setup, and external events, visit - http://localhost:10001/web/test
+2025-07-08 14:15:19.855 +0800 [info] Populating test data with events found in the app
+2025-07-08 14:15:34.531 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:34.531 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:34.533 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:34.534 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:35.302 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:35.302 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:35.302 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:35.303 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:36.287 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:36.287 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:36.288 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:36.288 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:36.515 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:36.515 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:36.515 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:36.516 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:36.752 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:36.753 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:36.753 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:36.754 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:36.985 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:36.985 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:36.986 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:36.986 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:37.215 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:37.216 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:37.216 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:37.216 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:37.445 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:37.446 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:37.446 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:37.446 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:15:37.677 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:15:37.677 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:15:37.678 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:15:37.678 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:18:42.883 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:18:42.883 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:18:42.884 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:18:42.884 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:18:42.887 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:18:43.041 +0800 [debug] ([34moauth.js[0m) [31mFetching oauth configs of product : freshdesk[0m
+2025-07-08 14:18:43.041 +0800 [debug] ([34miframe.js[0m) [31mChecking is authorized for all oauths [0m
+2025-07-08 14:18:43.042 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:18:43.043 +0800 [debug] ([34miframe.js[0m) [31mResponding to product with {"configs":{},"displayName":"ServerlessApp","product":{"freshdesk":{"events":{"onTicketCreate":{"handler":"onTicketCreateHandler"}}}},"modules":{},"features":["db","backend"],"actions":false,"omni":false,"products":["freshdesk"],"platform":"2.3","isInstall":false,"oauth_configs_list":[],"isAuthorized":true,"v2":[]}[0m
+2025-07-08 14:18:45.324 +0800 [debug] ([34mevent.js[0m) [31mFound ["onTicketCreateHandler"] as exported functions.[0m
+2025-07-08 14:18:57.621 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:18:57.621 +0800 [debug] ([34mbeevents.js[0m) [31mUsing {} as iparams for testing.[0m
+2025-07-08 14:18:57.622 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:18:57.622 +0800 [debug] ([34mbeevents.js[0m) [31mUsing {} as app settings for testing.[0m
+2025-07-08 14:18:57.622 +0800 [debug] ([34mbeevents.js[0m) [31mCalling event handler with {"categoryName":"productEvent","categoryArgs":{"methodName":"onTicketCreate","methodParams":{"region":"US","data":{"ticket":{"model_id":28939101,"subject":"Support Needed...","description":"<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\"><div dir=\"ltr\">adsf</div></div>","is_description_truncated":false,"description_text":"Some details on the issue ...","is_description_text_truncated":false,"due_by":"2021-11-10T13:45:13Z","first_response_by_bhrs":null,"fr_due_by":"2021-11-08T13:45:13Z","fr_escalated":false,"is_escalated":false,"fwd_emails":["ram@freshdesk.com","diana@freshdesk.com"],"reply_cc_emails":["ram@freshdesk.com","diana@freshdesk.com"],"email_config_id":null,"id":165,"group_id":null,"product_id":null,"company_id":null,"requester_id":48014615863,"responder_id":48,"status":2,"priority":1,"type":null,"tags":[],"spam":false,"source":3,"tweet_id":null,"cc_emails":[],"to_emails":null,"created_at":"2021-11-05T12:45:13Z","updated_at":"2021-11-05T12:45:13Z","attachments":[],"custom_fields":{"cf_aefds_11010177632":null,"cf_sda_11010177632":null,"cf_check_test_11010177632":null,"cf_pick_list_test_11010177632":null},"account_id":13,"sla_policy_id":1000000403489,"resolution_escalation_level":null,"response_reminded":false,"resolution_reminded":false,"time_to_resolution_in_bhrs":null,"time_to_resolution_in_chrs":null,"inbound_count":1,"archive":false,"internal_agent_id":null,"internal_group_id":null,"outbound_email":false,"watchers":[],"urgent":false,"trained":false,"deleted":false,"group_users":[],"import_id":null,"on_state_time":null,"source_additional_info":null,"status_stop_sla_timer":false,"status_deleted":false,"skill_id":null,"nr_escalated":null,"next_response_reminded":false,"nr_due_by":null,"attachment_ids":[],"first_assign_by_bhrs":0,"first_response_id":null,"first_response_group_id":null,"first_response_agent_id":null,"first_assign_agent_id":48,"first_assign_group_id":null,"agent_reassigned_count":null,"group_reassigned_count":null,"reopened_count":null,"private_note_count":null,"public_note_count":null,"agent_reply_count":null,"customer_reply_count":null,"agent_assigned_flag":true,"agent_reassigned_flag":null,"group_assigned_flag":null,"group_reassigned_flag":null,"internal_agent_assigned_flag":null,"internal_agent_reassigned_flag":null,"internal_group_assigned_flag":null,"internal_group_reassigned_flag":null,"internal_agent_first_assign_in_bhrs":null,"last_resolved_at":null,"closed_at":null,"resolved_at":null,"first_response_time":null,"first_assigned_at":"2021-11-05T12:45:13Z","assigned_at":"2021-11-05T12:45:13Z","bcc_emails":[],"tkt_cc":[],"associates":null,"associates_rdb":null,"parent_id":null,"support_email":null,"internal_agent_uid":null,"responder_uid":"246574923996993384","watchers_uid_list":[],"group_users_uid_list":[],"requester_responded_at":null,"agent_responded_at":null},"actor":{"sanitized_phone":"0987654321","company_id":null,"first_name":"Minerva","org_contact_id":null,"org_agent_id":"246574923996993384","last_seen_at":null,"city":null,"name":"Minerva","failed_login_count":0,"blocked_at":null,"customer_id":null,"email":"minerva@freshdesk.com","state":null,"parent_id":0,"description":null,"job_title":null,"tags":[],"current_login_ip":"100.25.62.61","timezone":"America/New_York","privileges":"193248897710135786048173323961003191631436058972055363553917057189806079","whitelisted":false,"visitor_id":null,"twitter_id":null,"country":null,"user_role":null,"current_login_at":"2021-11-05T12:43:09Z","fb_profile_id":null,"last_login_at":"2021-11-05T12:42:56Z","other_emails":[],"id":48,"account_id":13,"language":"en","last_name":null,"second_email":null,"last_login_ip":"13.222.333.555","other_company_ids":[],"extn":null,"login_count":1371,"preferences":{"agent_preferences":{"field_service":{"dismissed_sample_scheduling_dashboard":false},"shortcuts_mapping":[],"falcon_ui":false,"show_onBoarding":true,"notification_timestamp":null,"undo_send":false,"show_monthly_to_annual_notification":true,"focus_mode":true,"search_settings":{"tickets":{"include_attachment_names":true,"include_description":true,"include_notes":true,"include_other_properties":true,"include_subject":true}},"show_loyalty_upgrade":false,"shortcuts_enabled":true},"user_preferences":{"was_agent":false,"agent_deleted_forever":false,"marked_for_hard_delete":false},"password_expiry_date":"2120-10-17 05:21:53 UTC"},"delta":true,"external_id":null,"address":null,"blocked":false,"created_at":"2020-11-10T05:21:53Z","import_id":null,"posts_count":0,"type":"agent","helpdesk_agent":true,"updated_at":"2020-11-11T10:02:35Z","mobile":null,"deleted_at":null,"time_zone":"Eastern Time (US & Canada)","deleted":false,"phone":"0987654321","unique_external_id":null,"sanitized_mobile":null,"active":true},"requester":{"id":48014615863,"name":"Rachel","email":"rachel@freshdesk.com","mobile":null,"phone":null,"language":"en","created_at":"2021-11-05T12:45:13Z"}},"account_id":"11010177632","domain":"sample.freshdesk.com","event":"onTicketCreate","timestamp":1636116313.9754386,"iparams":{},"app_settings":{}}}}[0m
+2025-07-08 14:18:57.623 +0800 [debug] ([34mcoverage.js[0m) [31mInstrumenting C:\Users\AXND\Documents\GitHub\fw\ServerlessApp\server\server.js[0m
+2025-07-08 14:18:57.701 +0800 [debug] ([34mfiles.js[0m) [31mcreated temp directory : C:\Users\AXND\AppData\Local\Temp\acea1ac9-a813-4531-a4d6-5444a8b2d496[0m
+2025-07-08 14:18:58.207 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:26.946 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:19:26.946 +0800 [debug] ([34mbeevents.js[0m) [31mUsing {} as iparams for testing.[0m
+2025-07-08 14:19:26.946 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:19:26.946 +0800 [debug] ([34mbeevents.js[0m) [31mUsing {} as app settings for testing.[0m
+2025-07-08 14:19:26.947 +0800 [debug] ([34mbeevents.js[0m) [31mCalling event handler with {"categoryName":"productEvent","categoryArgs":{"methodName":"onTicketCreate","methodParams":{"region":"US","data":{"ticket":{"model_id":28939101,"subject":"Support Needed...","description":"<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\"><div dir=\"ltr\">adsf</div></div>","is_description_truncated":false,"description_text":"Some details on the issue ...","is_description_text_truncated":false,"due_by":"2021-11-10T13:45:13Z","first_response_by_bhrs":null,"fr_due_by":"2021-11-08T13:45:13Z","fr_escalated":false,"is_escalated":false,"fwd_emails":["ram@freshdesk.com","diana@freshdesk.com"],"reply_cc_emails":["ram@freshdesk.com","diana@freshdesk.com"],"email_config_id":null,"id":165,"group_id":null,"product_id":null,"company_id":null,"requester_id":48014615863,"responder_id":48,"status":2,"priority":1,"type":null,"tags":[],"spam":false,"source":3,"tweet_id":null,"cc_emails":[],"to_emails":null,"created_at":"2021-11-05T12:45:13Z","updated_at":"2021-11-05T12:45:13Z","attachments":[],"custom_fields":{"cf_aefds_11010177632":null,"cf_sda_11010177632":null,"cf_check_test_11010177632":null,"cf_pick_list_test_11010177632":null},"account_id":13,"sla_policy_id":1000000403489,"resolution_escalation_level":null,"response_reminded":false,"resolution_reminded":false,"time_to_resolution_in_bhrs":null,"time_to_resolution_in_chrs":null,"inbound_count":1,"archive":false,"internal_agent_id":null,"internal_group_id":null,"outbound_email":false,"watchers":[],"urgent":false,"trained":false,"deleted":false,"group_users":[],"import_id":null,"on_state_time":null,"source_additional_info":null,"status_stop_sla_timer":false,"status_deleted":false,"skill_id":null,"nr_escalated":null,"next_response_reminded":false,"nr_due_by":null,"attachment_ids":[],"first_assign_by_bhrs":0,"first_response_id":null,"first_response_group_id":null,"first_response_agent_id":null,"first_assign_agent_id":48,"first_assign_group_id":null,"agent_reassigned_count":null,"group_reassigned_count":null,"reopened_count":null,"private_note_count":null,"public_note_count":null,"agent_reply_count":null,"customer_reply_count":null,"agent_assigned_flag":true,"agent_reassigned_flag":null,"group_assigned_flag":null,"group_reassigned_flag":null,"internal_agent_assigned_flag":null,"internal_agent_reassigned_flag":null,"internal_group_assigned_flag":null,"internal_group_reassigned_flag":null,"internal_agent_first_assign_in_bhrs":null,"last_resolved_at":null,"closed_at":null,"resolved_at":null,"first_response_time":null,"first_assigned_at":"2021-11-05T12:45:13Z","assigned_at":"2021-11-05T12:45:13Z","bcc_emails":[],"tkt_cc":[],"associates":null,"associates_rdb":null,"parent_id":null,"support_email":null,"internal_agent_uid":null,"responder_uid":"246574923996993384","watchers_uid_list":[],"group_users_uid_list":[],"requester_responded_at":null,"agent_responded_at":null},"actor":{"sanitized_phone":"0987654321","company_id":null,"first_name":"Minerva","org_contact_id":null,"org_agent_id":"246574923996993384","last_seen_at":null,"city":null,"name":"Minerva","failed_login_count":0,"blocked_at":null,"customer_id":null,"email":"minerva@freshdesk.com","state":null,"parent_id":0,"description":null,"job_title":null,"tags":[],"current_login_ip":"100.25.62.61","timezone":"America/New_York","privileges":"193248897710135786048173323961003191631436058972055363553917057189806079","whitelisted":false,"visitor_id":null,"twitter_id":null,"country":null,"user_role":null,"current_login_at":"2021-11-05T12:43:09Z","fb_profile_id":null,"last_login_at":"2021-11-05T12:42:56Z","other_emails":[],"id":48,"account_id":13,"language":"en","last_name":null,"second_email":null,"last_login_ip":"13.222.333.555","other_company_ids":[],"extn":null,"login_count":1371,"preferences":{"agent_preferences":{"field_service":{"dismissed_sample_scheduling_dashboard":false},"shortcuts_mapping":[],"falcon_ui":false,"show_onBoarding":true,"notification_timestamp":null,"undo_send":false,"show_monthly_to_annual_notification":true,"focus_mode":true,"search_settings":{"tickets":{"include_attachment_names":true,"include_description":true,"include_notes":true,"include_other_properties":true,"include_subject":true}},"show_loyalty_upgrade":false,"shortcuts_enabled":true},"user_preferences":{"was_agent":false,"agent_deleted_forever":false,"marked_for_hard_delete":false},"password_expiry_date":"2120-10-17 05:21:53 UTC"},"delta":true,"external_id":null,"address":null,"blocked":false,"created_at":"2020-11-10T05:21:53Z","import_id":null,"posts_count":0,"type":"agent","helpdesk_agent":true,"updated_at":"2020-11-11T10:02:35Z","mobile":null,"deleted_at":null,"time_zone":"Eastern Time (US & Canada)","deleted":false,"phone":"0987654321","unique_external_id":null,"sanitized_mobile":null,"active":true},"requester":{"id":48014615863,"name":"Rachel","email":"rachel@freshdesk.com","mobile":null,"phone":null,"language":"en","created_at":"2021-11-05T12:45:13Z"}},"account_id":"11010177632","domain":"sample.freshdesk.com","event":"onTicketCreate","timestamp":1636116313.9754386,"iparams":{},"app_settings":{}}}}[0m
+2025-07-08 14:19:26.947 +0800 [debug] ([34mcoverage.js[0m) [31mInstrumenting C:\Users\AXND\Documents\GitHub\fw\ServerlessApp\server\server.js[0m
+2025-07-08 14:19:26.953 +0800 [debug] ([34mfiles.js[0m) [31mcreated temp directory : C:\Users\AXND\AppData\Local\Temp\c90236d0-97f1-4ab0-9875-0b09ffc9e498[0m
+2025-07-08 14:19:27.461 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:27.651 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:28.158 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:28.667 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:29.170 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:29.683 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:30.188 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:30.691 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:31.196 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:31.706 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:32.208 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:32.712 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:33.218 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:33.722 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:34.227 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:34.731 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:35.234 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:35.742 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:36.246 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:36.748 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:37.248 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:37.755 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:38.256 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:38.771 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:39.274 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:39.777 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:39.967 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:19:39.967 +0800 [debug] ([34mbeevents.js[0m) [31mUsing {} as iparams for testing.[0m
+2025-07-08 14:19:39.967 +0800 [debug] ([34mdata.js[0m) [31mRead {"server_101_101_migrate_oauth_status":true}[0m
+2025-07-08 14:19:39.968 +0800 [debug] ([34mbeevents.js[0m) [31mUsing {} as app settings for testing.[0m
+2025-07-08 14:19:39.968 +0800 [debug] ([34mbeevents.js[0m) [31mCalling event handler with {"categoryName":"productEvent","categoryArgs":{"methodName":"onTicketCreate","methodParams":{"region":"US","data":{"ticket":{"model_id":28939101,"subject":"Support Needed...","description":"<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\"><div dir=\"ltr\">adsf</div></div>","is_description_truncated":false,"description_text":"Some details on the issue ...","is_description_text_truncated":false,"due_by":"2021-11-10T13:45:13Z","first_response_by_bhrs":null,"fr_due_by":"2021-11-08T13:45:13Z","fr_escalated":false,"is_escalated":false,"fwd_emails":["ram@freshdesk.com","diana@freshdesk.com"],"reply_cc_emails":["ram@freshdesk.com","diana@freshdesk.com"],"email_config_id":null,"id":165,"group_id":null,"product_id":null,"company_id":null,"requester_id":48014615863,"responder_id":48,"status":2,"priority":1,"type":null,"tags":[],"spam":false,"source":3,"tweet_id":null,"cc_emails":[],"to_emails":null,"created_at":"2021-11-05T12:45:13Z","updated_at":"2021-11-05T12:45:13Z","attachments":[],"custom_fields":{"cf_aefds_11010177632":null,"cf_sda_11010177632":null,"cf_check_test_11010177632":null,"cf_pick_list_test_11010177632":null},"account_id":13,"sla_policy_id":1000000403489,"resolution_escalation_level":null,"response_reminded":false,"resolution_reminded":false,"time_to_resolution_in_bhrs":null,"time_to_resolution_in_chrs":null,"inbound_count":1,"archive":false,"internal_agent_id":null,"internal_group_id":null,"outbound_email":false,"watchers":[],"urgent":false,"trained":false,"deleted":false,"group_users":[],"import_id":null,"on_state_time":null,"source_additional_info":null,"status_stop_sla_timer":false,"status_deleted":false,"skill_id":null,"nr_escalated":null,"next_response_reminded":false,"nr_due_by":null,"attachment_ids":[],"first_assign_by_bhrs":0,"first_response_id":null,"first_response_group_id":null,"first_response_agent_id":null,"first_assign_agent_id":48,"first_assign_group_id":null,"agent_reassigned_count":null,"group_reassigned_count":null,"reopened_count":null,"private_note_count":null,"public_note_count":null,"agent_reply_count":null,"customer_reply_count":null,"agent_assigned_flag":true,"agent_reassigned_flag":null,"group_assigned_flag":null,"group_reassigned_flag":null,"internal_agent_assigned_flag":null,"internal_agent_reassigned_flag":null,"internal_group_assigned_flag":null,"internal_group_reassigned_flag":null,"internal_agent_first_assign_in_bhrs":null,"last_resolved_at":null,"closed_at":null,"resolved_at":null,"first_response_time":null,"first_assigned_at":"2021-11-05T12:45:13Z","assigned_at":"2021-11-05T12:45:13Z","bcc_emails":[],"tkt_cc":[],"associates":null,"associates_rdb":null,"parent_id":null,"support_email":null,"internal_agent_uid":null,"responder_uid":"246574923996993384","watchers_uid_list":[],"group_users_uid_list":[],"requester_responded_at":null,"agent_responded_at":null},"actor":{"sanitized_phone":"0987654321","company_id":null,"first_name":"Minerva","org_contact_id":null,"org_agent_id":"246574923996993384","last_seen_at":null,"city":null,"name":"Minerva","failed_login_count":0,"blocked_at":null,"customer_id":null,"email":"minerva@freshdesk.com","state":null,"parent_id":0,"description":null,"job_title":null,"tags":[],"current_login_ip":"100.25.62.61","timezone":"America/New_York","privileges":"193248897710135786048173323961003191631436058972055363553917057189806079","whitelisted":false,"visitor_id":null,"twitter_id":null,"country":null,"user_role":null,"current_login_at":"2021-11-05T12:43:09Z","fb_profile_id":null,"last_login_at":"2021-11-05T12:42:56Z","other_emails":[],"id":48,"account_id":13,"language":"en","last_name":null,"second_email":null,"last_login_ip":"13.222.333.555","other_company_ids":[],"extn":null,"login_count":1371,"preferences":{"agent_preferences":{"field_service":{"dismissed_sample_scheduling_dashboard":false},"shortcuts_mapping":[],"falcon_ui":false,"show_onBoarding":true,"notification_timestamp":null,"undo_send":false,"show_monthly_to_annual_notification":true,"focus_mode":true,"search_settings":{"tickets":{"include_attachment_names":true,"include_description":true,"include_notes":true,"include_other_properties":true,"include_subject":true}},"show_loyalty_upgrade":false,"shortcuts_enabled":true},"user_preferences":{"was_agent":false,"agent_deleted_forever":false,"marked_for_hard_delete":false},"password_expiry_date":"2120-10-17 05:21:53 UTC"},"delta":true,"external_id":null,"address":null,"blocked":false,"created_at":"2020-11-10T05:21:53Z","import_id":null,"posts_count":0,"type":"agent","helpdesk_agent":true,"updated_at":"2020-11-11T10:02:35Z","mobile":null,"deleted_at":null,"time_zone":"Eastern Time (US & Canada)","deleted":false,"phone":"0987654321","unique_external_id":null,"sanitized_mobile":null,"active":true},"requester":{"id":48014615863,"name":"Rachel","email":"rachel@freshdesk.com","mobile":null,"phone":null,"language":"en","created_at":"2021-11-05T12:45:13Z"}},"account_id":"11010177632","domain":"sample.freshdesk.com","event":"onTicketCreate","timestamp":1636116313.9754386,"iparams":{},"app_settings":{}}}}[0m
+2025-07-08 14:19:39.968 +0800 [debug] ([34mcoverage.js[0m) [31mInstrumenting C:\Users\AXND\Documents\GitHub\fw\ServerlessApp\server\server.js[0m
+2025-07-08 14:19:39.974 +0800 [debug] ([34mfiles.js[0m) [31mcreated temp directory : C:\Users\AXND\AppData\Local\Temp\1f79aa12-46d1-4613-a61a-50ea3a9c9f9c[0m
+2025-07-08 14:19:40.280 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:40.487 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:40.787 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:41.290 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:41.791 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:42.292 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:42.796 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:43.297 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:43.800 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:44.303 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:44.809 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:45.311 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:45.815 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:46.325 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:46.830 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:47.337 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:47.844 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:48.350 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:48.859 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:49.373 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:49.874 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:50.378 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:50.884 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:51.392 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:51.892 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:52.400 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:52.907 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:53.409 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:53.918 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:54.421 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:54.922 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:55.423 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:55.927 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:56.435 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:56.934 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:57.449 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:57.964 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:58.466 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:58.981 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:59.484 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:19:59.985 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:00.492 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:01.007 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:01.512 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:02.017 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:02.522 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:03.025 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:03.527 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:04.040 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:04.554 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:05.068 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:05.568 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:06.069 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:06.570 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:07.083 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:07.588 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:08.093 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:08.595 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:09.095 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:09.596 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:10.098 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:10.602 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:11.108 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:11.609 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:12.113 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:12.617 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:13.123 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:13.622 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:14.124 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:14.640 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:15.150 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:15.664 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:16.179 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:16.681 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:17.195 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:17.699 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:18.214 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:18.719 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:19.222 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:19.728 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:20.228 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:20.733 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:21.246 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:21.748 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:22.252 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:22.755 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:23.257 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:23.761 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:24.263 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:24.767 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:25.272 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:25.786 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:26.288 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:26.794 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:27.295 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:27.806 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:28.312 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:28.814 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:29.318 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:29.821 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:30.335 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:30.837 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:31.343 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:31.855 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:32.361 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:32.871 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:33.382 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:33.888 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:34.400 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:34.907 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:35.416 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:35.928 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:36.436 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:36.949 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:37.458 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:37.968 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:38.472 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:38.981 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:39.494 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:39.998 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:40.508 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:41.012 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:41.522 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:42.027 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:42.533 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:43.036 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:43.549 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:44.051 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:44.556 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:45.058 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:45.559 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:46.064 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:46.568 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:47.083 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:47.599 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:48.100 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:48.605 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:49.110 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:49.621 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:50.123 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:50.628 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:51.130 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:51.630 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:52.133 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:52.648 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:53.148 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:53.656 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:54.170 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:54.673 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:55.186 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:55.699 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:56.207 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:56.715 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:57.216 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:57.723 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:58.224 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:58.728 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:59.242 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:20:59.746 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:00.260 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:00.774 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:01.286 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:01.801 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:02.304 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:02.818 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:03.333 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:03.835 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:04.349 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:04.854 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:05.368 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:05.870 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:06.371 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:06.878 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:07.392 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:07.894 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:08.405 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:08.917 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:09.430 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:09.931 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:10.431 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:10.946 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:11.446 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:11.947 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:12.467 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:12.973 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:13.476 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:13.989 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:14.503 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:15.006 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:15.519 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:16.022 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:16.536 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:17.037 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:17.551 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:18.066 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:18.568 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:19.081 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:19.594 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:20.109 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:20.610 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:21.125 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:21.633 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:22.145 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:22.656 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:23.157 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:23.669 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:24.178 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:24.683 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:25.183 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:25.692 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:26.196 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:26.711 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:27.225 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:27.728 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:28.243 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:28.746 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:29.250 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:29.773 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:30.276 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:30.783 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:31.289 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:31.796 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:32.307 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:32.809 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:33.312 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:33.813 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:34.327 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:34.831 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:35.333 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:35.847 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:36.347 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:36.851 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:37.351 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:37.866 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:38.370 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:38.871 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:39.379 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:39.886 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:40.396 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:40.903 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:41.415 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:41.927 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:42.440 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:42.949 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:43.461 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:43.969 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:44.480 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:44.984 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:45.493 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:45.998 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:46.504 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:47.013 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:47.523 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:48.032 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:48.541 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:49.041 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:49.550 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:50.064 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:50.569 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:51.074 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:51.581 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:52.094 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:52.600 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:53.104 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:53.615 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:54.127 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:54.633 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:55.143 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:55.651 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:56.165 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:56.674 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:57.185 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:57.696 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:58.208 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:58.717 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:59.228 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:21:59.739 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:00.251 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:00.756 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:01.264 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:01.776 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:02.284 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:02.793 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:03.300 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:03.803 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:04.306 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:04.813 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:05.323 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:05.832 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:06.343 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:06.850 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:07.356 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:07.868 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:08.368 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:08.877 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:09.383 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:09.893 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:10.402 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:10.909 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:11.415 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:11.922 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:12.429 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:12.935 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:13.444 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:13.956 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:14.469 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:14.979 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:15.486 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:15.996 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:16.509 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:17.015 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:17.524 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:18.030 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:18.537 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:19.043 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:19.544 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:20.051 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:20.566 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:21.080 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:21.593 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:22.100 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:22.612 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:23.121 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:23.631 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:24.141 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:24.653 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:25.160 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:25.668 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:26.176 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:26.686 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:27.196 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:27.704 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:28.213 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:28.724 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:29.233 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:29.744 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:30.255 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:30.767 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:31.275 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:31.787 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:32.300 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:32.806 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:33.314 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:33.823 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:34.334 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:34.837 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:35.345 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:35.851 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:36.355 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:36.862 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:37.369 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:37.876 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:38.385 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:38.890 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:39.400 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:39.910 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:40.420 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:40.928 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:41.437 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:41.946 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:42.457 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:42.967 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:43.476 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:43.992 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:44.499 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:45.008 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:45.513 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:46.024 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:46.536 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:47.041 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:47.551 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:48.057 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:48.570 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:49.076 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:49.589 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:50.101 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:50.614 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:51.117 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:51.625 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:52.133 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:52.638 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:53.145 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:53.651 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:54.163 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:54.673 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:55.181 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:55.685 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:56.195 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:56.705 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:57.208 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:57.713 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:58.221 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:58.729 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:59.237 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:22:59.746 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:00.252 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:00.762 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:01.267 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:01.775 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:02.282 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:02.793 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:03.297 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:03.805 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:04.314 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:04.821 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:05.325 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:05.836 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:06.340 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:06.849 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:07.353 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:07.862 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:08.372 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:08.877 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:09.383 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:09.889 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:10.393 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:10.902 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:11.409 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:11.913 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:12.421 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:12.929 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:13.437 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:13.944 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:14.453 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:14.959 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:15.466 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:15.977 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:16.487 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:16.995 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:17.501 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:18.012 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:18.521 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:19.024 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:19.531 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:20.039 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:20.545 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:21.054 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:21.560 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:22.069 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:22.580 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:23.083 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:23.588 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:24.096 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:24.602 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:25.107 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:25.622 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:26.135 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:26.643 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:27.147 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:27.656 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:28.165 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:28.673 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:29.176 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:29.684 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:30.189 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:30.696 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:31.199 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:31.705 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:32.217 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:32.728 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:33.236 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:33.736 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:34.247 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:34.756 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:35.260 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:35.764 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:36.270 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:36.780 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:37.286 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:37.793 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:38.304 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:38.815 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:39.322 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:39.829 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:40.333 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:40.837 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:41.344 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:41.860 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:42.369 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:42.879 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:43.388 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:43.898 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:44.405 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:44.915 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:45.425 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:45.932 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:46.441 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:46.951 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:47.456 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:47.971 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:48.476 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:48.989 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:49.497 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:50.008 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:50.519 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:51.029 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:51.533 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:52.046 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:52.553 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:53.061 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:53.569 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:54.079 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:54.591 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:55.100 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:55.604 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:56.117 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:56.628 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:57.135 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:57.639 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:58.145 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:58.649 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:59.153 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:23:59.657 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:00.168 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:00.676 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:01.182 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:01.688 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:02.198 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:02.706 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:03.215 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:03.725 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:04.237 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:04.749 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:05.258 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:05.768 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:06.282 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:06.792 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:07.301 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:07.813 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:08.321 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:08.827 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:09.335 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:09.844 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:10.357 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:10.865 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:11.374 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:11.882 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:12.392 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:12.905 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:13.412 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:13.915 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:14.425 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:14.937 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:15.445 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:15.949 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:16.457 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:16.960 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:17.465 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:17.976 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:18.485 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:18.996 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:19.505 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:20.014 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:20.525 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:21.035 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:21.539 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:22.052 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:22.557 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:23.066 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:23.571 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:24.080 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:24.589 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:25.094 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:25.599 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:26.110 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:26.618 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:27.129 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:27.631 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:28.144 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:28.655 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:29.165 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:29.667 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:30.173 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:30.680 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:31.192 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:31.696 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:32.200 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:32.709 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:33.217 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:33.721 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:34.231 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:34.734 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:35.239 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:35.744 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:36.254 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:36.764 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:37.272 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:37.781 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:38.293 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:38.805 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:39.313 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:39.821 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:40.330 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:40.839 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:41.347 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:41.857 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:42.369 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:42.881 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:43.387 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:43.897 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:44.410 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:44.922 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:45.428 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:45.932 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:46.438 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:46.948 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:47.456 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:47.961 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:48.469 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:48.982 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:49.489 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:49.998 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:50.505 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:51.016 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:51.520 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:52.022 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:52.533 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:53.045 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:53.553 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:54.059 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:54.567 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:55.078 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:55.581 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:56.093 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:56.607 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:57.113 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:57.619 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:58.130 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:58.636 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:59.149 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:24:59.657 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:00.168 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:00.677 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:01.184 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:01.691 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:02.206 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:02.713 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:03.225 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:03.731 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:04.238 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:04.753 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:05.262 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:05.767 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:06.267 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:06.770 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:07.271 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:07.775 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:08.278 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:08.780 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:09.282 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:09.784 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:10.290 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:10.797 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:11.300 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:11.803 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:12.307 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:12.814 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:13.321 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:13.828 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:14.335 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:14.841 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:15.348 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:15.854 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:16.367 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:16.879 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:17.386 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:17.895 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:18.406 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:18.919 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:19.429 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:19.937 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:20.444 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:20.953 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:21.465 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:21.971 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:22.478 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:22.987 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:23.493 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:23.998 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:24.503 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:25.009 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:25.515 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:26.018 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:26.524 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:27.032 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:27.541 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:28.047 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:28.556 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:29.067 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:29.571 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:30.078 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:30.585 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:31.090 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:31.593 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:32.101 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:32.610 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:33.122 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:33.629 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:34.135 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:34.647 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:35.157 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:35.666 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:36.170 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:36.678 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:37.190 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:37.696 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:38.204 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:38.708 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:39.212 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:39.718 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:40.219 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:40.722 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:41.230 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:41.733 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:42.242 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:42.747 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:43.256 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:43.761 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:44.267 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:44.772 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:45.280 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:45.785 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:46.299 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:46.807 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:47.318 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:47.823 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:48.331 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:48.842 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:49.349 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:49.856 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:50.366 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:50.878 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:51.385 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:51.895 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:52.406 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:52.915 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:53.421 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:53.927 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:54.438 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:54.947 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:55.454 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:55.959 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:56.468 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:56.975 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:57.482 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:57.987 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:58.498 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:59.008 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:25:59.515 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:00.022 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:00.526 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:01.027 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:01.533 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:02.040 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:02.549 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:03.061 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:03.574 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:04.081 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:04.589 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:05.102 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:05.615 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:06.122 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:06.635 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:07.147 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:07.652 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:08.161 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:08.671 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:09.183 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:09.694 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:10.195 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:10.703 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:11.211 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:11.716 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:12.225 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:12.737 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:13.250 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:13.761 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:14.270 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:14.777 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:15.286 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:15.791 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:16.299 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:16.805 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:17.314 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:17.824 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:18.338 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:18.849 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:19.359 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:19.867 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:20.377 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:20.890 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:21.400 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:21.908 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:22.417 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:22.927 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:23.439 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:23.946 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:24.457 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:24.968 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:25.478 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:25.982 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:26.488 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:26.999 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:27.508 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:28.010 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:28.519 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:29.027 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:29.534 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:30.040 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:30.551 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:31.054 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:31.562 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:32.071 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:32.583 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:33.092 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:33.601 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:34.107 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:34.618 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:35.133 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:35.637 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:36.144 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:36.657 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:37.167 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:37.679 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:38.182 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:38.694 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:39.206 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:39.716 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:40.220 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:40.730 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:41.242 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:41.752 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:42.259 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:42.769 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:43.275 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:43.784 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:44.287 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:44.794 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:45.307 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:45.813 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:46.319 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:46.827 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:47.340 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:47.847 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:48.351 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:48.864 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:49.375 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:49.884 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:50.386 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:50.897 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:51.409 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:51.922 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:52.427 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:52.937 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:53.447 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:53.958 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:54.464 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:54.977 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:55.489 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:55.999 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:56.504 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:57.015 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:57.524 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:58.032 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:58.539 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:59.047 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:26:59.556 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:00.060 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:00.568 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:01.076 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:01.584 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:02.090 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:02.598 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:03.108 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:03.618 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:04.123 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:04.631 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:05.140 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:05.651 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:06.158 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:06.660 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:07.171 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:07.684 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:08.188 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:08.700 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:09.208 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:09.716 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:10.224 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:10.735 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:11.242 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:11.748 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:12.252 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:12.762 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:13.267 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:13.774 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:14.282 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:14.794 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:15.303 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:15.811 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:16.318 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:16.830 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:17.343 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:17.850 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:18.355 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:18.867 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:19.378 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:19.884 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:20.393 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:20.897 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:21.411 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:21.917 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:22.422 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:22.923 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:23.436 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:23.952 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:24.466 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:24.979 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:25.495 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:25.995 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:26.499 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:26.999 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:27.511 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:28.012 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:28.521 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:29.034 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:29.546 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:30.062 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:30.575 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:31.088 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:31.603 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:32.119 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:32.630 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:33.135 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:33.636 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:34.136 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:34.650 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:35.154 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:35.654 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:36.154 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:36.656 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:37.156 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:37.660 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:38.162 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:38.678 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:39.187 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:39.694 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:40.200 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:40.705 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:41.215 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:41.724 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:42.226 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:42.731 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:43.237 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:43.746 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:44.248 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:44.755 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:45.261 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:45.770 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:46.279 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:46.779 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:47.286 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:47.791 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:48.298 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:48.806 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:49.312 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:49.823 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:50.326 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:50.839 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:51.350 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:51.859 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:52.361 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:52.875 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:53.376 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:53.878 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:54.392 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:54.902 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:55.402 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:55.907 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:56.409 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:56.913 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:57.420 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:57.928 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:58.431 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:58.940 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:59.446 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:27:59.950 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:00.456 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:00.962 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:01.469 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:01.970 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:02.477 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:02.985 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:03.489 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:03.996 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:04.501 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:05.014 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:05.528 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:06.041 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:06.543 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
+2025-07-08 14:28:07.057 +0800 [debug] ([34mcoverage.js[0m) [31mWriting coverage.[0m
