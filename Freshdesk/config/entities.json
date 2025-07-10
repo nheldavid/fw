@@ -1,0 +1,18 @@
+{
+  "orders": {
+    "fields": [
+      {
+        "name": "order_id",
+        "label": "Order ID",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "customer_name",
+        "label": "Customer Name",
+        "type": "text",
+        "required": true
+      }
+    ]
+  }
+}

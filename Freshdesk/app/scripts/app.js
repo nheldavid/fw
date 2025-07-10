@@ -539,31 +539,31 @@ function logExtractionResults(extractedData) {
         centralOrderAccount: extractedData.centralOrderAccount ? 'Found' : 'Missing',
         Communication: extractedData.Communication ? 'Found' : 'Missing',
         orderNumber: extractedData.orderNumber ? 'Found' : 'Missing',
-        orderNumberFDE: extractedData.orderNumberFDE ? 'Found' : 'Missing',
-        orderDate: extractedData.orderDate ? 'Found' : 'Missing',
-        totalAmount: extractedData.totalAmount ? 'Found' : 'Missing',
-        paymentMethod: extractedData.paymentMethod ? 'Found' : 'Missing',
-        orderComment: extractedData.orderComment ? 'Found' : 'Missing',
-        position: extractedData.position ? 'Found' : 'Missing',
-        productName: extractedData.productName ? 'Found' : 'Missing',   
-        quantity: extractedData.quantity ? 'Found' : 'Missing',
-        unitPrice: extractedData.unitPrice ? 'Found' : 'Missing',
-        totalPrice: extractedData.totalPrice ? 'Found' : 'Missing',
-        optionalExtras: extractedData.optionalExtras ? 'Found' : 'Missing',
-        plannedDeliveryDate: extractedData.plannedDeliveryDate ? 'Found' : 'Missing',
-        actualDeliveryDate: extractedData.actualDeliveryDate ? 'Found' : 'Missing',
-        deliveryStatus: extractedData.deliveryStatus ? 'Found' : 'Missing',
-        shipmentNumber: extractedData.shipmentNumber ? 'Found' : 'Missing',
-        selfDeliveryReceipt: extractedData.selfDeliveryReceipt ? 'Found' : 'Missing',
-        complaintReason1: extractedData.complaintReason1 ? 'Found' : 'Missing',
-        complaintReason2: extractedData.complaintReason2 ? 'Found' : 'Missing',
-        refundAmount: extractedData.refundAmount ? 'Found' : 'Missing',
-        creditNote: extractedData.creditNote ? 'Found' : 'Missing',
-        complaintStatus: extractedData.complaintStatus ? 'Found' : 'Missing',
-        centralNumber: extractedData.centralNumber ? 'Found' : 'Missing',
-        deliveryDate: extractedData.deliveryDate ? 'Found' : 'Missing',
-        orderStatus: extractedData.orderStatus ? 'Found' : 'Missing'
-        //trackingLink: extractedData.trackingLink ? 'Found' : 'Missing',
+        // orderNumberFDE: extractedData.orderNumberFDE ? 'Found' : 'Missing'
+        // orderDate: extractedData.orderDate ? 'Found' : 'Missing',
+        // totalAmount: extractedData.totalAmount ? 'Found' : 'Missing',
+        // paymentMethod: extractedData.paymentMethod ? 'Found' : 'Missing',
+        // orderComment: extractedData.orderComment ? 'Found' : 'Missing',
+        // position: extractedData.position ? 'Found' : 'Missing',
+        // productName: extractedData.productName ? 'Found' : 'Missing',   
+        // quantity: extractedData.quantity ? 'Found' : 'Missing',
+        // unitPrice: extractedData.unitPrice ? 'Found' : 'Missing',
+        // totalPrice: extractedData.totalPrice ? 'Found' : 'Missing',
+        // optionalExtras: extractedData.optionalExtras ? 'Found' : 'Missing',
+        // plannedDeliveryDate: extractedData.plannedDeliveryDate ? 'Found' : 'Missing',
+        // actualDeliveryDate: extractedData.actualDeliveryDate ? 'Found' : 'Missing',
+        // deliveryStatus: extractedData.deliveryStatus ? 'Found' : 'Missing',
+        // shipmentNumber: extractedData.shipmentNumber ? 'Found' : 'Missing',
+        // selfDeliveryReceipt: extractedData.selfDeliveryReceipt ? 'Found' : 'Missing',
+        // complaintReason1: extractedData.complaintReason1 ? 'Found' : 'Missing',
+        // complaintReason2: extractedData.complaintReason2 ? 'Found' : 'Missing',
+        // refundAmount: extractedData.refundAmount ? 'Found' : 'Missing',
+        // creditNote: extractedData.creditNote ? 'Found' : 'Missing',
+        // complaintStatus: extractedData.complaintStatus ? 'Found' : 'Missing',
+        // centralNumber: extractedData.centralNumber ? 'Found' : 'Missing',
+        // deliveryDate: extractedData.deliveryDate ? 'Found' : 'Missing',
+        // orderStatus: extractedData.orderStatus ? 'Found' : 'Missing'
+        // //trackingLink: extractedData.trackingLink ? 'Found' : 'Missing',
     });
 }
 
@@ -578,31 +578,31 @@ function updateOrderDataWithExtractedValues(extractedData) {
     if (extractedData.centralOrderAccount) appState.orderData.centralOrderAccount = extractedData.centralOrderAccount;
     if (extractedData.Communication) appState.orderData.Communication = extractedData.Communication;
     if (extractedData.orderNumber) appState.orderData.orderNumber = extractedData.orderNumber;
-    if (extractedData.orderNumberFDE) appState.orderData.orderNumberFDE = extractedData.orderNumberFDE;
-    if (extractedData.orderDate) appState.orderData.orderDate = extractedData.orderDate;
-    if (extractedData.totalAmount) appState.orderData.totalAmount = extractedData.totalAmount;
-    if (extractedData.paymentMethod) appState.orderData.paymentMethod = extractedData.paymentMethod;
-    if (extractedData.orderComment) appState.orderData.orderComment = extractedData.orderComment;
-    if (extractedData.position) appState.orderData.position = extractedData.position;
-    if (extractedData.productName) appState.orderData.productName = extractedData.productName;
-    if (extractedData.quantity) appState.orderData.quantity = extractedData.quantity;
-    if (extractedData.unitPrice) appState.orderData.unitPrice = extractedData.unitPrice;
-    if (extractedData.totalPrice) appState.orderData.totalPrice = extractedData.totalPrice;
-    if (extractedData.optionalExtras) appState.orderData.optionalExtras = extractedData.optionalExtras;
-    if (extractedData.plannedDeliveryDate) appState.orderData.plannedDeliveryDate = extractedData.plannedDeliveryDate;
-    if (extractedData.actualDeliveryDate) appState.orderData.actualDeliveryDate = extractedData.actualDeliveryDate;
-    if (extractedData.deliveryStatus) appState.orderData.deliveryStatus = extractedData.deliveryStatus;
-    if (extractedData.shipmentNumber) appState.orderData.shipmentNumber = extractedData.shipmentNumber;
-    //if (extractedData.trackingLink) appState.orderData.trackingLink = extractedData.trackingLink;
-    if (extractedData.selfDeliveryReceipt) appState.orderData.selfDeliveryReceipt = extractedData.selfDeliveryReceipt;
-    if (extractedData.complaintReason1) appState.orderData.complaintReason1 = extractedData.complaintReason1;
-    if (extractedData.complaintReason2) appState.orderData.complaintReason2 = extractedData.complaintReason2;
-    if (extractedData.refundAmount) appState.orderData.refundAmount = extractedData.refundAmount;
-    if (extractedData.creditNote) appState.orderData.creditNote = extractedData.creditNote;
-    if (extractedData.complaintStatus) appState.orderData.complaintStatus = extractedData.complaintStatus;
-    if (extractedData.centralNumber) appState.orderData.centralNumber = extractedData.centralNumber;
-    if (extractedData.deliveryDate) appState.orderData.deliveryDate = extractedData.deliveryDate;
-    if (extractedData.orderStatus) appState.orderData.orderStatus = extractedData.orderStatus;
+    // if (extractedData.orderNumberFDE) appState.orderData.orderNumberFDE = extractedData.orderNumberFDE;
+    // if (extractedData.orderDate) appState.orderData.orderDate = extractedData.orderDate;
+    // if (extractedData.totalAmount) appState.orderData.totalAmount = extractedData.totalAmount;
+    // if (extractedData.paymentMethod) appState.orderData.paymentMethod = extractedData.paymentMethod;
+    // if (extractedData.orderComment) appState.orderData.orderComment = extractedData.orderComment;
+    // if (extractedData.position) appState.orderData.position = extractedData.position;
+    // if (extractedData.productName) appState.orderData.productName = extractedData.productName;
+    // if (extractedData.quantity) appState.orderData.quantity = extractedData.quantity;
+    // if (extractedData.unitPrice) appState.orderData.unitPrice = extractedData.unitPrice;
+    // if (extractedData.totalPrice) appState.orderData.totalPrice = extractedData.totalPrice;
+    // if (extractedData.optionalExtras) appState.orderData.optionalExtras = extractedData.optionalExtras;
+    // if (extractedData.plannedDeliveryDate) appState.orderData.plannedDeliveryDate = extractedData.plannedDeliveryDate;
+    // if (extractedData.actualDeliveryDate) appState.orderData.actualDeliveryDate = extractedData.actualDeliveryDate;
+    // if (extractedData.deliveryStatus) appState.orderData.deliveryStatus = extractedData.deliveryStatus;
+    // if (extractedData.shipmentNumber) appState.orderData.shipmentNumber = extractedData.shipmentNumber;
+    // //if (extractedData.trackingLink) appState.orderData.trackingLink = extractedData.trackingLink;
+    // if (extractedData.selfDeliveryReceipt) appState.orderData.selfDeliveryReceipt = extractedData.selfDeliveryReceipt;
+    // if (extractedData.complaintReason1) appState.orderData.complaintReason1 = extractedData.complaintReason1;
+    // if (extractedData.complaintReason2) appState.orderData.complaintReason2 = extractedData.complaintReason2;
+    // if (extractedData.refundAmount) appState.orderData.refundAmount = extractedData.refundAmount;
+    // if (extractedData.creditNote) appState.orderData.creditNote = extractedData.creditNote;
+    // if (extractedData.complaintStatus) appState.orderData.complaintStatus = extractedData.complaintStatus;
+    // if (extractedData.centralNumber) appState.orderData.centralNumber = extractedData.centralNumber;
+    // if (extractedData.deliveryDate) appState.orderData.deliveryDate = extractedData.deliveryDate;
+    // if (extractedData.orderStatus) appState.orderData.orderStatus = extractedData.orderStatus;
 }
 
 /**
@@ -788,119 +788,119 @@ function updateUIElements() {
     if (elements.orderNumber) {
         elements.orderNumber.setAttribute('value', appState.orderData.orderNumber);
     }
-    // Update FDE order number
-    if (elements.orderNumberFDE) {
-        elements.orderNumberFDE.setAttribute('value', appState.orderData.orderNumberFDE);
-    }
-    // Update order date with formatting
-    if (elements.orderDate) {   
-        const formattedDate = formatDate(appState.orderData.orderDate);
-        elements.orderDate.setAttribute('value', formattedDate);
-    }
-    // Update total amount
-    if (elements.totalAmount) {
-        elements.totalAmount.setAttribute('value', appState.orderData.totalAmount);
-    }
-    // Update payment method
-    if (elements.paymentMethod) {
-        elements.paymentMethod.setAttribute('value', appState.orderData.paymentMethod);
-    }
-    // Update order comment
-    if (elements.orderComment) {
-        elements.orderComment.setAttribute('value', appState.orderData.orderComment);
-    }
-    // Update position
-    if (elements.position) {
-        elements.position.setAttribute('value', appState.orderData.position);
-    }
-    // Update product name
-    if (elements.productName) {
-        elements.productName.setAttribute('value', appState.orderData.productName);
-    }
-    // Update quantity
-    if (elements.quantity) {
-        elements.quantity.setAttribute('value', appState.orderData.quantity);    
-    }
-    // Update unit price
-    if (elements.unitPrice) {
-        elements.unitPrice.setAttribute('value', appState.orderData.unitPrice);
-    }
-    // Update total price
-    if (elements.totalPrice) {
-        elements.totalPrice.setAttribute('value', appState.orderData.totalPrice);
-    }
-    // Update optional extras
-    if (elements.optionalExtras) {
-        elements.optionalExtras.setAttribute('value', appState.orderData.optionalExtras);
-    }
-    // Update planned delivery date with formatting
-    if (elements.plannedDeliveryDate) {
-        const formattedDate = formatDate(appState.orderData.plannedDeliveryDate);
-        elements.plannedDeliveryDate.setAttribute('value', formattedDate);
-    }
-    // Update actual delivery date with formatting
-    if (elements.actualDeliveryDate) {
-        const formattedDate = formatDate(appState.orderData.actualDeliveryDate);
-        elements.actualDeliveryDate.setAttribute('value', formattedDate);
-    }
-    // Update delivery status
-    if (elements.deliveryStatus) {
-        elements.deliveryStatus.setAttribute('value', appState.orderData.deliveryStatus);
-        const statusColor = getStatusColor(appState.orderData.deliveryStatus);  
-        elements.deliveryStatus.setAttribute('color', statusColor);
-    }
-    // Update shipment number
-    if (elements.shipmentNumber) {  
-        elements.shipmentNumber.setAttribute('value', appState.orderData.shipmentNumber);
-        // Add click event to open tracking link in new tab
-        elements.shipmentNumber.addEventListener('click', function() {
-            if (appState.orderData.shipmentNumber) {
-                window.open(`https://www.dhl.com/ph-en/home/tracking.html?tracking-id=${appState.orderData.shipmentNumber}&submit=1`, '_blank');
-            }
-        });
-    }
-    // Update self delivery receipt
-    if (elements.selfDeliveryReceipt) {
-        elements.selfDeliveryReceipt.setAttribute('value', appState.orderData.selfDeliveryReceipt);
-    }
-    // Update complaint reason 1
-    if (elements.complaintReason1) {
-        elements.complaintReason1.setAttribute('value', appState.orderData.complaintReason1);
-    }
-    // Update complaint reason 2
-    if (elements.complaintReason2) {
-        elements.complaintReason2.setAttribute('value', appState.orderData.complaintReason2);
-    }   
-    // Update refund amount
-    if (elements.refundAmount) {
-        elements.refundAmount.setAttribute('value', appState.orderData.refundAmount);
-    }
-    // Update credit note
-    if (elements.creditNote) {  
-        elements.creditNote.setAttribute('value', appState.orderData.creditNote);
-    }
-    // Update complaint status with appropriate color   
-    if (elements.complaintStatus) {
-        elements.complaintStatus.setAttribute('value', appState.orderData.complaintStatus);
-        const statusColor = getStatusColor(appState.orderData.complaintStatus); 
-        elements.complaintStatus.setAttribute('color', statusColor);
-    }
-    // Update central number
-    if (elements.centralNumber) {
-        elements.centralNumber.setAttribute('value', appState.orderData.centralNumber);
-    }  
-    // Update delivery date with formatting
-    if (elements.deliveryDate) {
-        const formattedDate = formatDate(appState.orderData.deliveryDate);
-        elements.deliveryDate.setAttribute('value', formattedDate);
-    }
+    // // Update FDE order number
+    // if (elements.orderNumberFDE) {
+    //     elements.orderNumberFDE.setAttribute('value', appState.orderData.orderNumberFDE);
+    // }
+    // // Update order date with formatting
+    // if (elements.orderDate) {   
+    //     const formattedDate = formatDate(appState.orderData.orderDate);
+    //     elements.orderDate.setAttribute('value', formattedDate);
+    // }
+    // // Update total amount
+    // if (elements.totalAmount) {
+    //     elements.totalAmount.setAttribute('value', appState.orderData.totalAmount);
+    // }
+    // // Update payment method
+    // if (elements.paymentMethod) {
+    //     elements.paymentMethod.setAttribute('value', appState.orderData.paymentMethod);
+    // }
+    // // Update order comment
+    // if (elements.orderComment) {
+    //     elements.orderComment.setAttribute('value', appState.orderData.orderComment);
+    // }
+    // // Update position
+    // if (elements.position) {
+    //     elements.position.setAttribute('value', appState.orderData.position);
+    // }
+    // // Update product name
+    // if (elements.productName) {
+    //     elements.productName.setAttribute('value', appState.orderData.productName);
+    // }
+    // // Update quantity
+    // if (elements.quantity) {
+    //     elements.quantity.setAttribute('value', appState.orderData.quantity);    
+    // }
+    // // Update unit price
+    // if (elements.unitPrice) {
+    //     elements.unitPrice.setAttribute('value', appState.orderData.unitPrice);
+    // }
+    // // Update total price
+    // if (elements.totalPrice) {
+    //     elements.totalPrice.setAttribute('value', appState.orderData.totalPrice);
+    // }
+    // // Update optional extras
+    // if (elements.optionalExtras) {
+    //     elements.optionalExtras.setAttribute('value', appState.orderData.optionalExtras);
+    // }
+    // // Update planned delivery date with formatting
+    // if (elements.plannedDeliveryDate) {
+    //     const formattedDate = formatDate(appState.orderData.plannedDeliveryDate);
+    //     elements.plannedDeliveryDate.setAttribute('value', formattedDate);
+    // }
+    // // Update actual delivery date with formatting
+    // if (elements.actualDeliveryDate) {
+    //     const formattedDate = formatDate(appState.orderData.actualDeliveryDate);
+    //     elements.actualDeliveryDate.setAttribute('value', formattedDate);
+    // }
+    // // Update delivery status
+    // if (elements.deliveryStatus) {
+    //     elements.deliveryStatus.setAttribute('value', appState.orderData.deliveryStatus);
+    //     const statusColor = getStatusColor(appState.orderData.deliveryStatus);  
+    //     elements.deliveryStatus.setAttribute('color', statusColor);
+    // }
+    // // Update shipment number
+    // if (elements.shipmentNumber) {  
+    //     elements.shipmentNumber.setAttribute('value', appState.orderData.shipmentNumber);
+    //     // Add click event to open tracking link in new tab
+    //     elements.shipmentNumber.addEventListener('click', function() {
+    //         if (appState.orderData.shipmentNumber) {
+    //             window.open(`https://www.dhl.com/ph-en/home/tracking.html?tracking-id=${appState.orderData.shipmentNumber}&submit=1`, '_blank');
+    //         }
+    //     });
+    // }
+    // // Update self delivery receipt
+    // if (elements.selfDeliveryReceipt) {
+    //     elements.selfDeliveryReceipt.setAttribute('value', appState.orderData.selfDeliveryReceipt);
+    // }
+    // // Update complaint reason 1
+    // if (elements.complaintReason1) {
+    //     elements.complaintReason1.setAttribute('value', appState.orderData.complaintReason1);
+    // }
+    // // Update complaint reason 2
+    // if (elements.complaintReason2) {
+    //     elements.complaintReason2.setAttribute('value', appState.orderData.complaintReason2);
+    // }   
+    // // Update refund amount
+    // if (elements.refundAmount) {
+    //     elements.refundAmount.setAttribute('value', appState.orderData.refundAmount);
+    // }
+    // // Update credit note
+    // if (elements.creditNote) {  
+    //     elements.creditNote.setAttribute('value', appState.orderData.creditNote);
+    // }
+    // // Update complaint status with appropriate color   
+    // if (elements.complaintStatus) {
+    //     elements.complaintStatus.setAttribute('value', appState.orderData.complaintStatus);
+    //     const statusColor = getStatusColor(appState.orderData.complaintStatus); 
+    //     elements.complaintStatus.setAttribute('color', statusColor);
+    // }
+    // // Update central number
+    // if (elements.centralNumber) {
+    //     elements.centralNumber.setAttribute('value', appState.orderData.centralNumber);
+    // }  
+    // // Update delivery date with formatting
+    // if (elements.deliveryDate) {
+    //     const formattedDate = formatDate(appState.orderData.deliveryDate);
+    //     elements.deliveryDate.setAttribute('value', formattedDate);
+    // }
     
-    // Update order status with appropriate color
-    if (elements.orderStatus) {
-        elements.orderStatus.setAttribute('value', appState.orderData.orderStatus);
-        const statusColor = getStatusColor(appState.orderData.orderStatus);
-        elements.orderStatus.setAttribute('color', statusColor);
-    }
+    // // Update order status with appropriate color
+    // if (elements.orderStatus) {
+    //     elements.orderStatus.setAttribute('value', appState.orderData.orderStatus);
+    //     const statusColor = getStatusColor(appState.orderData.orderStatus);
+    //     elements.orderStatus.setAttribute('color', statusColor);
+    // }
 }
 
 /**
@@ -1079,4 +1079,32 @@ async function showModal() {
   } catch (error) {
     console.log('Parent:InterfaceAPI:showModal', error);
   }
+  
+}
+
+async function getCustomObjectData() {
+// This function is called to retrieve custom object data.
+// You can implement your logic here to fetch and return the data.
+//console.log('Fetching custom object data for ticket ID: ' + args['data']['id']);
+
+const entity = await appState.client.db.entity({ version: "v1" });
+// Example: Fetching custom object data from the database
+// Replace this with your actual logic to retrieve data.
+const customObjectData = await entity.get("test");
+// Check if customObjectData is null or undefined
+
+if (!customObjectData) {
+    //console.log(`No custom object data found for ticket ID: ${args['data']['id']}`);
+    //return { message: 'No data found' };
+    console.log('No custom object data found');
+}
+console.log('Custom Object Data:', customObjectData);
+// Assuming customObjectData is an object with a schema method
+if (customObjectData ) {
+    await customObjectData.getAll()
+        .then(function (data) {
+            console.log('Custom Object Records:', data);
+    })
+    //console.log('Custom Object Records:', records);
+    }
 }
