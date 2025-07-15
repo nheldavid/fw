@@ -86,6 +86,7 @@ const FIELD_DISPLAY_NAMES = {
     [CUSTOM_FIELD_CONFIG.orderStatus]: 'Order Status'
 };
 
+
 // Global app state
 const appState = {
     client: null,
@@ -1087,10 +1088,10 @@ async function getCustomObjectData() {
 // You can implement your logic here to fetch and return the data.
 //console.log('Fetching custom object data for ticket ID: ' + args['data']['id']);
 
-const entity = await appState.client.db.entity({ version: "v1" });
+const entity = await appState.client.db.entity({ version: 'v1' });
 // Example: Fetching custom object data from the database
 // Replace this with your actual logic to retrieve data.
-const customObjectData = await entity.get("test");
+const customObjectData = await entity.get('orders');
 // Check if customObjectData is null or undefined
 
 if (!customObjectData) {
@@ -1107,4 +1108,96 @@ if (customObjectData ) {
     })
     //console.log('Custom Object Records:', records);
     }
+}
+
+// async function getfdOrders() {
+//     //let orders = [];
+//     try {
+//         await appState.client.request.invokeTemplate("getfdOrders")
+//         .then(function (orders) {
+//             if (orders) {
+//                 const obj = JSON.parse(orders.response);
+                
+//                 //console.log ('Parsed orders:',  obj['records']['0']['data']);
+//                 updateCustomerElements(obj['records']['0']['data'])
+//             } else {
+//                 console.warn('No records found in orders');
+//             }
+//         })
+//         .catch(function (error) {
+//             console.error('Error fetching orders:', error);
+//         });
+//     } catch (error) {
+//         console.error('Error in getfdOrders:', error);
+//     }
+// }
+
+function getfdOrders() {
+    app.initialized().then(function(client) {
+        console.log('Freshworks client initialized');
+        appState.client = client;
+        appState.isInitialized = true;
+
+        appState.client.data.get('ticket').then((ticketdetail) => {
+          appState.client.data.get("domainName").then((domainDetail) => {
+
+            console.log('Domain detail:', domainDetail.domainName);
+            console.log('Ticket detail:', ticketdetail);
+            //console.log('api key:', utils.get("api_Key"));
+            
+            const api_Key  = 'r4zx0ceHEQUPjQgkXrBZ'; // Replace with your actual API key
+            const dataUrl = `https://${domainDetail.domainName}/api/v2/custom_objects/schemas/23883143/records?ticket_id=${ticketdetail.ticket?.id}`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    //"Authorization": "Basic <%= encode(iparam.apiKey) %>"
+                    "Authorization": `Basic ${btoa(api_Key)}`
+                }
+            };
+            console.log('Data URL:', dataUrl);
+            console.log('Request options:', options);
+            appState.client.request.get(dataUrl, options)
+                .then(data => {
+                    const obj = JSON.parse(data.response);
+                    console.log('Parsed orders:', obj['records'][0]['data']);
+                    updateCustomerElements(obj['records'][0]['data']);
+
+            }, error => {
+          console.error('Error fetching the ticket details');
+          console.error(error);
+          notifyError('Failed to get ticket details.');
+        });
+    }, error => {
+      console.error('Error: Failed to get the domain.');
+      console.error(error)
+    });
+  }, error => {
+    console.error('Error: Failed to get ticket details with Data method.');
+    console.error(error)
+  });
+}).catch(function(error) {
+        console.error('Failed to initialize Freshworks client:', error);
+        showErrorState('Failed to initialize app');
+    });
+}
+    
+
+
+function updateCustomerElements(data) {
+    if (elements.customerName) {
+        elements.customerName.setAttribute('value', data['customer_name'] || 'Not available');
+    }
+    // if (elements.customerEmail) {
+    //     elements.customerEmail.setAttribute('value', data.customerEmail || 'Not available');
+    // }
+    // if (elements.billingAdddress) {
+    //     elements.billingAdddress.setAttribute('value', data.billingAdddress || 'Not available');
+    // }
+    // if (elements.centralOrderAccount) {
+    //     elements.centralOrderAccount.setAttribute('value', data.centralOrderAccount || 'Not available');
+    // }
+    // if (elements.Communication) {
+    //     elements.Communication.setAttribute('value', data.Communication || 'Not available');
+    // }
+
 }

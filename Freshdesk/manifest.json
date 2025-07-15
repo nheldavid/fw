@@ -1,6 +1,12 @@
 {
   "platform-version": "3.0",
   "modules": {
+    "common": {
+      "requests": {
+        "getfdOrders": {},
+        "getfdCustomers": {}
+      }
+    },
     "support_ticket": {
       "location": {
         "ticket_sidebar": {
