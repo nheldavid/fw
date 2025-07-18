@@ -53,7 +53,9 @@
           <div>
             <fw-button id="update-btn" color="secondary" size="small" onclick="getfdOrders()">
               <fw-icon name="refresh" slot="before-label"></fw-icon>
-              Update
+            </fw-button>
+            <fw-button id="expand-btn" color="secondary" size="small" onclick="showModal()">
+              <fw-icon name="open-new-tab" slot="before-label"></fw-icon>
             </fw-button>
           </div>
           
@@ -247,9 +249,7 @@
                   </div>
                 </fw-accordion-body>
               </fw-accordion>
-            </fw-card>
-            <div>
-              <fw-button size="small" onclick="showModal()">Expand</fw-button>
+            </fw-card>              
           </div>
         </main>
       </div>

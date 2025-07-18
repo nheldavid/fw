@@ -174,3 +174,18 @@ fw-card:focus {
 .mt-4 {
   margin-top: var(--fw-spacing-4, 16px);
 }
+table {
+  width: 100%;
+}
+
+/* // Fixing width of first 
+// column of each row  */
+td:nth-child(1) {
+    width: 40%;
+}
+
+/* // Fixing width of second 
+// column of each row  */
+td:nth-child(2) {
+    width: 60%;
+}

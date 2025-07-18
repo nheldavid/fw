@@ -1110,94 +1110,103 @@ if (customObjectData ) {
     }
 }
 
-// async function getfdOrders() {
-//     //let orders = [];
-//     try {
-//         await appState.client.request.invokeTemplate("getfdOrders")
-//         .then(function (orders) {
-//             if (orders) {
-//                 const obj = JSON.parse(orders.response);
-                
-//                 //console.log ('Parsed orders:',  obj['records']['0']['data']);
-//                 updateCustomerElements(obj['records']['0']['data'])
-//             } else {
-//                 console.warn('No records found in orders');
-//             }
-//         })
-//         .catch(function (error) {
-//             console.error('Error fetching orders:', error);
-//         });
-//     } catch (error) {
-//         console.error('Error in getfdOrders:', error);
-//     }
-// }
+async function getSchemaID(name) {
+    const schema = await appState.client.request.invokeTemplate("getSchema");
 
-function getfdOrders() {
-    app.initialized().then(function(client) {
-        console.log('Freshworks client initialized');
-        appState.client = client;
-        appState.isInitialized = true;
-
-        appState.client.data.get('ticket').then((ticketdetail) => {
-          appState.client.data.get("domainName").then((domainDetail) => {
-
-            console.log('Domain detail:', domainDetail.domainName);
-            console.log('Ticket detail:', ticketdetail);
-            //console.log('api key:', utils.get("api_Key"));
-            
-            const api_Key  = 'r4zx0ceHEQUPjQgkXrBZ'; // Replace with your actual API key
-            const dataUrl = `https://${domainDetail.domainName}/api/v2/custom_objects/schemas/23883143/records?ticket_id=${ticketdetail.ticket?.id}`;
-            const options = {
-                method: 'GET',
-                headers: {
-                    //"Authorization": "Basic <%= encode(iparam.apiKey) %>"
-                    "Authorization": `Basic ${btoa(api_Key)}`
-                }
-            };
-            console.log('Data URL:', dataUrl);
-            console.log('Request options:', options);
-            appState.client.request.get(dataUrl, options)
-                .then(data => {
-                    const obj = JSON.parse(data.response);
-                    console.log('Parsed orders:', obj['records'][0]['data']);
-                    updateCustomerElements(obj['records'][0]['data']);
-
-            }, error => {
-          console.error('Error fetching the ticket details');
-          console.error(error);
-          notifyError('Failed to get ticket details.');
-        });
-    }, error => {
-      console.error('Error: Failed to get the domain.');
-      console.error(error)
-    });
-  }, error => {
-    console.error('Error: Failed to get ticket details with Data method.');
-    console.error(error)
-  });
-}).catch(function(error) {
-        console.error('Failed to initialize Freshworks client:', error);
-        showErrorState('Failed to initialize app');
-    });
-}
+    const obj = JSON.parse(schema.response);
+    console.log('Schema response:', obj);
     
+    const schemaid = obj.schemas.find(schema => schema.name === name)?.id;
+    if (!schemaid) {
+        console.warn(`Schema ID for "${name}" not found`);
+        return null;
+    }
+    console.log(`Schema ID for "${name}":`, schemaid);
+    return schemaid;    
+}
 
+function getfdOrders(){
+    let obj
+    obj = getData('Customers');
+    // Safely access the nested data with proper validation
+    if (obj?.records && Array.isArray(obj.records) && obj.records.length > 0) {
+        const firstRecord = obj.records[0];
+        if (firstRecord?.data) {
+            console.log('Parsed orders:', firstRecord.data);
+            updateCustomerElements(firstRecord.data);
+        } else {
+            console.warn('No data found in first record');
+        }
+    } else {
+        console.warn('No records found in orders response');
+    }
+
+    obj = getData('Orders');
+
+    obj = getData('Item Positions');
+
+    obj = getData('Delivery and Status Info');
+
+    obj = getData('Complaint Status');
+
+}
+
+async function getData(name) {
+    try {
+        const schemaID = await getSchemaID(name);
+        if (!schemaID) {
+            console.warn('No schema ID found for Fleurop orders');
+            return;
+        }
+        else {
+            console.log('Schema ID for Fleurop orders:', schemaID);
+        }
+        const ticketID = appState.currentTicket.id;
+        console.log('Fetching Fleurop orders for ticket ID:', ticketID);
+
+        const orders = await appState.client.request.invokeTemplate("getData", {
+            context: { 
+                "schema_id": schemaID,
+                "ticket_id" : ticketID
+            } 
+        });
+        
+        if (!orders || !orders.response) {
+            console.warn('No response received from getfdOrders');
+            return;
+        }
+        
+        const obj = JSON.parse(orders.response);
+
+        console.log('Orders response:', obj);
+
+        return obj
+        
+    } catch (error) {
+        console.error('Error in getfdOrders:', error);
+        
+        // Optionally handle different error types
+        if (error instanceof SyntaxError) {
+            console.error('JSON parsing error - invalid response format');
+        }
+    }
+}
 
 function updateCustomerElements(data) {
     if (elements.customerName) {
         elements.customerName.setAttribute('value', data['customer_name'] || 'Not available');
     }
-    // if (elements.customerEmail) {
-    //     elements.customerEmail.setAttribute('value', data.customerEmail || 'Not available');
-    // }
-    // if (elements.billingAdddress) {
-    //     elements.billingAdddress.setAttribute('value', data.billingAdddress || 'Not available');
-    // }
-    // if (elements.centralOrderAccount) {
-    //     elements.centralOrderAccount.setAttribute('value', data.centralOrderAccount || 'Not available');
-    // }
-    // if (elements.Communication) {
-    //     elements.Communication.setAttribute('value', data.Communication || 'Not available');
-    // }
+    if (elements.customerEmail) {
+        elements.customerEmail.setAttribute('value', data['customer_email'] || 'Not available');
+    }
+    if (elements.billingAdddress) {
+        elements.billingAdddress.setAttribute('value', data['billing_address'] || 'Not available');
+    }
+    if (elements.centralOrderAccount) {
+        elements.centralOrderAccount.setAttribute('value', data['central_order_account'] || 'Not available');
+    }
+    if (elements.Communication) {
+        elements.Communication.setAttribute('value', data['communication'] || 'Not available');
+    }
 
 }
