@@ -1036,13 +1036,147 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
+async function showRecipient() {
+    
+    const obj = await getData('Empfänger');
+    // Safely access the nested data with proper validation
+    console.log(obj);
+    if (obj?.records && Array.isArray(obj.records) && obj.records.length > 0) {
+        const firstRecord = obj.records[0];
+        if (firstRecord?.data) {
+            console.log('Parsed data:', firstRecord.data);
+            //updateCustomerElements(firstRecord.data);
+
+            let data = firstRecord.data
+
+            // Helper function to safely concatenate strings, filtering out undefined/null values
+                const safeConcat = (...values) => {
+                    return values
+                        .filter(val => val !== undefined && val !== null && val !== '')
+                        .join(' ')
+                        .trim();
+                };
+
+            const payload = {
+                name: safeConcat(data['anrede'], data['name1'], data['name2'], data['name3']),
+                address1: safeConcat(data['land'], data['plz'], data['region'], data['ort']),
+                phone1: data['telefon'] || '',
+                address2: safeConcat(data['ortsteil'], data['strasse'], data['hausnummer'], data['zusatz']), // Fixed typo
+                phone2: data['telefon2'] || ''
+            }
+            
+            displayRecipient(payload);
+                
+        } else {
+            console.warn('No data found in first record');
+        }
+    } else {
+        console.warn('No records found in table response');
+    }
+}
+
+
+/* Show modal to display contact's information */
+function displayRecipient(payload) {
+  appState.client.interface.trigger("showModal", {
+    title: "Empfänger",
+    template: "views/recipient.html",
+    data: payload
+  }).then(function (data) {
+    console.error(data)
+    // appState.client.interface.trigger("showAlert", {
+    //   message: "Empfänger erfolgreich angezeigt",
+    //   type: "success"
+    // });
+  }).catch(function (error) {
+    console.error(error)
+    // appState.client.interface.trigger("showAlert", {
+    //   message: "Fehler beim Anzeigen des Empfängers",
+    //   type: "error"
+    // });
+  });
+}
+
+async function showExecution() {
+    try {
+        // Fetch data from the "Ausführung" schema
+        const obj = await getData('Ausführung');
+        // Safely access the nested data with proper validation
+        console.log(obj);
+        if (obj?.records && Array.isArray(obj.records) && obj.records.length > 0) {
+            const firstRecord = obj.records[0];
+            if (firstRecord?.data) {
+                console.log('Parsed data:', firstRecord.data);
+                //updateCustomerElements(firstRecord.data);
+
+                let data = firstRecord.data;
+
+                // Helper function to safely concatenate strings, filtering out undefined/null values
+                const safeConcat = (...values) => {
+                    return values
+                        .filter(val => val !== undefined && val !== null && val !== '')
+                        .join(' ')
+                        .trim();
+                };
+
+                const payload = {
+                    nummer: data['ausfuehrender'] || '',
+                    name: safeConcat(data['anrede'], data['name1'], data['name2'], data['name3']),
+                    addresse: safeConcat(data['plz'], data['ort'], data['strasse'], data['land']),
+                    rang: data['rang'] || '',
+                    fax: data['fax'] || '',
+                    telefon: data['telefon'] || '',
+                    email: data['email'] || '',
+                    auftragshinweis: data['auftragshinweis'] || '',
+                    hinweis: data['hinweis'] || ''
+                };
+                
+                displayExecution(payload);
+                    
+            } else {
+                console.warn('No data found in first record');
+            }
+        } else {
+            console.warn('No records found in table response');
+        }
+    } catch (error) {
+        console.error('Error fetching Ausführung data:', error);
+        // appState.client.interface.trigger("showAlert", {
+        //     message: "Fehler beim Abrufen der Ausführung",
+        //     type: "error"
+        // });
+    }
+}
+
+async function displayExecution(payload) {
+  try { 
+    const data = await appState.client.interface.trigger("showModal", {
+      title: "Ausführung",
+      template: "views/execution.html",
+      data: payload
+    });
+    console.log('Execution modal data:', data);
+  } catch (error) {
+    console.error('Error displaying execution modal:', error);  
+    // appState.client.interface.trigger("showAlert", {
+    //   message: "Fehler beim Anzeigen der Ausführung",   
+    //     type: "error"
+    // });
+    }
+}
+    // Optionally handle the response data if needed
+    // console.log('Execution modal response:', data);
+    // appState.client.interface.trigger("showAlert", {
+    //   message: "Ausführung erfolgreich angezeigt",
+
+
 async function showModal() {
   try {
 
     // store info to variable for later use in modal
     const data = await appState.client.interface.trigger('showModal', {
-        title: 'Fleurop Order Information',
-        template: './views/modal.html',
+        title: 'Auftraggeber Details',
+        template: './views/client_details.html',
         data: {
             customerName: document.getElementById('customer-name').value,
             customerEmail: document.getElementById('customer-email').value,
@@ -1080,34 +1214,7 @@ async function showModal() {
   } catch (error) {
     console.log('Parent:InterfaceAPI:showModal', error);
   }
-  
-}
 
-async function getCustomObjectData() {
-// This function is called to retrieve custom object data.
-// You can implement your logic here to fetch and return the data.
-//console.log('Fetching custom object data for ticket ID: ' + args['data']['id']);
-
-const entity = await appState.client.db.entity({ version: 'v1' });
-// Example: Fetching custom object data from the database
-// Replace this with your actual logic to retrieve data.
-const customObjectData = await entity.get('orders');
-// Check if customObjectData is null or undefined
-
-if (!customObjectData) {
-    //console.log(`No custom object data found for ticket ID: ${args['data']['id']}`);
-    //return { message: 'No data found' };
-    console.log('No custom object data found');
-}
-console.log('Custom Object Data:', customObjectData);
-// Assuming customObjectData is an object with a schema method
-if (customObjectData ) {
-    await customObjectData.getAll()
-        .then(function (data) {
-            console.log('Custom Object Records:', data);
-    })
-    //console.log('Custom Object Records:', records);
-    }
 }
 
 async function getSchemaID(name) {
@@ -1167,7 +1274,7 @@ async function getData(name) {
         const orders = await appState.client.request.invokeTemplate("getData", {
             context: { 
                 "schema_id": schemaID,
-                "ticket_id" : ticketID
+                "ticketnummer" : ticketID
             } 
         });
         
@@ -1192,21 +1299,3 @@ async function getData(name) {
     }
 }
 
-function updateCustomerElements(data) {
-    if (elements.customerName) {
-        elements.customerName.setAttribute('value', data['customer_name'] || 'Not available');
-    }
-    if (elements.customerEmail) {
-        elements.customerEmail.setAttribute('value', data['customer_email'] || 'Not available');
-    }
-    if (elements.billingAdddress) {
-        elements.billingAdddress.setAttribute('value', data['billing_address'] || 'Not available');
-    }
-    if (elements.centralOrderAccount) {
-        elements.centralOrderAccount.setAttribute('value', data['central_order_account'] || 'Not available');
-    }
-    if (elements.Communication) {
-        elements.Communication.setAttribute('value', data['communication'] || 'Not available');
-    }
-
-}

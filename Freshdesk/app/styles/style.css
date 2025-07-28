@@ -189,3 +189,19 @@ td:nth-child(1) {
 td:nth-child(2) {
     width: 60%;
 }
+
+fw-accordion {
+  --fw-accordion-border: 1px solid #ccc;
+}
+fw-accordion-title {
+  --fw-accordion-title-background-color: #F5F7F9; 
+  --fw-accordion-title-expanded-icon-color: #2C5CC5; 
+  --fw-accordion-title-collapsed-icon-color: #264966; 
+  --fw-accordion-title-font-size: 12px; 
+  --fw-accordion-title-font-weight: 600; 
+  --fw-accordion-title-line-height: 20px;
+}
+
+fw-accordion-body {
+  --fw-accordion-body-background-color: #FFFFFF;
+}

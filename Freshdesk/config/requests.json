@@ -3,7 +3,7 @@
     "schema": {
       "method": "GET",
       "host": "<%= iparam.subdomain %>.freshdesk.com",
-      "path": "/api/v2/custom_objects/schemas/<%= context.schema_id %>/records?ticket_id=<%= context.ticket_id %>",
+      "path": "/api/v2/custom_objects/schemas/<%= context.schema_id %>/records?ticketnummer=<%= context.ticketnummer %>",
       "headers": {
         "Authorization": "Basic <%= encode(iparam.api_key) %>",
         "Content-Type": "application/json"
