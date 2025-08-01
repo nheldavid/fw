@@ -74,6 +74,7 @@ html {
 
 /* Information sections using fw-card */
 .info-section {
+  display: none;
   margin-bottom: var(--fw-spacing-4, 16px);
 }
 
@@ -190,9 +191,7 @@ td:nth-child(2) {
     width: 60%;
 }
 
-fw-accordion {
-  --fw-accordion-border: 1px solid #ccc;
-}
+
 fw-accordion-title {
   --fw-accordion-title-background-color: #F5F7F9; 
   --fw-accordion-title-expanded-icon-color: #2C5CC5; 
@@ -204,4 +203,11 @@ fw-accordion-title {
 
 fw-accordion-body {
   --fw-accordion-body-background-color: #FFFFFF;
+}
+
+.title-button {
+  position: absolute;
+  right: 50px;
+  padding-top: 8px; 
+  z-index: 0;
 }

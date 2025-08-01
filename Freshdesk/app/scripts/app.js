@@ -22,70 +22,26 @@ const CUSTOM_FIELD_CONFIG = {
     orderNumber: 'cf_order_number',      // Single line text field
     deliveryDate: 'cf_delivery_date',    // Date field
     orderStatus: 'cf_order_status',       // Dropdown field
-    billingAdddress: 'cf_billing_address', // Single line text field    
-    centralOrderAccount: 'cf_central_order_account', // Single line text field
-    Communication: 'cf_communication', // Single line text field
-    orderNumberFDE: 'cf_order_number_fde', // Single line text field
-    orderDate: 'cf_order_date', // Date field   
-    totalAmount: 'cf_total_amount', // Number field
-    paymentMethod: 'cf_payment_method', // Single line text field
-    orderComment: 'cf_order_comment', // Multi-line text field
-    position: 'cf_position', // Single line text field
-    productName: 'cf_product_name', // Single line text field
-    quantity: 'cf_quantity', // Number field
-    unitPrice: 'cf_unit_price', // Number field
-    totalPrice: 'cf_total_price', // Number field
-    optionalExtras: 'cf_optional_extras', // Multi-line text field
-    plannedDeliveryDate: 'cf_planned_delivery_date', // Date field
-    actualDeliveryDate: 'cf_actual_delivery_date', // Date field
-    deliveryStatus: 'cf_delivery_status', // Dropdown field
-    shipmentNumber: 'cf_shipment_number', // Single line text field
-    //trackingLink: 'cf_tracking_link', // Single line text field
-    selfDeliveryReceipt: 'cf_self_delivery_receipt', // Single line text field
-    complaintReason1: 'cf_complaint_reason_1', // Single line text field
-    complaintReason2: 'cf_complaint_reason_2', // Single line text field
-    refundAmount: 'cf_refund_amount', // Number field
-    creditNote: 'cf_credit_note', // Single line text field
-    complaintStatus: 'cf_complaint_status', // Dropdown field
-    centralNumber: 'cf_central_number' // Single line text field
 };
 
 // Field display names for logging and debugging
 const FIELD_DISPLAY_NAMES = {
     [CUSTOM_FIELD_CONFIG.customerName]: 'Customer Name',
     [CUSTOM_FIELD_CONFIG.customerEmail]: 'Customer Email',
-    [CUSTOM_FIELD_CONFIG.billingAdddress]: 'Billing Address',
-    [CUSTOM_FIELD_CONFIG.centralOrderAccount]: 'Central Order Account',
-    [CUSTOM_FIELD_CONFIG.Communication]: 'Communication',
     [CUSTOM_FIELD_CONFIG.orderNumber]: 'Order Number',
-    [CUSTOM_FIELD_CONFIG.orderNumberFDE]: 'FDE Order Number',
-    [CUSTOM_FIELD_CONFIG.orderDate]: 'Order Date',
-    [CUSTOM_FIELD_CONFIG.totalAmount]: 'Total Amount',
-    [CUSTOM_FIELD_CONFIG.paymentMethod]: 'Payment Method',
-    [CUSTOM_FIELD_CONFIG.orderComment]: 'Order Comment',
-    [CUSTOM_FIELD_CONFIG.position]: 'Position',
-    [CUSTOM_FIELD_CONFIG.productName]: 'Product Name',
-    [CUSTOM_FIELD_CONFIG.quantity]: 'Quantity',
-    [CUSTOM_FIELD_CONFIG.unitPrice]: 'Unit Price',
-    [CUSTOM_FIELD_CONFIG.totalPrice]: 'Total Price',
-    [CUSTOM_FIELD_CONFIG.optionalExtras]: 'Optional Extras',
-    [CUSTOM_FIELD_CONFIG.plannedDeliveryDate]: 'Planned Delivery Date',
-    [CUSTOM_FIELD_CONFIG.actualDeliveryDate]: 'Actual Delivery Date',
-    [CUSTOM_FIELD_CONFIG.deliveryStatus]: 'Delivery Status',
-    [CUSTOM_FIELD_CONFIG.shipmentNumber]: 'Shipment Number',
-    //[CUSTOM_FIELD_CONFIG.trackingLink]: 'Tracking Link',
-    [CUSTOM_FIELD_CONFIG.selfDeliveryReceipt]: 'Self Delivery Receipt',
-    [CUSTOM_FIELD_CONFIG.complaintReason1]: 'Complaint Reason 1',
-    [CUSTOM_FIELD_CONFIG.complaintReason2]: 'Complaint Reason 2',
-    [CUSTOM_FIELD_CONFIG.refundAmount]: 'Refund Amount',
-    [CUSTOM_FIELD_CONFIG.creditNote]: 'Credit Note',
-    [CUSTOM_FIELD_CONFIG.complaintStatus]: 'Complaint Status',
-    [CUSTOM_FIELD_CONFIG.centralNumber]: 'Central Number',
-
     [CUSTOM_FIELD_CONFIG.deliveryDate]: 'Delivery Date',
     [CUSTOM_FIELD_CONFIG.orderStatus]: 'Order Status'
+
 };
 
+const CUSTOM_OBJECTS = {
+    execution: 'Ausführung',
+    recipient: 'Empfänger',
+    client: 'Auftraggeber',
+    orderStatus: 'Auftragsstatus',
+    mediator: 'Vermittler',
+    cart: 'Warenkorb'
+};
 
 // Global app state
 const appState = {
@@ -103,33 +59,7 @@ const elements = {
     retryBtn: null,
     customerName: null,
     customerEmail: null,
-    billingAdddress: null,
-    centralOrderAccount: null,
-    Communication: null,    
     orderNumber: null,
-    orderNumberFDE: null,
-    orderDate: null,
-    totalAmount: null,
-    paymentMethod: null,
-    orderComment: null,
-    position: null,
-    productName: null,
-    quantity: null,
-    unitPrice: null,
-    totalPrice: null,
-    optionalExtras: null,
-    plannedDeliveryDate: null,
-    actualDeliveryDate: null,
-    deliveryStatus: null,
-    shipmentNumber: null,
-    //trackingLink: null,
-    selfDeliveryReceipt: null,
-    complaintReason1: null,
-    complaintReason2: null,
-    refundAmount: null,
-    creditNote: null,
-    complaintStatus: null,
-    centralNumber: null,
     deliveryDate: null,
     orderStatus: null
 };
@@ -163,8 +93,11 @@ function initializeApp() {
         // Load ticket data
         loadTicketData();
         
+        extractCustomObjectData();
+
         // Set up event listeners
         setupEventListeners();
+
         
     }).catch(function(error) {
         console.error('Failed to initialize Freshworks client:', error);
@@ -182,38 +115,15 @@ function initializeDOMElements() {
     elements.retryBtn = document.getElementById('retry-btn');
     elements.customerName = document.getElementById('customer-name');
     elements.customerEmail = document.getElementById('customer-email');
-    elements.billingAdddress = document.getElementById('billing-address');
-    elements.centralOrderAccount = document.getElementById('central-order-account');
-    elements.Communication = document.getElementById('communication');
-    elements.orderNumberFDE = document.getElementById('order-number-fde');
     elements.orderNumber = document.getElementById('order-number');
-    elements.orderDate = document.getElementById('order-date');
-    elements.totalAmount = document.getElementById('total-amount');
-    elements.paymentMethod = document.getElementById('payment-method');
-    elements.orderComment = document.getElementById('order-comment');
-    elements.position = document.getElementById('position');
-    elements.productName = document.getElementById('product-name');
-    elements.quantity = document.getElementById('quantity');
-    elements.unitPrice = document.getElementById('unit-price');
-    elements.totalPrice = document.getElementById('total-price');
-    elements.optionalExtras = document.getElementById('optional-extras');
-    elements.plannedDeliveryDate = document.getElementById('planned-delivery-date');
-    elements.actualDeliveryDate = document.getElementById('actual-delivery-date');
-    elements.deliveryStatus = document.getElementById('delivery-status');
-    elements.shipmentNumber = document.getElementById('shipment-number');
-    //elements.trackingLink = document.getElementById('tracking-link');
-    elements.selfDeliveryReceipt = document.getElementById('self-delivery-receipt');
-    elements.complaintReason1 = document.getElementById('complaint-reason-1');
-    elements.complaintReason2 = document.getElementById('complaint-reason-2');
-    elements.refundAmount = document.getElementById('refund-amount');
-    elements.creditNote = document.getElementById('credit-note');
-    elements.complaintStatus = document.getElementById('complaint-status');
-    elements.centralNumber = document.getElementById('central-number');
-    
-    // Ensure deliveryDate and orderStatus are initialized
-    // These fields are optional and may not be present in all tickets
     elements.deliveryDate = document.getElementById('delivery-date');
     elements.orderStatus = document.getElementById('order-status');
+    elements.auftragsstatusaccordion = document.getElementById('auftragsstatus-accordion');
+    elements.empfaengeraccordion = document.getElementById('empfaenger-accordion');
+    elements.auftraggeberaccordion = document.getElementById('auftraggeber-accordion');
+    elements.executionaccordion = document.getElementById('execution-accordion');
+    elements.vermittleraccordion = document.getElementById('vermittler-accordion');
+    elements.warenkorbaccordion = document.getElementById('warenkorb-accordion');
 }
 
 /**
@@ -226,6 +136,13 @@ function setupEventListeners() {
             loadTicketData();
         });
     }
+
+    // if (elements.auftragsstatusaccordion) {
+    //     elements.auftragsstatusaccordion.addEventListener('fwAccordionToggle', function() {
+    //         console.log('Auftragsstatus accordion expanded/collapsed');
+    //         appState.client.interface.trigger("showNotify", { type: 'success', message: 'Auftragsstatus accordion toggled' }); ;
+    //     });
+    // }
 }
 
 /**
@@ -259,7 +176,7 @@ function loadTicketData() {
             
             // Extract order information from custom fields
             extractOrderInformation(data.ticket);
-            
+
         })
         .catch(function(error) {
             console.error('Failed to load ticket data:', {
@@ -328,7 +245,6 @@ function extractOrderInformation(ticket) {
         showErrorState('Failed to process ticket data');
     }
 }
-
 /**
  * Initialize order data with default values
  */
@@ -336,12 +252,6 @@ function initializeOrderData() {
     appState.orderData = {
         customerName: 'Not available',
         customerEmail: 'Not available',
-        billingAdddress: 'Not available',
-        centralOrderAccount: 'Not available',
-        Communication: 'Not available',
-        orderNumberFDE: 'Not available',
-        orderDate: 'Not available',
-        totalAmount: 0,
         orderNumber: 'Not available',
         deliveryDate: 'Not available',
         orderStatus: 'Not available'
@@ -389,137 +299,6 @@ function processCustomFields(customFields) {
         CUSTOM_FIELD_CONFIG.customerEmail,  
         'string'
     );
-
-    extractedData.billingAdddress = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.billingAdddress,
-        'string'
-    );
-    extractedData.centralOrderAccount = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.centralOrderAccount,
-        'string'
-    );
-    extractedData.Communication = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.Communication,
-        'string'
-    );
-    extractedData.orderNumberFDE = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.orderNumberFDE,
-        'string'
-    );
-    extractedData.orderDate = extractAndValidateField(  
-        customFields,
-        CUSTOM_FIELD_CONFIG.orderDate,
-        'date'
-    );
-    extractedData.totalAmount = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.totalAmount,
-        'number'
-    );
-    extractedData.paymentMethod = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.paymentMethod,
-        'string'
-    );
-    extractedData.orderComment = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.orderComment,
-        'string'
-    );
-    extractedData.position = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.position,
-        'string'
-    );
-    extractedData.productName = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.productName,
-        'string'
-    );
-    extractedData.quantity = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.quantity,
-        'number'
-    );
-    extractedData.unitPrice = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.unitPrice,
-        'number'
-    );
-    extractedData.totalPrice = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.totalPrice,
-        'number'
-    );
-    extractedData.optionalExtras = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.optionalExtras,
-        'string'
-    );
-    extractedData.plannedDeliveryDate = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.plannedDeliveryDate,
-        'date'
-    );
-    extractedData.actualDeliveryDate = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.actualDeliveryDate,
-        'date'
-    );
-    extractedData.deliveryStatus = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.deliveryStatus,
-        'string'
-    );
-    extractedData.shipmentNumber = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.shipmentNumber,
-        'string'
-    );
-    // extractedData.trackingLink = extractAndValidateField(
-    //     customFields,
-    //     CUSTOM_FIELD_CONFIG.trackingLink,
-    //     'string'
-    // );
-    extractedData.selfDeliveryReceipt = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.selfDeliveryReceipt,
-        'string'
-    );
-    extractedData.complaintReason1 = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.complaintReason1,
-        'string'
-    );
-    extractedData.complaintReason2 = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.complaintReason2,
-        'string'
-    );
-    extractedData.refundAmount = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.refundAmount,
-        'number'
-    );
-    extractedData.creditNote = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.creditNote,
-        'string'
-    );
-    extractedData.complaintStatus = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.complaintStatus,
-        'string'
-    );
-    extractedData.centralNumber = extractAndValidateField(
-        customFields,
-        CUSTOM_FIELD_CONFIG.centralNumber,
-        'string'
-    );
         
     // Log extraction results
     logExtractionResults(extractedData);
@@ -536,35 +315,9 @@ function logExtractionResults(extractedData) {
     console.log('Field extraction results:', {
         customerName: extractedData.customerName ? 'Found' : 'Missing',
         customerEmail: extractedData.customerEmail ? 'Found' : 'Missing',
-        billingAdddress: extractedData.billingAdddress ? 'Found' : 'Missing',
-        centralOrderAccount: extractedData.centralOrderAccount ? 'Found' : 'Missing',
-        Communication: extractedData.Communication ? 'Found' : 'Missing',
         orderNumber: extractedData.orderNumber ? 'Found' : 'Missing',
-        // orderNumberFDE: extractedData.orderNumberFDE ? 'Found' : 'Missing'
-        // orderDate: extractedData.orderDate ? 'Found' : 'Missing',
-        // totalAmount: extractedData.totalAmount ? 'Found' : 'Missing',
-        // paymentMethod: extractedData.paymentMethod ? 'Found' : 'Missing',
-        // orderComment: extractedData.orderComment ? 'Found' : 'Missing',
-        // position: extractedData.position ? 'Found' : 'Missing',
-        // productName: extractedData.productName ? 'Found' : 'Missing',   
-        // quantity: extractedData.quantity ? 'Found' : 'Missing',
-        // unitPrice: extractedData.unitPrice ? 'Found' : 'Missing',
-        // totalPrice: extractedData.totalPrice ? 'Found' : 'Missing',
-        // optionalExtras: extractedData.optionalExtras ? 'Found' : 'Missing',
-        // plannedDeliveryDate: extractedData.plannedDeliveryDate ? 'Found' : 'Missing',
-        // actualDeliveryDate: extractedData.actualDeliveryDate ? 'Found' : 'Missing',
-        // deliveryStatus: extractedData.deliveryStatus ? 'Found' : 'Missing',
-        // shipmentNumber: extractedData.shipmentNumber ? 'Found' : 'Missing',
-        // selfDeliveryReceipt: extractedData.selfDeliveryReceipt ? 'Found' : 'Missing',
-        // complaintReason1: extractedData.complaintReason1 ? 'Found' : 'Missing',
-        // complaintReason2: extractedData.complaintReason2 ? 'Found' : 'Missing',
-        // refundAmount: extractedData.refundAmount ? 'Found' : 'Missing',
-        // creditNote: extractedData.creditNote ? 'Found' : 'Missing',
-        // complaintStatus: extractedData.complaintStatus ? 'Found' : 'Missing',
-        // centralNumber: extractedData.centralNumber ? 'Found' : 'Missing',
-        // deliveryDate: extractedData.deliveryDate ? 'Found' : 'Missing',
-        // orderStatus: extractedData.orderStatus ? 'Found' : 'Missing'
-        // //trackingLink: extractedData.trackingLink ? 'Found' : 'Missing',
+        deliveryDate: extractedData.deliveryDate ? 'Found' : 'Missing',
+        orderStatus: extractedData.orderStatus ? 'Found' : 'Missing'
     });
 }
 
@@ -575,35 +328,11 @@ function logExtractionResults(extractedData) {
 function updateOrderDataWithExtractedValues(extractedData) {
     if (extractedData.customerName) appState.orderData.customerName = extractedData.customerName;
     if (extractedData.customerEmail) appState.orderData.customerEmail = extractedData.customerEmail;
-    if (extractedData.billingAdddress) appState.orderData.billingAdddress = extractedData.billingAdddress;
-    if (extractedData.centralOrderAccount) appState.orderData.centralOrderAccount = extractedData.centralOrderAccount;
-    if (extractedData.Communication) appState.orderData.Communication = extractedData.Communication;
+
     if (extractedData.orderNumber) appState.orderData.orderNumber = extractedData.orderNumber;
-    // if (extractedData.orderNumberFDE) appState.orderData.orderNumberFDE = extractedData.orderNumberFDE;
-    // if (extractedData.orderDate) appState.orderData.orderDate = extractedData.orderDate;
-    // if (extractedData.totalAmount) appState.orderData.totalAmount = extractedData.totalAmount;
-    // if (extractedData.paymentMethod) appState.orderData.paymentMethod = extractedData.paymentMethod;
-    // if (extractedData.orderComment) appState.orderData.orderComment = extractedData.orderComment;
-    // if (extractedData.position) appState.orderData.position = extractedData.position;
-    // if (extractedData.productName) appState.orderData.productName = extractedData.productName;
-    // if (extractedData.quantity) appState.orderData.quantity = extractedData.quantity;
-    // if (extractedData.unitPrice) appState.orderData.unitPrice = extractedData.unitPrice;
-    // if (extractedData.totalPrice) appState.orderData.totalPrice = extractedData.totalPrice;
-    // if (extractedData.optionalExtras) appState.orderData.optionalExtras = extractedData.optionalExtras;
-    // if (extractedData.plannedDeliveryDate) appState.orderData.plannedDeliveryDate = extractedData.plannedDeliveryDate;
-    // if (extractedData.actualDeliveryDate) appState.orderData.actualDeliveryDate = extractedData.actualDeliveryDate;
-    // if (extractedData.deliveryStatus) appState.orderData.deliveryStatus = extractedData.deliveryStatus;
-    // if (extractedData.shipmentNumber) appState.orderData.shipmentNumber = extractedData.shipmentNumber;
-    // //if (extractedData.trackingLink) appState.orderData.trackingLink = extractedData.trackingLink;
-    // if (extractedData.selfDeliveryReceipt) appState.orderData.selfDeliveryReceipt = extractedData.selfDeliveryReceipt;
-    // if (extractedData.complaintReason1) appState.orderData.complaintReason1 = extractedData.complaintReason1;
-    // if (extractedData.complaintReason2) appState.orderData.complaintReason2 = extractedData.complaintReason2;
-    // if (extractedData.refundAmount) appState.orderData.refundAmount = extractedData.refundAmount;
-    // if (extractedData.creditNote) appState.orderData.creditNote = extractedData.creditNote;
-    // if (extractedData.complaintStatus) appState.orderData.complaintStatus = extractedData.complaintStatus;
-    // if (extractedData.centralNumber) appState.orderData.centralNumber = extractedData.centralNumber;
-    // if (extractedData.deliveryDate) appState.orderData.deliveryDate = extractedData.deliveryDate;
-    // if (extractedData.orderStatus) appState.orderData.orderStatus = extractedData.orderStatus;
+
+    if (extractedData.deliveryDate) appState.orderData.deliveryDate = extractedData.deliveryDate;
+    if (extractedData.orderStatus) appState.orderData.orderStatus = extractedData.orderStatus;
 }
 
 /**
@@ -772,136 +501,23 @@ function updateUIElements() {
     // Update customer email
     if (elements.customerEmail) {
         elements.customerEmail.setAttribute('value', appState.orderData.customerEmail);
-    }
-    // Update billing address
-    if (elements.billingAdddress) {
-        elements.billingAdddress.setAttribute('value', appState.orderData.billingAdddress);
-    }
-    // Update central order account
-    if (elements.centralOrderAccount) { 
-        elements.centralOrderAccount.setAttribute('value', appState.orderData.centralOrderAccount);
-    }
-    // Update communication method
-    if (elements.Communication) {
-        elements.Communication.setAttribute('value', appState.orderData.Communication);
-    }    
+    } 
     // Update order number
     if (elements.orderNumber) {
         elements.orderNumber.setAttribute('value', appState.orderData.orderNumber);
     }
-    // // Update FDE order number
-    // if (elements.orderNumberFDE) {
-    //     elements.orderNumberFDE.setAttribute('value', appState.orderData.orderNumberFDE);
-    // }
-    // // Update order date with formatting
-    // if (elements.orderDate) {   
-    //     const formattedDate = formatDate(appState.orderData.orderDate);
-    //     elements.orderDate.setAttribute('value', formattedDate);
-    // }
-    // // Update total amount
-    // if (elements.totalAmount) {
-    //     elements.totalAmount.setAttribute('value', appState.orderData.totalAmount);
-    // }
-    // // Update payment method
-    // if (elements.paymentMethod) {
-    //     elements.paymentMethod.setAttribute('value', appState.orderData.paymentMethod);
-    // }
-    // // Update order comment
-    // if (elements.orderComment) {
-    //     elements.orderComment.setAttribute('value', appState.orderData.orderComment);
-    // }
-    // // Update position
-    // if (elements.position) {
-    //     elements.position.setAttribute('value', appState.orderData.position);
-    // }
-    // // Update product name
-    // if (elements.productName) {
-    //     elements.productName.setAttribute('value', appState.orderData.productName);
-    // }
-    // // Update quantity
-    // if (elements.quantity) {
-    //     elements.quantity.setAttribute('value', appState.orderData.quantity);    
-    // }
-    // // Update unit price
-    // if (elements.unitPrice) {
-    //     elements.unitPrice.setAttribute('value', appState.orderData.unitPrice);
-    // }
-    // // Update total price
-    // if (elements.totalPrice) {
-    //     elements.totalPrice.setAttribute('value', appState.orderData.totalPrice);
-    // }
-    // // Update optional extras
-    // if (elements.optionalExtras) {
-    //     elements.optionalExtras.setAttribute('value', appState.orderData.optionalExtras);
-    // }
-    // // Update planned delivery date with formatting
-    // if (elements.plannedDeliveryDate) {
-    //     const formattedDate = formatDate(appState.orderData.plannedDeliveryDate);
-    //     elements.plannedDeliveryDate.setAttribute('value', formattedDate);
-    // }
-    // // Update actual delivery date with formatting
-    // if (elements.actualDeliveryDate) {
-    //     const formattedDate = formatDate(appState.orderData.actualDeliveryDate);
-    //     elements.actualDeliveryDate.setAttribute('value', formattedDate);
-    // }
-    // // Update delivery status
-    // if (elements.deliveryStatus) {
-    //     elements.deliveryStatus.setAttribute('value', appState.orderData.deliveryStatus);
-    //     const statusColor = getStatusColor(appState.orderData.deliveryStatus);  
-    //     elements.deliveryStatus.setAttribute('color', statusColor);
-    // }
-    // // Update shipment number
-    // if (elements.shipmentNumber) {  
-    //     elements.shipmentNumber.setAttribute('value', appState.orderData.shipmentNumber);
-    //     // Add click event to open tracking link in new tab
-    //     elements.shipmentNumber.addEventListener('click', function() {
-    //         if (appState.orderData.shipmentNumber) {
-    //             window.open(`https://www.dhl.com/ph-en/home/tracking.html?tracking-id=${appState.orderData.shipmentNumber}&submit=1`, '_blank');
-    //         }
-    //     });
-    // }
-    // // Update self delivery receipt
-    // if (elements.selfDeliveryReceipt) {
-    //     elements.selfDeliveryReceipt.setAttribute('value', appState.orderData.selfDeliveryReceipt);
-    // }
-    // // Update complaint reason 1
-    // if (elements.complaintReason1) {
-    //     elements.complaintReason1.setAttribute('value', appState.orderData.complaintReason1);
-    // }
-    // // Update complaint reason 2
-    // if (elements.complaintReason2) {
-    //     elements.complaintReason2.setAttribute('value', appState.orderData.complaintReason2);
-    // }   
-    // // Update refund amount
-    // if (elements.refundAmount) {
-    //     elements.refundAmount.setAttribute('value', appState.orderData.refundAmount);
-    // }
-    // // Update credit note
-    // if (elements.creditNote) {  
-    //     elements.creditNote.setAttribute('value', appState.orderData.creditNote);
-    // }
-    // // Update complaint status with appropriate color   
-    // if (elements.complaintStatus) {
-    //     elements.complaintStatus.setAttribute('value', appState.orderData.complaintStatus);
-    //     const statusColor = getStatusColor(appState.orderData.complaintStatus); 
-    //     elements.complaintStatus.setAttribute('color', statusColor);
-    // }
-    // // Update central number
-    // if (elements.centralNumber) {
-    //     elements.centralNumber.setAttribute('value', appState.orderData.centralNumber);
-    // }  
-    // // Update delivery date with formatting
-    // if (elements.deliveryDate) {
-    //     const formattedDate = formatDate(appState.orderData.deliveryDate);
-    //     elements.deliveryDate.setAttribute('value', formattedDate);
-    // }
+    // Update delivery date with formatting
+    if (elements.deliveryDate) {
+        const formattedDate = formatDate(appState.orderData.deliveryDate);
+        elements.deliveryDate.setAttribute('value', formattedDate);
+    }
     
-    // // Update order status with appropriate color
-    // if (elements.orderStatus) {
-    //     elements.orderStatus.setAttribute('value', appState.orderData.orderStatus);
-    //     const statusColor = getStatusColor(appState.orderData.orderStatus);
-    //     elements.orderStatus.setAttribute('color', statusColor);
-    // }
+    // Update order status with appropriate color
+    if (elements.orderStatus) {
+        elements.orderStatus.setAttribute('value', appState.orderData.orderStatus);
+        const statusColor = getStatusColor(appState.orderData.orderStatus);
+        elements.orderStatus.setAttribute('color', statusColor);
+    }
 }
 
 /**
@@ -1037,41 +653,33 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function showRecipient() {
-    
-    const obj = await getData('Empfänger');
-    // Safely access the nested data with proper validation
-    console.log(obj);
-    if (obj?.records && Array.isArray(obj.records) && obj.records.length > 0) {
-        const firstRecord = obj.records[0];
-        if (firstRecord?.data) {
-            console.log('Parsed data:', firstRecord.data);
-            //updateCustomerElements(firstRecord.data);
-
-            let data = firstRecord.data
-
-            // Helper function to safely concatenate strings, filtering out undefined/null values
-                const safeConcat = (...values) => {
-                    return values
-                        .filter(val => val !== undefined && val !== null && val !== '')
-                        .join(' ')
-                        .trim();
-                };
-
-            const payload = {
-                name: safeConcat(data['anrede'], data['name1'], data['name2'], data['name3']),
-                address1: safeConcat(data['land'], data['plz'], data['region'], data['ort']),
-                phone1: data['telefon'] || '',
-                address2: safeConcat(data['ortsteil'], data['strasse'], data['hausnummer'], data['zusatz']), // Fixed typo
-                phone2: data['telefon2'] || ''
-            }
-            
-            displayRecipient(payload);
-                
-        } else {
-            console.warn('No data found in first record');
+    try {
+        const obj = await getData('Empfänger');
+        const data = obj?.records?.[0]?.data;
+        
+        if (!data) {
+            console.warn('No recipient data found');
+            return;
         }
-    } else {
-        console.warn('No records found in table response');
+
+        console.log('Parsed data:', data);
+
+        // Helper function to safely concatenate strings
+        const safeConcat = (...values) => 
+            values.filter(val => val && val.trim()).join(' ');
+
+        const payload = {
+            name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
+            address1: safeConcat(data.land, data.plz, data.region, data.ort),
+            phone1: data.telefon || '',
+            address2: safeConcat(data.ortsteil, data.strasse, data.hausnummer, data.zusatz),
+            phone2: data.telefon2 || ''
+        };
+        
+        displayRecipient(payload);
+        
+    } catch (error) {
+        console.error('Error fetching Empfänger data:', error);
     }
 }
 
@@ -1084,67 +692,20 @@ function displayRecipient(payload) {
     data: payload
   }).then(function (data) {
     console.error(data)
-    // appState.client.interface.trigger("showAlert", {
-    //   message: "Empfänger erfolgreich angezeigt",
-    //   type: "success"
-    // });
+
   }).catch(function (error) {
     console.error(error)
-    // appState.client.interface.trigger("showAlert", {
-    //   message: "Fehler beim Anzeigen des Empfängers",
-    //   type: "error"
-    // });
   });
 }
 
 async function showExecution() {
     try {
-        // Fetch data from the "Ausführung" schema
-        const obj = await getData('Ausführung');
-        // Safely access the nested data with proper validation
-        console.log(obj);
-        if (obj?.records && Array.isArray(obj.records) && obj.records.length > 0) {
-            const firstRecord = obj.records[0];
-            if (firstRecord?.data) {
-                console.log('Parsed data:', firstRecord.data);
-                //updateCustomerElements(firstRecord.data);
 
-                let data = firstRecord.data;
-
-                // Helper function to safely concatenate strings, filtering out undefined/null values
-                const safeConcat = (...values) => {
-                    return values
-                        .filter(val => val !== undefined && val !== null && val !== '')
-                        .join(' ')
-                        .trim();
-                };
-
-                const payload = {
-                    nummer: data['ausfuehrender'] || '',
-                    name: safeConcat(data['anrede'], data['name1'], data['name2'], data['name3']),
-                    addresse: safeConcat(data['plz'], data['ort'], data['strasse'], data['land']),
-                    rang: data['rang'] || '',
-                    fax: data['fax'] || '',
-                    telefon: data['telefon'] || '',
-                    email: data['email'] || '',
-                    auftragshinweis: data['auftragshinweis'] || '',
-                    hinweis: data['hinweis'] || ''
-                };
-                
-                displayExecution(payload);
-                    
-            } else {
-                console.warn('No data found in first record');
-            }
-        } else {
-            console.warn('No records found in table response');
-        }
+        const payload = await getAusfuehrungData();
+        displayExecution(payload);
+        
     } catch (error) {
         console.error('Error fetching Ausführung data:', error);
-        // appState.client.interface.trigger("showAlert", {
-        //     message: "Fehler beim Abrufen der Ausführung",
-        //     type: "error"
-        // });
     }
 }
 
@@ -1168,6 +729,32 @@ async function displayExecution(payload) {
     // console.log('Execution modal response:', data);
     // appState.client.interface.trigger("showAlert", {
     //   message: "Ausführung erfolgreich angezeigt",
+
+async function showOrderStatus() {
+    try {
+        const payload = await getOrderStatus();
+        displayOrderStatus(payload);
+    }
+    catch (error) {
+        console.error('Error fetching Auftragsstatus data:', error);
+    }
+}
+
+async function displayOrderStatus(payload) {
+    try 
+    {
+    const data = await appState.client.interface.trigger("showModal", {
+        title: "Auftragsstatus",
+        template: "views/order_details.html",
+        data: payload
+    });
+    console.log('Order status modal data:', data);
+    } catch (error) {
+        console.error('Error displaying order status modal:', error);
+    }
+}
+
+
 
 
 async function showModal() {
@@ -1217,19 +804,26 @@ async function showModal() {
 
 }
 
+/**  
+* @param {string} name - The name of the schema to fetch
+*/
 async function getSchemaID(name) {
-    const schema = await appState.client.request.invokeTemplate("getSchema");
-
+    try 
+    {const schema = await appState.client.request.invokeTemplate("getSchema");
     const obj = JSON.parse(schema.response);
-    console.log('Schema response:', obj);
     
-    const schemaid = obj.schemas.find(schema => schema.name === name)?.id;
+    const schemaid = obj.schemas?.find(schema => schema.name === name)?.id;
+
     if (!schemaid) {
         console.warn(`Schema ID for "${name}" not found`);
         return null;
     }
     console.log(`Schema ID for "${name}":`, schemaid);
     return schemaid;    
+}   catch (error) {
+        console.error(`Error fetching schema ID for "${name}":`, error);
+        return null;
+    }
 }
 
 function getfdOrders(){
@@ -1262,40 +856,249 @@ async function getData(name) {
     try {
         const schemaID = await getSchemaID(name);
         if (!schemaID) {
-            console.warn('No schema ID found for Fleurop orders');
-            return;
+            console.warn(`No schema ID found for ${name}`);
+            return null;
         }
-        else {
-            console.log('Schema ID for Fleurop orders:', schemaID);
-        }
+
         const ticketID = appState.currentTicket.id;
-        console.log('Fetching Fleurop orders for ticket ID:', ticketID);
+        console.log(`Fetching ${name} data for ticket ID:`, ticketID);
 
         const orders = await appState.client.request.invokeTemplate("getData", {
             context: { 
-                "schema_id": schemaID,
-                "ticketnummer" : ticketID
+                schema_id: schemaID,
+                ticketnummer: ticketID
             } 
         });
         
-        if (!orders || !orders.response) {
-            console.warn('No response received from getfdOrders');
-            return;
+        if (!orders?.response) {
+            console.warn(`No response received for ${name} data`);
+            return null;
         }
         
-        const obj = JSON.parse(orders.response);
-
-        console.log('Orders response:', obj);
-
-        return obj
+        return JSON.parse(orders.response);
         
     } catch (error) {
-        console.error('Error in getfdOrders:', error);
-        
-        // Optionally handle different error types
-        if (error instanceof SyntaxError) {
-            console.error('JSON parsing error - invalid response format');
-        }
+        console.error(`Error fetching ${name} data:`, error);
+        return null;
     }
 }
 
+
+async function extractCustomObjectData() {
+
+    console.log('Extracting custom object data...');
+
+    updateAusfuehrungElements(await getAusfuehrungData());
+
+    updateRecipientElements(await getRecipientData());
+
+    updateClientElements(await getClientData());
+
+    updateOrderStatusElements(await getOrderStatus());
+
+
+}
+
+async function getAusfuehrungData() {
+
+        const obj = await getData(CUSTOM_OBJECTS.execution);
+        const data = obj?.records?.[0]?.data;
+        
+        if (!data) {
+            console.warn('No execution data found');
+            return;
+        }
+
+        console.log('Parsed data:', data);
+
+        // Helper function to safely concatenate strings
+        const safeConcat = (...values) => 
+            values.filter(val => val && val.trim()).join(' ');
+
+        const payload = {
+            nummer: data.ausfuehrender || '',
+            name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
+            addresse: safeConcat(data.plz, data.ort, data.strasse, data.land),
+            rang: data.rang || '',
+            fax: data.fax || '',
+            telefon: data.telefon || '',
+            email: data.email || '',
+            auftragshinweis: data.auftragshinweis || '',
+            hinweis: data.hinweis || ''
+        };
+    return payload;
+}
+
+function updateAusfuehrungElements(data) {
+    const elements = {
+        'ausfuehrung-nummer': data.nummer,
+        'ausfuehrung-name': data.name,
+        'ausfuehrung-addresse': data.addresse,
+        'ausfuehrung-rang': data.rang,
+        'ausfuehrung-fax': data.fax,
+        'ausfuehrung-telefon': data.telefon,
+        'ausfuehrung-email': data.email,
+        'auftragshinweis': data.auftragshinweis,
+        'hinweis': data.hinweis
+    };
+
+    Object.entries(elements).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = value || 'N/A';
+        }
+    });
+}
+
+async function getRecipientData() {
+    const obj = await getData(CUSTOM_OBJECTS.recipient);
+    const data = obj?.records?.[0]?.data;
+    if (!data) {
+        console.warn('No recipient data found');
+        return;
+    }
+    console.log('Parsed recipient data:', data);
+
+    // Helper function to safely concatenate strings
+    const safeConcat = (...values) => 
+        values.filter(val => val && val.trim()).join(' ');  
+    const payload = {
+        name: safeConcat(data.anrede, data.name1, data.name2),
+        firmenzusatz: data.name3 || '',
+        address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land),
+        phone: data.telefon || '',
+    };  
+    return payload;
+}
+
+function updateRecipientElements(data) {
+    try
+    {
+    console.log('Updating recipient elements with data:', data);
+    const elements = {
+        'recipient-name': data.name,
+        'recipient-firmenzusatz': data.firmenzusatz,
+        'recipient-addresse': data.address,
+        'recipient-telefon': data.phone
+    };  
+    Object.entries(elements).forEach(([id, value]) => {
+        const element = document.getElementById(id);    
+        if (element) {
+            element.innerHTML = value || 'N/A';
+        } else {
+            console.warn(`Element with ID ${id} not found`);
+        }
+    });
+    } catch (error) {
+        console.error('Error updating recipient elements:', error);
+    }   
+}
+
+async function getClientData() {
+    try {
+        const obj = await getData(CUSTOM_OBJECTS.client);
+        const data = obj?.records?.[0]?.data;
+        if (!data) {
+            console.warn('No client data found');
+            return;
+        }
+        console.log('Parsed client data:', data);
+
+        // Helper function to safely concatenate strings
+        const safeConcat = (...values) => 
+            values.filter(val => val && val.trim()).join(' ');  
+        const payload = {
+            name: safeConcat(data.anrede, data.name1, data.name2),
+            firmenzusatz: data.name3 || '',
+            address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land),
+            phone: data.telefon || '',  
+            email: data.email || ''
+        }
+        return payload;
+    } catch (error) {       
+        console.error('Error fetching client data:', error);
+        return null;
+    }
+}
+
+function updateClientElements(data) {
+    try {
+        console.log('Updating client elements with data:', data);
+        const elements = {
+
+            'auftraggeber-name': data.name,
+            'auftraggeber-firmenzusatz': data.firmenzusatz,
+            'auftraggeber-addresse': data.address,
+            'auftraggeber-telefon': data.phone,
+            'auftraggeber-email': data.email
+        };
+        Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.innerHTML = value || 'N/A';
+            }
+            else {
+                console.warn(`Element with ID ${id} not found`);
+            }
+        });
+    } catch (error) {
+        console.error('Error updating client elements:', error);
+    }
+}
+
+async function getOrderStatus() {
+    try {
+        const obj = await getData(CUSTOM_OBJECTS.orderStatus);
+        const data = obj?.records?.[0]?.data;
+        if (!data) {
+            console.warn('No order status data found');
+            return;
+        }
+        console.log('Parsed order status data:', data);
+
+        // Helper function to safely concatenate strings
+        // const safeConcat = (...values) =>
+        //     values.filter(val => val && val.trim()).join(' ');
+
+        const payload = {
+            bestelldatum: data.bestelldatum || '',
+            vertriebsweg: data.vertriebsweg || '',
+            auftragsstatus: data.status || '',
+            freitext: data.freitext || '',
+            molliwert: data.molliwert || '',
+            erfassdatum: data.erfassdatum || '',
+            rechnungsnummer: data.rechnungsnummer || '',
+            trackingnummer: data.trackingnummer || ''
+        };
+        return payload;
+    } catch (error) {
+        console.error('Error fetching order status data:', error);
+        return null;
+    }   
+}
+
+function updateOrderStatusElements(data) {
+    try {
+        console.log('Updating order status elements with data:', data);
+        const elements = {
+            'bestelldatum': data.bestelldatum,
+            'vertriebsweg': data.vertriebsweg,
+            'auftragsstatus': data.auftragsstatus,
+            'freitext': data.freitext,
+            'molliwert': data.molliwert,
+            'erfassdatum': data.erfassdatum,
+            'rechnungsnummer': data.rechnungsnummer,
+            'trackingnummer': data.trackingnummer
+        };
+        Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.innerHTML = value || 'N/A';
+            } else {
+                console.warn(`Element with ID ${id} not found`);
+            }
+        });
+    } catch (error) {
+        console.error('Error updating order status elements:', error);
+    }
+}
