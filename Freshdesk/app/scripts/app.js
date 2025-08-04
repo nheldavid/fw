@@ -118,12 +118,12 @@ function initializeDOMElements() {
     elements.orderNumber = document.getElementById('order-number');
     elements.deliveryDate = document.getElementById('delivery-date');
     elements.orderStatus = document.getElementById('order-status');
-    elements.auftragsstatusaccordion = document.getElementById('auftragsstatus-accordion');
-    elements.empfaengeraccordion = document.getElementById('empfaenger-accordion');
-    elements.auftraggeberaccordion = document.getElementById('auftraggeber-accordion');
-    elements.executionaccordion = document.getElementById('execution-accordion');
-    elements.vermittleraccordion = document.getElementById('vermittler-accordion');
-    elements.warenkorbaccordion = document.getElementById('warenkorb-accordion');
+    elements.orderBtn = document.getElementById('btn-auftragsstatus');
+    elements.recipientBtn = document.getElementById('btn-empfaenger');
+    elements.clientBtn = document.getElementById('btn-auftraggeber');
+    elements.executionBtn = document.getElementById('btn-execution');
+    elements.mediatorBtn = document.getElementById('btn-vermittler');
+    elements.cartBtn = document.getElementById('btn-warenkorb');
 }
 
 /**
@@ -137,12 +137,13 @@ function setupEventListeners() {
         });
     }
 
-    // if (elements.auftragsstatusaccordion) {
-    //     elements.auftragsstatusaccordion.addEventListener('fwAccordionToggle', function() {
-    //         console.log('Auftragsstatus accordion expanded/collapsed');
-    //         appState.client.interface.trigger("showNotify", { type: 'success', message: 'Auftragsstatus accordion toggled' }); ;
-    //     });
-    // }
+    elements.orderBtn?.addEventListener('click', showOrderStatus);
+    elements.recipientBtn?.addEventListener('click', showRecipient);
+    elements.clientBtn?.addEventListener('click', showClient);
+    elements.executionBtn?.addEventListener('click', showExecution);
+    elements.mediatorBtn?.addEventListener('click', showMediator);
+    elements.cartBtn?.addEventListener('click', showCart);
+
 }
 
 /**
@@ -673,7 +674,7 @@ function getDataFromElements(elementMap) {
     const payload = {};
     Object.entries(elementMap).forEach(([key, elementId]) => {
         const element = document.getElementById(elementId);
-        payload[key] = element?.innerHTML !== 'N/A' ? element?.innerHTML || '' : '';
+        payload[key] = element?.innerHTML !== 'N/A' ? element?.innerHTML : '';
     });
     return payload;
 }
@@ -732,199 +733,165 @@ const CART_ELEMENTS = {
 const showRecipient = () => showModal("Empfänger", "views/recipient.html", RECIPIENT_ELEMENTS);
 const showClient = () => showModal("Auftraggeber", "views/client.html", RECIPIENT_ELEMENTS);
 const showExecution = () => showModal("Ausführung", "views/execution.html", EXECUTION_ELEMENTS);
-const showOrderStatus = () => showModal("Auftragsstatus", "views/order_details.html", ORDER_STATUS_ELEMENTS);
+const showOrderStatus = () => showModal("Auftragsstatus", "views/order_status.html", ORDER_STATUS_ELEMENTS);
 const showMediator = () => showModal("Vermittler", "views/mediator.html", MEDIATOR_ELEMENTS);
 const showCart = () => showModal("Warenkorb", "views/cart.html", CART_ELEMENTS);
 
-/**  
-* @param {string} name - The name of the schema to fetch
-*/
-async function getSchemaID(name) {
-    try {
-        const schema = await appState.client.request.invokeTemplate("getSchema");
-        const schemaid = JSON.parse(schema.response).schemas?.find(s => s.name === name)?.id;
-        
-        if (!schemaid) {
-            console.warn(`Schema ID for "${name}" not found`);
-            return null;
-        }
-        console.log(`Schema ID for "${name}":`, schemaid);
-        return schemaid;    
-    } catch (error) {
-        console.error(`Error fetching schema ID for "${name}":`, error);
-        return null;
-    }
-}
-
-async function getData(name) {
-    try {
-        const schemaID = await getSchemaID(name);
-        if (!schemaID) return null;
-
-        const orders = await appState.client.request.invokeTemplate("getData", {
-            context: { 
-                schema_id: schemaID,
-                ticketnummer: appState.currentTicket.id
-            } 
-        });
-        
-        return orders?.response ? JSON.parse(orders.response) : null;
-    } catch (error) {
-        console.error(`Error fetching ${name} data:`, error);
-        return null;
-    }
-}
-
-
-// Helper function to safely concatenate strings
-const safeConcat = (...values) => {
-    const separator = values[values.length - 1];
+// Configuration objects for each data type
+const DATA_CONFIGS = {
+    execution: {
+        nummer: "ausfuehrender",
+        name: ["anrede", "name1", "name2", "name3"],
+        addresse: {
+            fields: ["plz", "ort", "strasse", "land"],
+            separator: "<br>"
+        },
+        rang: "rang",
+        fax: "fax",
+        telefon: "telefon",
+        email: "email",
+        auftragshinweis: "auftragshinweis",
+        hinweis: "hinweis"
+    },
     
-    // Check if last argument is a separator option
-    if (typeof separator === 'object' && separator.separator) {
-        const actualValues = values.slice(0, -1);
-        return actualValues.filter(val => val && val.trim()).join(separator.separator);
-    }
+    recipient: {
+        name: ["anrede", "name1", "name2"],
+        firmenzusatz: "name3",
+        address: {
+            fields: ["plz", "ort", "strasse", "region", "land"],
+            separator: "<br>"
+        },
+        phone: "telefon"
+    },
     
-    // Default behavior - join with space
-    return values.filter(val => val && val.trim()).join(' ');
+    client: {
+        name: ["anrede", "name1", "name2"],
+        firmenzusatz: "name3",
+        address: {
+            fields: ["plz", "ort", "strasse", "region", "land"],
+            separator: "<br>"
+        },
+        phone: "telefon",
+        email: "email"
+    },
+    
+    orderStatus: {
+        bestelldatum: "bestelldatum",
+        vertriebsweg: "vertriebsweg",
+        auftragsstatus: "status",
+        freitext: "freitext",
+        molliwert: "molliwert",
+        erfassdatum: "erfassdatum",
+        rechnungsnummer: "rechnungsnummer",
+        trackingnummer: "trackingnummer"
+    },
+    
+    mediator: {
+        vermittler: "vermittler",
+        active: "active",
+        typ: "vermittler_lfp_agp",
+        name: ["anrede", "name1", "name2", "name3"],
+        addresse: {
+            fields: ["plz", "ort", "strasse", "region", "land"],
+            separator: "<br>"
+        },
+        fax: "fax",
+        telefon: "telefon"
+    },
+    
+    cart: {
+        auftragsnummer: "auftragsnummer",
+        bestellnummer: "bestellnummer",
+        lieferdatum: "lieferdatum",
+        zahlbetrag: "zahlbetrag",
+        kartentext: "kartentext"
+    }
 };
 
-// Generic function to update DOM elements
-function updateElements(data, elementMap) {
-    Object.entries(elementMap).forEach(([id, value]) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.innerHTML = value || 'N/A';
-        } else {
-            console.warn(`Element with ID ${id} not found`);
+/**
+ * Generic data processing function
+ * @param {Object} data - Raw data from API
+ * @param {Object} config - Configuration for field processing
+ * @returns {Object} Processed data object
+ */
+function processData(data, config) {
+    const result = {};
+    
+    Object.entries(config).forEach(([key, fieldConfig]) => {
+        if (typeof fieldConfig === 'string') {
+            // Simple field mapping
+            result[key] = getValue(data[fieldConfig]);
+        } else if (Array.isArray(fieldConfig)) {
+            // Array of fields to combine with space
+            result[key] = combineFields(data, fieldConfig, ' ');
+        } else if (typeof fieldConfig === 'object' && fieldConfig.fields) {
+            // Complex field with custom separator
+            result[key] = combineFields(data, fieldConfig.fields, fieldConfig.separator);
         }
     });
+    
+    return result;
 }
 
-async function getAusfuehrungData() {
-    const data = (await getData(CUSTOM_OBJECTS.execution))?.records?.[0]?.data;
-    if (!data) {
-        console.warn('No execution data found');
-        return {};
-    }
-
-    return {
-        nummer: data.ausfuehrender || '',
-        name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
-        addresse: safeConcat(data.plz, data.ort, data.strasse, data.land, { separator: '\n' }),
-        rang: data.rang || '',
-        fax: data.fax || '',
-        telefon: data.telefon || '',
-        email: data.email || '',
-        auftragshinweis: data.auftragshinweis || '',
-        hinweis: data.hinweis || ''
-    };
+/**
+ * Combine multiple fields with filtering and custom separator
+ * @param {Object} data - Source data
+ * @param {Array} fields - Field names to combine
+ * @param {string} separator - Separator to use
+ * @returns {string} Combined string
+ */
+function combineFields(data, fields, separator = ' ') {
+    return fields
+        .map(field => data[field])
+        .filter(val => val && String(val).trim())
+        .join(separator);
 }
 
-async function getRecipientData() {
-    const data = (await getData(CUSTOM_OBJECTS.recipient))?.records?.[0]?.data;
-    if (!data) {
-        console.warn('No recipient data found');
-        return {};
-    }
-
-    return {
-        name: safeConcat(data.anrede, data.name1, data.name2),
-        firmenzusatz: data.name3 || '',
-        address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land, { separator: '\n' }),
-        phone: data.telefon || ''
-    };
-}
-
-async function getClientData() {
+/**
+ * Generic data fetcher with error handling
+ * @param {string} objectType - Type of custom object to fetch
+ * @param {string} dataType - Human readable name for logging
+ * @returns {Object} Processed data or empty object
+ */
+async function fetchData(objectType, dataType) {
     try {
-        const data = (await getData(CUSTOM_OBJECTS.client))?.records?.[0]?.data;
+        const obj = await getData(CUSTOM_OBJECTS[objectType]);
+        const data = obj?.records?.[0]?.data;
+        
         if (!data) {
-            console.warn('No client data found');
+            console.warn(`No ${dataType} data found`);
             return {};
         }
-
-        return {
-            name: safeConcat(data.anrede, data.name1, data.name2),
-            firmenzusatz: data.name3 || '',
-            address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land, { separator: '\n' }),
-            phone: data.telefon || '',  
-            email: data.email || ''
-        };
-    } catch (error) {       
-        console.error('Error fetching client data:', error);
-        return {};
-    }
-}
-
-async function getOrderStatus() {
-    try {
-        const data = (await getData(CUSTOM_OBJECTS.orderStatus))?.records?.[0]?.data;
-        if (!data) {
-            console.warn('No order status data found');
-            return {};
-        }
-
-        return {
-            bestelldatum: data.bestelldatum || '',
-            vertriebsweg: data.vertriebsweg || '',
-            auftragsstatus: data.status || '',
-            freitext: data.freitext || '',
-            molliwert: data.molliwert || '',
-            erfassdatum: data.erfassdatum || '',
-            rechnungsnummer: data.rechnungsnummer || '',
-            trackingnummer: data.trackingnummer || ''
-        };
+        
+        return processData(data, DATA_CONFIGS[objectType]);
     } catch (error) {
-        console.error('Error fetching order status data:', error);
-        return {};
-    }   
-}
-
-async function getMediatorData() {
-    try {
-        const data = (await getData(CUSTOM_OBJECTS.mediator))?.records?.[0]?.data;
-        if (!data) {
-            console.warn('No mediator data found');
-            return {};
-        }
-        return {
-            vermittler: data.vermittler,
-            active: data.vermittler_aktiv,
-            typ: data.vermittler_lfp_agp,
-            name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
-            addresse: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land, { separator: '\n' }),
-            fax: data.fax || '',
-            telefon: data.telefon || ''
-        };
-    }
-    catch (error) {
-        console.error('Error fetching mediator data:', error);
+        console.error(`Error fetching ${dataType} data:`, error);
         return {};
     }
 }
 
-async function getCartData() {
-    try {
-        const data = (await getData(CUSTOM_OBJECTS.cart))?.records?.[0]?.data;
-        if (!data) {
-            console.warn('No cart data found');
-            return {};
-        }
-        return {
-            auftragsnummer: data.auftragsnummer,
-            bestellnummer: data.bestellnummer,
-            lieferdatum: data.lieferdatum,
-            zahlbetrag: data.zahlbetrag,
-            kartentext: data.kartentext
-        };
-    } catch (error) {
-        console.error('Error fetching cart data:', error);
-        return {};
-    }
-}
-            
+// Simplified data functions - now just one-liners!
+const getAusfuehrungData = () => fetchData('execution', 'execution');
+const getRecipientData = () => fetchData('recipient', 'recipient');
+const getClientData = () => fetchData('client', 'client');
+const getOrderStatus = () => fetchData('orderStatus', 'order status');
+const getMediatorData = () => fetchData('mediator', 'mediator');
+const getCartData = () => fetchData('cart', 'cart');
+
+// Even more generic version if you want maximum flexibility
+async function getDataByType(type) {
+    const typeMap = {
+        execution: { object: 'execution', name: 'execution' },
+        recipient: { object: 'recipient', name: 'recipient' },
+        client: { object: 'client', name: 'client' },
+        orderStatus: { object: 'orderStatus', name: 'order status' },
+        mediator: { object: 'mediator', name: 'mediator' },
+        cart: { object: 'cart', name: 'cart' }
+    };
+    
+    const config = typeMap[type];
+    return await config ? fetchData(config.object, config.name) : {};
+}            
 
 async function extractCustomObjectData() {
     console.log('Extracting custom object data...');
@@ -979,7 +946,7 @@ async function extractCustomObjectData() {
 
     updateElements(mediator, {
         'vermittler': mediator.vermittler,
-        'vermittler-aktiv': mediator.active ? 'Ja' : 'Nein',
+        'vermittler-aktiv': mediator.active,
         'vermittler-typ': mediator.typ,
         'vermittler-name': mediator.name,
         'vermittler-addresse': mediator.addresse,
@@ -995,3 +962,4 @@ async function extractCustomObjectData() {
         'warenkorb-kartentext': cart.kartentext
     });
 }
+

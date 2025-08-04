@@ -111,8 +111,8 @@
               </div>
             </fw-card>
 
-            <fw-accordion id="execution-accordion">
-              <fw-button class="title-button" size="small" color="link" onclick="showExecution()">
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-ausfuhrung">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
               <fw-accordion-title>
@@ -161,8 +161,8 @@
               </fw-accordion-body>
             </fw-accordion>
 
-            <fw-accordion id="client-accordion">
-              <fw-button class="title-button" size="small" color="link">
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-auftraggeber">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
               <fw-accordion-title>
@@ -195,8 +195,8 @@
               </fw-accordion-body>
             </fw-accordion>
             
-            <fw-accordion id="recipient-accordion">
-              <fw-button class="title-button" size="small" color="link" onclick="showRecipient()">
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-empfaenger">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
               <fw-accordion-title>
@@ -225,8 +225,8 @@
               </fw-accordion-body>
             </fw-accordion>
 
-            <fw-accordion id="auftragsstatus-accordion">
-              <fw-button class="title-button" size="small" color="link" onclick="showOrderStatus()">
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-auftragsstatus">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
               <fw-accordion-title>
@@ -271,8 +271,8 @@
               </fw-accordion-body>
             </fw-accordion>    
             
-            <fw-accordion id="vermittler-accordion">
-              <fw-button class="title-button" size="small" color="link">
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-vermittler">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
               <fw-accordion-title>
@@ -288,7 +288,7 @@
                   <div class="info-item">
                     <span class="fw-type-xs">Aktiv:</span>
                     <div class="fw-type-sm">
-                      <fw-checkbox checked disabled id="vermittler-aktiv"></fw-checkbox>
+                      <fw-checkbox checked readonly id="vermittler-aktiv"></fw-checkbox>
                     </div>
                   </div>
                   <div class="info-item">
@@ -315,8 +315,8 @@
               </fw-accordion-body>
             </fw-accordion> 
 
-            <fw-accordion id="warenkorb-accordion">
-              <fw-button class="title-button" size="small" color="link">
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-warenkorb">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
               <fw-accordion-title>
@@ -359,5 +359,6 @@
     
     <!-- Main application logic - handles Freshdesk API integration and UI updates -->
     <script src="scripts/app.js"></script>
+    <script src="scripts/data-utils.js"></script>
   </body>
 </html>
