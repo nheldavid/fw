@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\styles\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\styles\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\styles\\client.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\styles\\client.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\views\\recipient.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\views\\recipient.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "style.css",
+              "DocumentMoniker": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\styles\\style.css",
+              "RelativeDocumentMoniker": "app\\styles\\style.css",
+              "ToolTip": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\styles\\style.css",
+              "RelativeToolTip": "app\\styles\\style.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-04T02:33:30.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "client.css",
+              "DocumentMoniker": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\styles\\client.css",
+              "RelativeDocumentMoniker": "app\\styles\\client.css",
+              "ToolTip": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\styles\\client.css",
+              "RelativeToolTip": "app\\styles\\client.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-04T02:33:29.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "recipient.html",
+              "DocumentMoniker": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\views\\recipient.html",
+              "RelativeDocumentMoniker": "app\\views\\recipient.html",
+              "ToolTip": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\views\\recipient.html",
+              "RelativeToolTip": "app\\views\\recipient.html",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-08-04T02:33:14.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\index.html",
+              "RelativeDocumentMoniker": "app\\index.html",
+              "ToolTip": "C:\\Users\\AXND\\Documents\\GitHub\\fw\\Freshdesk\\app\\index.html",
+              "RelativeToolTip": "app\\index.html",
+              "ViewState": "AgIAABQBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-08-04T02:32:58.478Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

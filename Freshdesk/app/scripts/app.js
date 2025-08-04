@@ -652,231 +652,123 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-async function showRecipient() {
+// Generic function to show modals using existing DOM data
+async function showModal(title, template, elementIds) {
     try {
-        const obj = await getData('Empfänger');
-        const data = obj?.records?.[0]?.data;
+        const payload = getDataFromElements(elementIds);
         
-        if (!data) {
-            console.warn('No recipient data found');
-            return;
-        }
-
-        console.log('Parsed data:', data);
-
-        // Helper function to safely concatenate strings
-        const safeConcat = (...values) => 
-            values.filter(val => val && val.trim()).join(' ');
-
-        const payload = {
-            name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
-            address1: safeConcat(data.land, data.plz, data.region, data.ort),
-            phone1: data.telefon || '',
-            address2: safeConcat(data.ortsteil, data.strasse, data.hausnummer, data.zusatz),
-            phone2: data.telefon2 || ''
-        };
-        
-        displayRecipient(payload);
-        
+        const data = await appState.client.interface.trigger("showModal", {
+            title,
+            template,
+            data: payload
+        });
+        console.log(`${title} modal data:`, data);
     } catch (error) {
-        console.error('Error fetching Empfänger data:', error);
+        console.error(`Error with ${title} modal:`, error);
     }
 }
 
-
-/* Show modal to display contact's information */
-function displayRecipient(payload) {
-  appState.client.interface.trigger("showModal", {
-    title: "Empfänger",
-    template: "views/recipient.html",
-    data: payload
-  }).then(function (data) {
-    console.error(data)
-
-  }).catch(function (error) {
-    console.error(error)
-  });
-}
-
-async function showExecution() {
-    try {
-
-        const payload = await getAusfuehrungData();
-        displayExecution(payload);
-        
-    } catch (error) {
-        console.error('Error fetching Ausführung data:', error);
-    }
-}
-
-async function displayExecution(payload) {
-  try { 
-    const data = await appState.client.interface.trigger("showModal", {
-      title: "Ausführung",
-      template: "views/execution.html",
-      data: payload
+// Helper function to extract data from DOM elements
+function getDataFromElements(elementMap) {
+    const payload = {};
+    Object.entries(elementMap).forEach(([key, elementId]) => {
+        const element = document.getElementById(elementId);
+        payload[key] = element?.innerHTML !== 'N/A' ? element?.innerHTML || '' : '';
     });
-    console.log('Execution modal data:', data);
-  } catch (error) {
-    console.error('Error displaying execution modal:', error);  
-    // appState.client.interface.trigger("showAlert", {
-    //   message: "Fehler beim Anzeigen der Ausführung",   
-    //     type: "error"
-    // });
-    }
-}
-    // Optionally handle the response data if needed
-    // console.log('Execution modal response:', data);
-    // appState.client.interface.trigger("showAlert", {
-    //   message: "Ausführung erfolgreich angezeigt",
-
-async function showOrderStatus() {
-    try {
-        const payload = await getOrderStatus();
-        displayOrderStatus(payload);
-    }
-    catch (error) {
-        console.error('Error fetching Auftragsstatus data:', error);
-    }
+    return payload;
 }
 
-async function displayOrderStatus(payload) {
-    try 
-    {
-    const data = await appState.client.interface.trigger("showModal", {
-        title: "Auftragsstatus",
-        template: "views/order_details.html",
-        data: payload
-    });
-    console.log('Order status modal data:', data);
-    } catch (error) {
-        console.error('Error displaying order status modal:', error);
-    }
+// Element mapping configurations
+const RECIPIENT_ELEMENTS = {
+    name: 'recipient-name',
+    firmenzusatz: 'recipient-firmenzusatz', 
+    address1: 'recipient-addresse',
+    phone1: 'recipient-telefon'
+};
+
+const EXECUTION_ELEMENTS = {
+    nummer: 'ausfuehrung-nummer',
+    name: 'ausfuehrung-name',
+    addresse: 'ausfuehrung-addresse',
+    rang: 'ausfuehrung-rang',
+    fax: 'ausfuehrung-fax',
+    telefon: 'ausfuehrung-telefon',
+    email: 'ausfuehrung-email',
+    auftragshinweis: 'auftragshinweis',
+    hinweis: 'hinweis'
+};
+
+const ORDER_STATUS_ELEMENTS = {
+    bestelldatum: 'bestelldatum',
+    vertriebsweg: 'vertriebsweg',
+    auftragsstatus: 'auftragsstatus',
+    freitext: 'freitext',
+    molliwert: 'molliwert',
+    erfassdatum: 'erfassdatum',
+    rechnungsnummer: 'rechnungsnummer',
+    trackingnummer: 'trackingnummer'
+};
+
+const MEDIATOR_ELEMENTS = {
+    vermittler: 'vermittler',
+    active: 'vermittler-aktiv',
+    typ: 'vermittler-typ',
+    name: 'vermittler-name',
+    addresse: 'vermittler-addresse',
+    fax: 'vermittler-fax',
+    telefon: 'vermittler-telefon'
+};
+
+const CART_ELEMENTS = {
+    auftragsnummer: 'warenkorb-auftragsnummer',
+    bestellnummer: 'warenkorb-bestellnummer',
+    lieferdatum: 'warenkorb-lieferdatum',
+    zahlbetrag: 'warenkorb-zahlbetrag',
+    kartentext: 'warenkorb-kartentext'
 }
 
 
-
-
-async function showModal() {
-  try {
-
-    // store info to variable for later use in modal
-    const data = await appState.client.interface.trigger('showModal', {
-        title: 'Auftraggeber Details',
-        template: './views/client_details.html',
-        data: {
-            customerName: document.getElementById('customer-name').value,
-            customerEmail: document.getElementById('customer-email').value,
-            billingAddress: document.getElementById('billing-address').value,
-            centralOrderAccount: document.getElementById('central-order-account').value,
-            communication: document.getElementById('communication').value,
-            orderNumber: document.getElementById('order-number').value,
-            fdeOrderNumber: document.getElementById('fde-order-number').value,
-            orderDate: document.getElementById('order-date').value,
-            totalAmount: document.getElementById('total-amount').value, 
-            paymentMethod: document.getElementById('payment-method').value,
-            orderComment: document.getElementById('order-comment').value,
-            position: document.getElementById('position').value,
-            productName: document.getElementById('product-name').value,
-            quantity: document.getElementById('quantity').value,
-            unitPrice: document.getElementById('unit-price').value,
-            totalPrice: document.getElementById('total-price').value,
-            optionalExtras: document.getElementById('optional-extras').value
-            // plannedDeliveryDate: document.getElementById('planned-delivery-date').value,
-            // actualDeliveryDate: document.getElementById('actual-delivery-date').value,
-            // deliveryStatus: document.getElementById('delivery-status').value,
-            // shipmentNumber: document.getElementById('shipment-number').value,
-            // selfDeliveryReceipt: document.getElementById('self-delivery-receipt').value,
-            // complaintReason1: document.getElementById('complaint-reason-1').value,
-            // complaintReason2: document.getElementById('complaint-reason-2').value,
-            // refundAmount: document.getElementById('refund-amount').value,
-            // creditNote: document.getElementById('credit-note').value,
-            // complaintStatus: document.getElementById('complaint-status').value,
-            // centralNumber: document.getElementById('central-number').value,
-            // deliveryDate: document.getElementById('delivery-date').value,
-            // orderStatus: document.getElementById('order-status').value  
-      }
-    });
-    console.log('Parent:InterfaceAPI:showModal', data);
-  } catch (error) {
-    console.log('Parent:InterfaceAPI:showModal', error);
-  }
-
-}
+// Main functions - now get data from DOM instead of API
+const showRecipient = () => showModal("Empfänger", "views/recipient.html", RECIPIENT_ELEMENTS);
+const showClient = () => showModal("Auftraggeber", "views/client.html", RECIPIENT_ELEMENTS);
+const showExecution = () => showModal("Ausführung", "views/execution.html", EXECUTION_ELEMENTS);
+const showOrderStatus = () => showModal("Auftragsstatus", "views/order_details.html", ORDER_STATUS_ELEMENTS);
+const showMediator = () => showModal("Vermittler", "views/mediator.html", MEDIATOR_ELEMENTS);
+const showCart = () => showModal("Warenkorb", "views/cart.html", CART_ELEMENTS);
 
 /**  
 * @param {string} name - The name of the schema to fetch
 */
 async function getSchemaID(name) {
-    try 
-    {const schema = await appState.client.request.invokeTemplate("getSchema");
-    const obj = JSON.parse(schema.response);
-    
-    const schemaid = obj.schemas?.find(schema => schema.name === name)?.id;
-
-    if (!schemaid) {
-        console.warn(`Schema ID for "${name}" not found`);
-        return null;
-    }
-    console.log(`Schema ID for "${name}":`, schemaid);
-    return schemaid;    
-}   catch (error) {
+    try {
+        const schema = await appState.client.request.invokeTemplate("getSchema");
+        const schemaid = JSON.parse(schema.response).schemas?.find(s => s.name === name)?.id;
+        
+        if (!schemaid) {
+            console.warn(`Schema ID for "${name}" not found`);
+            return null;
+        }
+        console.log(`Schema ID for "${name}":`, schemaid);
+        return schemaid;    
+    } catch (error) {
         console.error(`Error fetching schema ID for "${name}":`, error);
         return null;
     }
 }
 
-function getfdOrders(){
-    let obj
-    obj = getData('Customers');
-    // Safely access the nested data with proper validation
-    if (obj?.records && Array.isArray(obj.records) && obj.records.length > 0) {
-        const firstRecord = obj.records[0];
-        if (firstRecord?.data) {
-            console.log('Parsed orders:', firstRecord.data);
-            updateCustomerElements(firstRecord.data);
-        } else {
-            console.warn('No data found in first record');
-        }
-    } else {
-        console.warn('No records found in orders response');
-    }
-
-    obj = getData('Orders');
-
-    obj = getData('Item Positions');
-
-    obj = getData('Delivery and Status Info');
-
-    obj = getData('Complaint Status');
-
-}
-
 async function getData(name) {
     try {
         const schemaID = await getSchemaID(name);
-        if (!schemaID) {
-            console.warn(`No schema ID found for ${name}`);
-            return null;
-        }
-
-        const ticketID = appState.currentTicket.id;
-        console.log(`Fetching ${name} data for ticket ID:`, ticketID);
+        if (!schemaID) return null;
 
         const orders = await appState.client.request.invokeTemplate("getData", {
             context: { 
                 schema_id: schemaID,
-                ticketnummer: ticketID
+                ticketnummer: appState.currentTicket.id
             } 
         });
         
-        if (!orders?.response) {
-            console.warn(`No response received for ${name} data`);
-            return null;
-        }
-        
-        return JSON.parse(orders.response);
-        
+        return orders?.response ? JSON.parse(orders.response) : null;
     } catch (error) {
         console.error(`Error fetching ${name} data:`, error);
         return null;
@@ -884,183 +776,97 @@ async function getData(name) {
 }
 
 
-async function extractCustomObjectData() {
-
-    console.log('Extracting custom object data...');
-
-    updateAusfuehrungElements(await getAusfuehrungData());
-
-    updateRecipientElements(await getRecipientData());
-
-    updateClientElements(await getClientData());
-
-    updateOrderStatusElements(await getOrderStatus());
-
-
-}
-
-async function getAusfuehrungData() {
-
-        const obj = await getData(CUSTOM_OBJECTS.execution);
-        const data = obj?.records?.[0]?.data;
-        
-        if (!data) {
-            console.warn('No execution data found');
-            return;
-        }
-
-        console.log('Parsed data:', data);
-
-        // Helper function to safely concatenate strings
-        const safeConcat = (...values) => 
-            values.filter(val => val && val.trim()).join(' ');
-
-        const payload = {
-            nummer: data.ausfuehrender || '',
-            name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
-            addresse: safeConcat(data.plz, data.ort, data.strasse, data.land),
-            rang: data.rang || '',
-            fax: data.fax || '',
-            telefon: data.telefon || '',
-            email: data.email || '',
-            auftragshinweis: data.auftragshinweis || '',
-            hinweis: data.hinweis || ''
-        };
-    return payload;
-}
-
-function updateAusfuehrungElements(data) {
-    const elements = {
-        'ausfuehrung-nummer': data.nummer,
-        'ausfuehrung-name': data.name,
-        'ausfuehrung-addresse': data.addresse,
-        'ausfuehrung-rang': data.rang,
-        'ausfuehrung-fax': data.fax,
-        'ausfuehrung-telefon': data.telefon,
-        'ausfuehrung-email': data.email,
-        'auftragshinweis': data.auftragshinweis,
-        'hinweis': data.hinweis
-    };
-
-    Object.entries(elements).forEach(([id, value]) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.innerHTML = value || 'N/A';
-        }
-    });
-}
-
-async function getRecipientData() {
-    const obj = await getData(CUSTOM_OBJECTS.recipient);
-    const data = obj?.records?.[0]?.data;
-    if (!data) {
-        console.warn('No recipient data found');
-        return;
+// Helper function to safely concatenate strings
+const safeConcat = (...values) => {
+    const separator = values[values.length - 1];
+    
+    // Check if last argument is a separator option
+    if (typeof separator === 'object' && separator.separator) {
+        const actualValues = values.slice(0, -1);
+        return actualValues.filter(val => val && val.trim()).join(separator.separator);
     }
-    console.log('Parsed recipient data:', data);
+    
+    // Default behavior - join with space
+    return values.filter(val => val && val.trim()).join(' ');
+};
 
-    // Helper function to safely concatenate strings
-    const safeConcat = (...values) => 
-        values.filter(val => val && val.trim()).join(' ');  
-    const payload = {
-        name: safeConcat(data.anrede, data.name1, data.name2),
-        firmenzusatz: data.name3 || '',
-        address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land),
-        phone: data.telefon || '',
-    };  
-    return payload;
-}
-
-function updateRecipientElements(data) {
-    try
-    {
-    console.log('Updating recipient elements with data:', data);
-    const elements = {
-        'recipient-name': data.name,
-        'recipient-firmenzusatz': data.firmenzusatz,
-        'recipient-addresse': data.address,
-        'recipient-telefon': data.phone
-    };  
-    Object.entries(elements).forEach(([id, value]) => {
-        const element = document.getElementById(id);    
+// Generic function to update DOM elements
+function updateElements(data, elementMap) {
+    Object.entries(elementMap).forEach(([id, value]) => {
+        const element = document.getElementById(id);
         if (element) {
             element.innerHTML = value || 'N/A';
         } else {
             console.warn(`Element with ID ${id} not found`);
         }
     });
-    } catch (error) {
-        console.error('Error updating recipient elements:', error);
-    }   
+}
+
+async function getAusfuehrungData() {
+    const data = (await getData(CUSTOM_OBJECTS.execution))?.records?.[0]?.data;
+    if (!data) {
+        console.warn('No execution data found');
+        return {};
+    }
+
+    return {
+        nummer: data.ausfuehrender || '',
+        name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
+        addresse: safeConcat(data.plz, data.ort, data.strasse, data.land, { separator: '\n' }),
+        rang: data.rang || '',
+        fax: data.fax || '',
+        telefon: data.telefon || '',
+        email: data.email || '',
+        auftragshinweis: data.auftragshinweis || '',
+        hinweis: data.hinweis || ''
+    };
+}
+
+async function getRecipientData() {
+    const data = (await getData(CUSTOM_OBJECTS.recipient))?.records?.[0]?.data;
+    if (!data) {
+        console.warn('No recipient data found');
+        return {};
+    }
+
+    return {
+        name: safeConcat(data.anrede, data.name1, data.name2),
+        firmenzusatz: data.name3 || '',
+        address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land, { separator: '\n' }),
+        phone: data.telefon || ''
+    };
 }
 
 async function getClientData() {
     try {
-        const obj = await getData(CUSTOM_OBJECTS.client);
-        const data = obj?.records?.[0]?.data;
+        const data = (await getData(CUSTOM_OBJECTS.client))?.records?.[0]?.data;
         if (!data) {
             console.warn('No client data found');
-            return;
+            return {};
         }
-        console.log('Parsed client data:', data);
 
-        // Helper function to safely concatenate strings
-        const safeConcat = (...values) => 
-            values.filter(val => val && val.trim()).join(' ');  
-        const payload = {
+        return {
             name: safeConcat(data.anrede, data.name1, data.name2),
             firmenzusatz: data.name3 || '',
-            address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land),
+            address: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land, { separator: '\n' }),
             phone: data.telefon || '',  
             email: data.email || ''
-        }
-        return payload;
+        };
     } catch (error) {       
         console.error('Error fetching client data:', error);
-        return null;
-    }
-}
-
-function updateClientElements(data) {
-    try {
-        console.log('Updating client elements with data:', data);
-        const elements = {
-
-            'auftraggeber-name': data.name,
-            'auftraggeber-firmenzusatz': data.firmenzusatz,
-            'auftraggeber-addresse': data.address,
-            'auftraggeber-telefon': data.phone,
-            'auftraggeber-email': data.email
-        };
-        Object.entries(elements).forEach(([id, value]) => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.innerHTML = value || 'N/A';
-            }
-            else {
-                console.warn(`Element with ID ${id} not found`);
-            }
-        });
-    } catch (error) {
-        console.error('Error updating client elements:', error);
+        return {};
     }
 }
 
 async function getOrderStatus() {
     try {
-        const obj = await getData(CUSTOM_OBJECTS.orderStatus);
-        const data = obj?.records?.[0]?.data;
+        const data = (await getData(CUSTOM_OBJECTS.orderStatus))?.records?.[0]?.data;
         if (!data) {
             console.warn('No order status data found');
-            return;
+            return {};
         }
-        console.log('Parsed order status data:', data);
 
-        // Helper function to safely concatenate strings
-        // const safeConcat = (...values) =>
-        //     values.filter(val => val && val.trim()).join(' ');
-
-        const payload = {
+        return {
             bestelldatum: data.bestelldatum || '',
             vertriebsweg: data.vertriebsweg || '',
             auftragsstatus: data.status || '',
@@ -1070,35 +876,122 @@ async function getOrderStatus() {
             rechnungsnummer: data.rechnungsnummer || '',
             trackingnummer: data.trackingnummer || ''
         };
-        return payload;
     } catch (error) {
         console.error('Error fetching order status data:', error);
-        return null;
+        return {};
     }   
 }
 
-function updateOrderStatusElements(data) {
+async function getMediatorData() {
     try {
-        console.log('Updating order status elements with data:', data);
-        const elements = {
-            'bestelldatum': data.bestelldatum,
-            'vertriebsweg': data.vertriebsweg,
-            'auftragsstatus': data.auftragsstatus,
-            'freitext': data.freitext,
-            'molliwert': data.molliwert,
-            'erfassdatum': data.erfassdatum,
-            'rechnungsnummer': data.rechnungsnummer,
-            'trackingnummer': data.trackingnummer
+        const data = (await getData(CUSTOM_OBJECTS.mediator))?.records?.[0]?.data;
+        if (!data) {
+            console.warn('No mediator data found');
+            return {};
+        }
+        return {
+            vermittler: data.vermittler,
+            active: data.vermittler_aktiv,
+            typ: data.vermittler_lfp_agp,
+            name: safeConcat(data.anrede, data.name1, data.name2, data.name3),
+            addresse: safeConcat(data.plz, data.ort, data.strasse, data.region, data.land, { separator: '\n' }),
+            fax: data.fax || '',
+            telefon: data.telefon || ''
         };
-        Object.entries(elements).forEach(([id, value]) => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.innerHTML = value || 'N/A';
-            } else {
-                console.warn(`Element with ID ${id} not found`);
-            }
-        });
-    } catch (error) {
-        console.error('Error updating order status elements:', error);
     }
+    catch (error) {
+        console.error('Error fetching mediator data:', error);
+        return {};
+    }
+}
+
+async function getCartData() {
+    try {
+        const data = (await getData(CUSTOM_OBJECTS.cart))?.records?.[0]?.data;
+        if (!data) {
+            console.warn('No cart data found');
+            return {};
+        }
+        return {
+            auftragsnummer: data.auftragsnummer,
+            bestellnummer: data.bestellnummer,
+            lieferdatum: data.lieferdatum,
+            zahlbetrag: data.zahlbetrag,
+            kartentext: data.kartentext
+        };
+    } catch (error) {
+        console.error('Error fetching cart data:', error);
+        return {};
+    }
+}
+            
+
+async function extractCustomObjectData() {
+    console.log('Extracting custom object data...');
+
+    const [ausfuehrung, recipient, client, orderStatus, mediator, cart] = await Promise.all([
+        getAusfuehrungData(),
+        getRecipientData(),
+        getClientData(),
+        getOrderStatus(),
+        getMediatorData(),
+        getCartData()
+    ]);
+
+    // Update all elements using the generic function
+    updateElements(ausfuehrung, {
+        'ausfuehrung-nummer': ausfuehrung.nummer,
+        'ausfuehrung-name': ausfuehrung.name,
+        'ausfuehrung-addresse': ausfuehrung.addresse,
+        'ausfuehrung-rang': ausfuehrung.rang,
+        'ausfuehrung-fax': ausfuehrung.fax,
+        'ausfuehrung-telefon': ausfuehrung.telefon,
+        'ausfuehrung-email': ausfuehrung.email,
+        'auftragshinweis': ausfuehrung.auftragshinweis,
+        'hinweis': ausfuehrung.hinweis
+    });
+
+    updateElements(recipient, {
+        'recipient-name': recipient.name,
+        'recipient-firmenzusatz': recipient.firmenzusatz,
+        'recipient-addresse': recipient.address,
+        'recipient-telefon': recipient.phone
+    });
+
+    updateElements(client, {
+        'auftraggeber-name': client.name,
+        'auftraggeber-firmenzusatz': client.firmenzusatz,
+        'auftraggeber-addresse': client.address,
+        'auftraggeber-telefon': client.phone,
+        'auftraggeber-email': client.email
+    });
+
+    updateElements(orderStatus, {
+        'bestelldatum': orderStatus.bestelldatum,
+        'vertriebsweg': orderStatus.vertriebsweg,
+        'auftragsstatus': orderStatus.auftragsstatus,
+        'freitext': orderStatus.freitext,
+        'molliwert': orderStatus.molliwert,
+        'erfassdatum': orderStatus.erfassdatum,
+        'rechnungsnummer': orderStatus.rechnungsnummer,
+        'trackingnummer': orderStatus.trackingnummer
+    });
+
+    updateElements(mediator, {
+        'vermittler': mediator.vermittler,
+        'vermittler-aktiv': mediator.active ? 'Ja' : 'Nein',
+        'vermittler-typ': mediator.typ,
+        'vermittler-name': mediator.name,
+        'vermittler-addresse': mediator.addresse,
+        'vermittler-fax': mediator.fax,
+        'vermittler-telefon': mediator.telefon
+    });
+
+    updateElements(cart, {
+        'warenkorb-auftragsnummer': cart.auftragsnummer,
+        'warenkorb-bestellnummer': cart.bestellnummer,
+        'warenkorb-lieferdatum': cart.lieferdatum,
+        'warenkorb-zahlbetrag': cart.zahlbetrag,
+        'warenkorb-kartentext': cart.kartentext
+    });
 }
