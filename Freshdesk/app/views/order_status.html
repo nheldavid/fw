@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="table">
-      <span class="fw-type-h6">Augtragsstatus </span>
+      <!-- <span class="fw-type-h6">Augtragsstatus </span> -->
       <table class="table-details">
         <tr class="fw-b-0">
           <td class="fw-b-0 fw-type-sm">Bestelldatum:</td>
@@ -72,6 +72,8 @@
           //test data for datatable
           // This should be replaced with actual data fetching logic  
 
+          //console.log("ticket id: ", client.currentTicket.id);
+
             const data = {
               columns: [{
                 "key": "name",
@@ -83,7 +85,7 @@
                 "key": "role",
                 "text": "Role"
               }],
-              persons: [{
+              rows: [{
                 "id": "1234",
                 "name": "Alexander Goodman", 
                 "role": "Administrator", 
@@ -104,7 +106,7 @@
           console.log("Data for datatable: ", data);
           let datatable = document.getElementById('datatable1');
           datatable.columns = data.columns
-          datatable.rows = data.persons;
+          datatable.rows = data.rows;
           console.log("Data table initialized with columns: ", datatable.columns);
           console.log("Data table initialized with rows: ", datatable.rows);
           

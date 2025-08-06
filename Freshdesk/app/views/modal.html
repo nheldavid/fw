@@ -7,197 +7,100 @@
     <link rel="stylesheet" href="../styles/style.css" />
   </head>
   <body>
-    <script src="../scripts/modal.js"></script>
-    <div class="form">
-      <form>
-        <div>
-          <div>
-              <div class="fw-flex fw-flex-row">
-                <span class="fw-flex-grow fw-type-h5">Fleurop-Auftragsdaten</span>
-                <fw-button color="secondary">
-                  <fw-icon slot="before-label" size="16" name="refresh"></fw-icon>
-                  <span>Update</span>
-                </fw-button>
-                
-                <fw-button color="secondary">
-                  <fw-icon slot="before-label" size="16" name="alert"></fw-icon>
-                  <span>Complaint</span>
-                </fw-button>
-              </div>
-              <div class="fw-flex fw-flex-row">
-                <span class="fw-flex-grow fw-type-h6">Order</span>
-                <span>alsd;lfawek</span>
-                <span class="fw-flex-grow fw-type-h6">FDE</span>
-                <span>sawewe</span>
-                <fw-label id="delivery-status" value="Delivered" color="text-primary"></fw-label>
-              </div>
-          </div>
-          
-          <fw-accordion expanded>
-          <fw-accordion-title>Customer Information</fw-accordion-title>
-              <fw-accordion-body>
-                <table>
-                  <tr>
-                    <td class="fw-type-h7">Customer Name:</td>
-                    <td id="customer-name" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Customer Email:</td>
-                    <td id="customer-email" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Billing Address:</td>
-                    <td id="billing-address" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Central Order Account:</td>
-                    <td id="central-order-account" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Communication:</td>
-                    <td id="communication" class="fw-type-h6"></td>
-                  </tr>
-                </table>
-            </fw-accordion-body>
-          </fw-accordion>
-          <br />
-          <fw-accordion>
-              <fw-accordion-title>Order Details</fw-accordion-title>
-              <fw-accordion-body>
-                <table>
-                  <tr>
-                    <td class="fw-type-h7">Order Number (SAP):</td>
-                    <td id="order-number" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">FDE Order Number:</td>
-                    <td id="fde-order-number" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Order Date:</td>
-                    <td id="order-date" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Total Amount:</td>
-                    <td id="total-amount" class="fw-type-h6"></td>    
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Payment Method, Voucher:</td>
-                    <td id="payment-method" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Order Comment/Note:</td>
-                    <td id="order-comment" class="fw-type-h6"></td>
-                  </tr>
-                </table>
-              </fw-accordion-body>
-          </fw-accordion>
-          <br />
-          <fw-accordion>
-              <fw-accordion-title>Item Positions and Accessories </fw-accordion-title>
-              <fw-accordion-body>
-                <table> 
-                  <tr>
-                    <td class="fw-type-h7">Position: </td>
-                    <td id="position" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Product Name/Description: </td>
-                    <td id="product-name" class="fw-type-h6"></td>  
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Quantity: </td>
-                    <td id="quantity" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Price: </td>
-                    <td id="price" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Total Price (Position): </td>
-                    <td id="total-price" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Optional Extras (Accessories): </td>
-                    <td id="optional-extras" class="fw-type-h7"></td>
-                  </tr>
-                </table>
-              </fw-accordion-body>
-          </fw-accordion>
-          <br />
-          <fw-accordion>
-            <fw-accordion-title>Delivery and Status Information </fw-accordion-title>
-              <fw-accordion-body>
-                <table>
-                  <tr>
-                    <td class="fw-type-h7">Planned Delivery Date:</td>
-                    <td id="planned-delivery-date" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Actual Delivery Date:</td>
-                    <td id="actual-delivery-date" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Delivery Status:</td>
-                    <td id="delivery-status" class="fw-type-h6"></td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Shipment Number:</td>
-                    <td id="shipment-number" class="fw-type-h6"></td>  
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Self-Delivery Receipt:</td>
-                    <td id="self-delivery-receipt" class="fw-type-h6"></td>  
-                  </tr>
-                </table>
-            </fw-accordion-body>
-          </fw-accordion>  
-          <br />    
-          <fw-accordion>
-            <fw-accordion-title>Complaint Status </fw-accordion-title>
-              <fw-accordion-body>
-                <table>
-                  <tr>
-                    <td class="fw-type-h7">Complaint Reason 1:</td>
-                    <td class="fw-type-h6">
-                      <fw-select id="complaint-reason1" class="fw-mt-4" placeholder="">
-                      <fw-select-option value="1">Reason 1</fw-select-option>
-                      <fw-select-option value="2">Reason 2</fw-select-option>
-                      <fw-select-option value="3">Reason 3</fw-select-option>
-                    </fw-select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Complaint Reason 2:</td>
-                    <td class="fw-type-h6">
-                      <fw-select id="complaint-reason2" class="fw-mt-4" placeholder="">
-                      <fw-select-option value="1">Reason 1</fw-select-option>
-                      <fw-select-option value="2">Reason 2</fw-select-option>
-                      <fw-select-option value="3">Reason 3</fw-select-option>
-                    </fw-select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Refund (Amount):</td>
-                    <td id="refund-amount" class="fw-type-h6"></td>  
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Credit Note/No:</td>
-                    <td id="credit-note" class="fw-type-h6"></td>  
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Status:</td>
-                    <td id="complaint-status" class="fw-type-h6"></td>  
-                  </tr>
-                  <tr>
-                    <td class="fw-type-h7">Central Number:</td>
-                    <td id="central-number" class="fw-type-h6"></td>  
-                  </tr>
-                </table>
-            </fw-accordion-body>
-          </fw-accordion>   
-        </div>   
-      </form>
+    <div class="table">
+      <!-- <span class="fw-type-h6">Augtragsstatus </span> -->
+      <table class="table-details">
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Bestelldatum:</td>
+          <td class="fw-b-0 fw-type-h6" id="bestelldatum"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Vertriebsweg:</td>
+          <td class="fw-b-0 fw-type-h6" id="vertriebsweg"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Status:</td>
+          <td class="fw-b-0 fw-type-h6" id="auftragsstatus"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Freitext:</td> 
+          <td class="fw-b-0 fw-type-h6" id="freitext"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Molliwert:</td>
+          <td class="fw-b-0 fw-type-h6" id="molliwert"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Erfassdatum:</td>
+          <td class="fw-b-0 fw-type-h6" id="erfassdatum"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Rechnungsnummer:</td>
+          <td class="fw-b-0 fw-type-h6" id="rechnungsnummer"></td>
+        </tr>
+        <tr class="fw-b-0">
+          <td class="fw-b-0 fw-type-sm">Trackingnummer:</td>
+          <td class="fw-b-0 fw-type-h6" id="trackingnummer"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="table-details" style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
+    <span class="fw-type-h4">OT</span>
+    <table id="Klassik-OT-table" >
+      <thead>
+        <tr>
+          <th class="fw-b-0 fw-type-sm">Datum</th>
+          <th class="fw-b-0 fw-type-sm">Ereignis</th>
+          <th class="fw-b-0 fw-type-sm">Text</th>
+          <th class="fw-b-0 fw-type-sm">Ergebnis</th>
+          <th class="fw-b-0 fw-type-sm">Name</th>
+          <th class="fw-b-0 fw-type-sm">Adresse</th>
+          <th class="fw-b-0 fw-type-sm">Erfasser</th>
+          <th class="fw-b-0 fw-type-sm">Storniert</th>
+          <th class="fw-b-0 fw-type-sm">Text</th>
+          <th class="fw-b-0 fw-type-sm">Datum</th>
+          <!-- <th class="fw-b-0 fw-type-sm">Uhrzeit</th> -->
+          <th class="fw-b-0 fw-type-sm">Erfasser</th>
+        </tr>
+      </thead>
+      <tbody id="Klassik-OT-tableBody">
+        <tr>
+          <td> Loading...</td>
+        </tr>
+         
+        <!-- Rows will be inserted here -->
+      </tbody>
+    </table> 
+    </div>  
+    <div class="table"  style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
+      <span class="fw-type-h4">Gutscheine</span>
+      <table>
+        <thead>
+          <th class="fw-b-0 fw-type-sm">Kartennummer</th>
+          <th class="fw-b-0 fw-type-sm">Wert</th>
+          <th class="fw-b-0 fw-type-sm">Einlösedatum</th>
+        </thead>
+        <tbody id="gtschn_tableBody">
+
+        </tbody>
+      </table>
+    </div>
+    <div class="table"  style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
+      <span class="fw-type-h5">Kopfpauschalen</span>
+      <table>
+        <thead>
+          <th class="fw-b-0 fw-type-sm">Kondition</th>
+          <th class="fw-b-0 fw-type-sm">Konditionstext</th>
+          <th class="fw-b-0 fw-type-sm">Betrag</th>
+          <th class="fw-b-0 fw-type-sm">Einheit</th>
+        </thead>
+        <tbody id="kopf_ps_tableBody">
+
+        </tbody>
+      </table>
     </div>
   </body>
+
+  <script src="../scripts/modal.js"></script>
+  <script src="../scripts/data-utils.js"></script>
 </html>

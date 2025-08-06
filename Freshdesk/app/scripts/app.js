@@ -14,6 +14,7 @@
  * These field keys are defined in CUSTOM_FIELD_CONFIG below.
  */
 
+
 // Custom Field Configuration
 // These field keys must match the custom fields configured in Freshdesk
 const CUSTOM_FIELD_CONFIG = {
@@ -43,13 +44,7 @@ const CUSTOM_OBJECTS = {
     cart: 'Warenkorb'
 };
 
-// Global app state
-const appState = {
-    client: null,
-    isInitialized: false,
-    currentTicket: null,
-    orderData: null
-};
+
 
 // DOM elements - Crayons Web Components
 const elements = {
@@ -653,32 +648,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-// Generic function to show modals using existing DOM data
-async function showModal(title, template, elementIds) {
-    try {
-        const payload = getDataFromElements(elementIds);
-        
-        const data = await appState.client.interface.trigger("showModal", {
-            title,
-            template,
-            data: payload
-        });
-        console.log(`${title} modal data:`, data);
-    } catch (error) {
-        console.error(`Error with ${title} modal:`, error);
-    }
-}
-
-// Helper function to extract data from DOM elements
-function getDataFromElements(elementMap) {
-    const payload = {};
-    Object.entries(elementMap).forEach(([key, elementId]) => {
-        const element = document.getElementById(elementId);
-        payload[key] = element?.innerHTML !== 'N/A' ? element?.innerHTML : '';
-    });
-    return payload;
-}
-
 // Element mapping configurations
 const RECIPIENT_ELEMENTS = {
     name: 'recipient-name',
@@ -733,9 +702,46 @@ const CART_ELEMENTS = {
 const showRecipient = () => showModal("Empfänger", "views/recipient.html", RECIPIENT_ELEMENTS);
 const showClient = () => showModal("Auftraggeber", "views/client.html", RECIPIENT_ELEMENTS);
 const showExecution = () => showModal("Ausführung", "views/execution.html", EXECUTION_ELEMENTS);
-const showOrderStatus = () => showModal("Auftragsstatus", "views/order_status.html", ORDER_STATUS_ELEMENTS);
-const showMediator = () => showModal("Vermittler", "views/mediator.html", MEDIATOR_ELEMENTS);
+const showOrderStatus = () => showModal("Auftragsstatus", "views/modal.html", ORDER_STATUS_ELEMENTS);
+const showMediator = () => showModal("Vermittler", "views/client_details.html", MEDIATOR_ELEMENTS);
 const showCart = () => showModal("Warenkorb", "views/cart.html", CART_ELEMENTS);
+
+// Generic function to show modals using existing DOM data
+async function showModal(title, template, elementIds) {
+    try {
+        const payload = getDataFromElements(elementIds);
+        
+        const data = await appState.client.interface.trigger("showModal", {
+            title,
+            template,
+            data: payload
+        });
+        console.log(`${title} modal data:`, data);
+    } catch (error) {
+        console.error(`Error with ${title} modal:`, error);
+    }
+}
+
+// Helper function to extract data from DOM elements
+function getDataFromElements(elementMap) {
+    const payload = {};
+    Object.entries(elementMap).forEach(([key, elementId]) => {
+        const element = document.getElementById(elementId);
+        payload[key] = element?.innerHTML !== 'N/A' ? element?.innerHTML : '';
+    });
+
+     // Manually add ticketnummer from appState
+    payload.ticketnummer = appState.currentTicket?.id || '';
+
+    // if (title === "Auftragsstatus") {
+    //     const otdata = getOTtable();
+    //     payload.OTData = otdata;
+    //     console.log(`Payload for ${title}:`, payload);
+    // }
+    
+    
+    return payload;    
+}
 
 // Configuration objects for each data type
 const DATA_CONFIGS = {
@@ -808,44 +814,6 @@ const DATA_CONFIGS = {
     }
 };
 
-/**
- * Generic data processing function
- * @param {Object} data - Raw data from API
- * @param {Object} config - Configuration for field processing
- * @returns {Object} Processed data object
- */
-function processData(data, config) {
-    const result = {};
-    
-    Object.entries(config).forEach(([key, fieldConfig]) => {
-        if (typeof fieldConfig === 'string') {
-            // Simple field mapping
-            result[key] = getValue(data[fieldConfig]);
-        } else if (Array.isArray(fieldConfig)) {
-            // Array of fields to combine with space
-            result[key] = combineFields(data, fieldConfig, ' ');
-        } else if (typeof fieldConfig === 'object' && fieldConfig.fields) {
-            // Complex field with custom separator
-            result[key] = combineFields(data, fieldConfig.fields, fieldConfig.separator);
-        }
-    });
-    
-    return result;
-}
-
-/**
- * Combine multiple fields with filtering and custom separator
- * @param {Object} data - Source data
- * @param {Array} fields - Field names to combine
- * @param {string} separator - Separator to use
- * @returns {string} Combined string
- */
-function combineFields(data, fields, separator = ' ') {
-    return fields
-        .map(field => data[field])
-        .filter(val => val && String(val).trim())
-        .join(separator);
-}
 
 /**
  * Generic data fetcher with error handling
@@ -877,21 +845,34 @@ const getClientData = () => fetchData('client', 'client');
 const getOrderStatus = () => fetchData('orderStatus', 'order status');
 const getMediatorData = () => fetchData('mediator', 'mediator');
 const getCartData = () => fetchData('cart', 'cart');
+const getOTtable = () => fetchData('ot', 'klassik OT', true);
 
-// Even more generic version if you want maximum flexibility
-async function getDataByType(type) {
-    const typeMap = {
-        execution: { object: 'execution', name: 'execution' },
-        recipient: { object: 'recipient', name: 'recipient' },
-        client: { object: 'client', name: 'client' },
-        orderStatus: { object: 'orderStatus', name: 'order status' },
-        mediator: { object: 'mediator', name: 'mediator' },
-        cart: { object: 'cart', name: 'cart' }
-    };
+// // Even more generic version if you want maximum flexibility
+// async function getDataByType(type) {
+//     const typeMap = {
+//         execution: { object: 'execution', name: 'execution' },
+//         recipient: { object: 'recipient', name: 'recipient' },
+//         client: { object: 'client', name: 'client' },
+//         orderStatus: { object: 'orderStatus', name: 'order status' },
+//         mediator: { object: 'mediator', name: 'mediator' },
+//         cart: { object: 'cart', name: 'cart' }
+//     };
     
-    const config = typeMap[type];
-    return await config ? fetchData(config.object, config.name) : {};
-}            
+//     const config = typeMap[type];
+//     return await config ? fetchData(config.object, config.name) : {};
+// }            
+
+// Generic function to update DOM elements
+function updateElements(data, elementMap) {
+    Object.entries(elementMap).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = value || 'Nicht verfügbar';
+        } else {
+            console.warn(`Element with ID ${id} not found`);
+        }
+    });
+}
 
 async function extractCustomObjectData() {
     console.log('Extracting custom object data...');

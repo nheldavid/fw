@@ -1,44 +1,150 @@
-      const init = async () => {
-        try {
-          const client = await window.frsh_init();
+const CUSTOM_OBJECTS = {
+    ot: 'Auftragsstatus_KLASSIK_OT',
+    gutscheine: 'Auftragsstatus_KLASSIK_GTSCHN',
+    kopfpauschalen: 'Auftragsstatus_KLASSIK_KOPF_PS'
+}
 
-          const context = await client.instance.context();
+const DATA_CONFIGS = {
+    ot: {
+        datum: ["datum", "uhrzeit"],
+        ereignes: "ereignis",
+        text: "text",
+        ergebnis: "ergebnis",
+        name: "name",
+        addresse: {
+            fields: ["strasse_hausnummer","plz", "ort", "ortsteil"],
+            separator: "<br>"
+        },
+        erfasser: "erfasser",
+        storniert: "storniert",
+        storniert_text: "storniert_text",
+        storno_datum: "storno_datum",
+        //storno_uhrzeit: "storno_uhrzeit",
+        storno_erfasser: "storno_erfasser"
+    },
+    gutscheine: {
+        kartennummer: "kartennummer",
+        wert: "wert",
+        einlosedatum: "einlösedatum",
+    },
+    kopfpauschalen: {
+        kondition: "kondition",
+        konditionstext: "konditionstext",
+        betrag: "betrag",
+        einhet: "einheit"
+    }}
 
-          document.getElementById("customer-name").innerHTML =  context.data.customerName || 'Not Available';
-          document.getElementById("customer-email").innerHTML = context.data.customerEmail || 'Not Available';
-          document.getElementById("billing-address").innerHTML = context.data.billingAddress || 'Not Available';
-          document.getElementById("central-order-account").innerHTML = context.data.centralOrderAccount || 'Not Available';
-          document.getElementById("communication").innerHTML = context.data.communication || 'Not Available';
-          //document.getElementById("shipment-number").innerHTML = context.data.shipmentNumber || 'Not Available';
-          // document.getElementById("order-number").innerHTML = context.data.orderNumber || 'Not Available';
-          // document.getElementById("fde-order-number").innerHTML = context.data.fdeOrderNumber || 'Not Available';
-          // document.getElementById("order-date").innerHTML = context.data.orderDate || 'Not Available';
-          // document.getElementById("total-amount").innerHTML = context.data.totalAmount || 'Not Available';
-          // document.getElementById("payment-method").innerHTML = context.data.paymentMethod || 'Not Available';
-          // document.getElementById("order-comment").innerHTML = context.data.orderComment || 'Not Available';
-          // document.getElementById("position").innerHTML = context.data.position || 'Not Available';
-          // document.getElementById("product-name").innerHTML = context.data.productName || 'Not Available';
-          // document.getElementById("quantity").innerHTML = context.data.quantity || 'Not Available';
-          // document.getElementById("price").innerHTML = context.data.price || 'Not Available';
-          // document.getElementById("total-price").innerHTML = context.data.totalPrice || 'Not Available';
-          // document.getElementById("optional-extras").innerHTML = context.data.optionalExtras || 'Not Available';
-          // document.getElementById("planned-delivery-date").innerHTML = context.data.plannedDeliveryDate || 'Not Available';
-          // document.getElementById("actual-delivery-date").innerHTML = context.data.actualDeliveryDate || 'Not Available';
-          // document.getElementById("delivery-status").innerHTML = context.data.deliveryStatus || 'Not Available';
-          // document.getElementById("shipment-number").innerHTML = context.data.shipmentNumber || 'Not Available';
-          // document.getElementById("self-delivery-receipt").innerHTML = context.data.selfDeliveryReceipt || 'Not Available';
-          // document.getElementById("comlplaint-reason1").value = context.data.complaintReason1 || 'Not Available';
-          // document.getElementById("comlplaint-reason2").value = context.data.complaintReason2 || 'Not Available';
-          // document.getElementById("refund-amount").innerHTML = context.data.refundAmount || 'Not Available';
-          // document.getElementById("credit-note").innerHTML = context.data.creditNote || 'Not Available';
-          // document.getElementById("complaint-status").innerHTML = context.data.complaintStatus || 'Not Available';
-          // document.getElementById("central-number").innerHTML = context.data.centralNumber || 'Not Available';
-          // document.getElementById("delivery-date").innerHTML = context.data.deliveryDate || 'Not Available';
-          // document.getElementById("order-status").value = context.data.orderStatus || 'Not Available';  
-          console.log("Modal instance method context", context);
-          } catch (error) {
-          console.log('Child:DataApi', error);
+document.addEventListener("DOMContentLoaded", function(){
+      app.initialized()
+        .then(function(_client){
+        let client = _client;
+        client.instance.context().then(function (context){
+          const orderdetails = context.data;
+          appState.client = client;
+          appState.currentTicket = context.ticket;
+
+          appState.client.data.get('ticket')
+            .then(function(data) {
+              appState.currentTicket = data.ticket;
+            });
+
+          console.log ("received data: ", orderdetails);
+
+          document.getElementById('bestelldatum').innerHTML = orderdetails.bestelldatum;
+          document.getElementById('vertriebsweg').innerHTML = orderdetails.vertriebsweg;
+          document.getElementById('auftragsstatus').innerHTML = orderdetails.auftragsstatus;
+          document.getElementById('freitext').innerHTML = orderdetails.freitext;
+          document.getElementById('molliwert').innerHTML = orderdetails.molliwert;
+          document.getElementById('erfassdatum').innerHTML = orderdetails.erfassdatum;    
+          document.getElementById('rechnungsnummer').innerHTML = orderdetails.rechnungsnummer;
+          document.getElementById('trackingnummer').innerHTML = orderdetails.trackingnummer;
+
+          console.log("Ticket ID: ", orderdetails.ticketnummer);        
+          
+          extractCustomObjectData()
+
+        });
+      });
+    });
+
+  // Fetch and display data for each custom object
+  // Simplified data functions - now just one-liners!
+const getOTtable = () => fetchData('ot', 'klassik OT');
+const getGutscheineTable = () => fetchData('gutscheine', 'Gutscheine');
+const getKopfpauschalenTable = () => fetchData('kopfpauschalen', 'Kopfpauschalen');
+/**
+ * Generic data fetcher with error handling
+ * @param {string} objectType - Type of custom object to fetch
+ * @param {string} dataType - Human readable name for logging
+ * @returns {Object} Processed data or empty object
+ */
+async function fetchData(objectType, dataType) {
+    try {
+        const obj = await getData(CUSTOM_OBJECTS[objectType]);
+        //const data = obj?.records?.[0]?.data;
+        const data = obj?.records?.map(record => record.data);
+
+        console.log(`${dataType} data fetched successfully`, data);
+        if (!data) {
+            console.warn(`No ${dataType} data found`);
+            return {};
         }
-      };
+        
+        // Use the new function to process multiple records
+        return processMultipleRecords(data, DATA_CONFIGS[objectType]);
+        //return processData(data, DATA_CONFIGS[objectType]);
+    } catch (error) {
+        console.error(`Error fetching ${dataType} data:`, error);
+        return {};
+    }
+}
 
-      init();
+
+
+
+async function extractCustomObjectData() {
+    console.log('Extracting custom object data...');
+
+    const [ot, gutscheine, kopfpauschalen] = await Promise.all([
+        getOTtable(),
+        getGutscheineTable(),
+        getKopfpauschalenTable()
+    ]);
+
+    console.log('OT Data:', ot);
+    console.log('Gutscheine Data:', gutscheine);
+    console.log('Kopfpauschalen Data:', kopfpauschalen);
+
+
+    // Display data in the UI
+    document.getElementById('Klassik-OT-tableBody').innerHTML = generateTableHTML(ot);
+    document.getElementById('gtschn_tableBody').innerHTML = generateTableHTML(gutscheine);
+    document.getElementById('kopf_ps_tableBody').innerHTML = generateTableHTML(kopfpauschalen);
+}
+function generateTableHTML(data) {
+    if (!data || Object.keys(data).length === 0) {
+        return '<p>No data available</p>';
+    }
+    // let html = '<table class="data-table"><thead><tr>';
+    // // Generate table headers
+    // Object.keys(data[0]).forEach(key => {
+
+    //     html += `<th class="fw-type-xs" style="border: 1px;">${key}</th>`;
+    // });
+    // html += '</tr></thead><tbody>';   
+    // // Generate table rows
+
+    let html = '';
+    data.forEach(row => {
+        html += '<tr>'; 
+        Object.values(row).forEach(value => {
+
+            html += `<td class="fw-type-sm">${value}</td>`;
+        }
+        );
+        html += '</tr>';
+    }
+    );
+    html += '</tbody></table>';
+    return html;
+}
