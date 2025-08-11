@@ -7,97 +7,304 @@
     <link rel="stylesheet" href="../styles/style.css" />
   </head>
   <body>
+    
+    <div id="auftragsstatus-div">
+      <div class="table">
+        <!-- <span class="fw-type-h6">Augtragsstatus </span> -->
+        <table class="table-details">
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Bestelldatum:</td>
+            <td class="fw-b-0 fw-type-h6" id="bestelldatum"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Vertriebsweg:</td>
+            <td class="fw-b-0 fw-type-h6" id="vertriebsweg"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Status:</td>
+            <td class="fw-b-0 fw-type-h6" id="auftragsstatus"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Freitext:</td> 
+            <td class="fw-b-0 fw-type-h6" id="freitext"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Molliwert:</td>
+            <td class="fw-b-0 fw-type-h6" id="molliwert"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Erfassdatum:</td>
+            <td class="fw-b-0 fw-type-h6" id="erfassdatum"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Rechnungsnummer:</td>
+            <td class="fw-b-0 fw-type-h6" id="rechnungsnummer"></td>
+          </tr>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Trackingnummer:</td>
+            <td class="fw-b-0 fw-type-h6" id="trackingnummer"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="table-details" style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
+      <span class="fw-type-h4">OT</span>
+      <table id="Klassik-OT-table" >
+        <thead>
+          <tr>
+            <th class="fw-b-0 fw-type-sm">Datum</th>
+            <th class="fw-b-0 fw-type-sm">Ereignis</th>
+            <th class="fw-b-0 fw-type-sm">Text</th>
+            <th class="fw-b-0 fw-type-sm">Ergebnis</th>
+            <th class="fw-b-0 fw-type-sm">Name</th>
+            <th class="fw-b-0 fw-type-sm">Adresse</th>
+            <th class="fw-b-0 fw-type-sm">Erfasser</th>
+            <th class="fw-b-0 fw-type-sm">Storniert</th>
+            <th class="fw-b-0 fw-type-sm">Text</th>
+            <th class="fw-b-0 fw-type-sm">Datum</th>
+            <!-- <th class="fw-b-0 fw-type-sm">Uhrzeit</th> -->
+            <th class="fw-b-0 fw-type-sm">Erfasser</th>
+          </tr>
+        </thead>
+        <tbody id="Klassik-OT-tableBody">
+          <!-- Rows will be inserted here -->
+        </tbody>
+      </table> 
+      </div>  
+      <div class="table"  style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
+        <span class="fw-type-h4">Gutscheine</span>
+        <table>
+          <thead>
+            <tr>
+              <th class="fw-b-0 fw-type-sm">Kartennummer</th>
+              <th class="fw-b-0 fw-type-sm">Wert</th>
+              <th class="fw-b-0 fw-type-sm">Einlösedatum</th>
+            </tr>
+          </thead>
+          <tbody id="gtschn_tableBody">
+
+          </tbody>
+        </table>
+      </div>
+      <div class="table"  style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
+        <span class="fw-type-h5">Kopfpauschalen</span>
+        <table>
+          <thead>
+            <tr>
+              <th class="fw-b-0 fw-type-sm">Kondition</th>
+              <th class="fw-b-0 fw-type-sm">Konditionstext</th>
+              <th class="fw-b-0 fw-type-sm">Betrag</th>
+              <th class="fw-b-0 fw-type-sm">Einheit</th>
+            </tr>
+          </thead>
+          <tbody id="kopf_ps_tableBody">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="warenkorb-div">
     <div class="table">
-      <!-- <span class="fw-type-h6">Augtragsstatus </span> -->
       <table class="table-details">
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Bestelldatum:</td>
-          <td class="fw-b-0 fw-type-h6" id="bestelldatum"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Vertriebsweg:</td>
-          <td class="fw-b-0 fw-type-h6" id="vertriebsweg"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Status:</td>
-          <td class="fw-b-0 fw-type-h6" id="auftragsstatus"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Freitext:</td> 
-          <td class="fw-b-0 fw-type-h6" id="freitext"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Molliwert:</td>
-          <td class="fw-b-0 fw-type-h6" id="molliwert"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Erfassdatum:</td>
-          <td class="fw-b-0 fw-type-h6" id="erfassdatum"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Rechnungsnummer:</td>
-          <td class="fw-b-0 fw-type-h6" id="rechnungsnummer"></td>
-        </tr>
-        <tr class="fw-b-0">
-          <td class="fw-b-0 fw-type-sm">Trackingnummer:</td>
-          <td class="fw-b-0 fw-type-h6" id="trackingnummer"></td>
-        </tr>
-      </table>
-    </div>
-    <div class="table-details" style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
-    <span class="fw-type-h4">OT</span>
-    <table id="Klassik-OT-table" >
-      <thead>
-        <tr>
-          <th class="fw-b-0 fw-type-sm">Datum</th>
-          <th class="fw-b-0 fw-type-sm">Ereignis</th>
-          <th class="fw-b-0 fw-type-sm">Text</th>
-          <th class="fw-b-0 fw-type-sm">Ergebnis</th>
-          <th class="fw-b-0 fw-type-sm">Name</th>
-          <th class="fw-b-0 fw-type-sm">Adresse</th>
-          <th class="fw-b-0 fw-type-sm">Erfasser</th>
-          <th class="fw-b-0 fw-type-sm">Storniert</th>
-          <th class="fw-b-0 fw-type-sm">Text</th>
-          <th class="fw-b-0 fw-type-sm">Datum</th>
-          <!-- <th class="fw-b-0 fw-type-sm">Uhrzeit</th> -->
-          <th class="fw-b-0 fw-type-sm">Erfasser</th>
-        </tr>
-      </thead>
-      <tbody id="Klassik-OT-tableBody">
-        <tr>
-          <td> Loading...</td>
-        </tr>
-         
-        <!-- Rows will be inserted here -->
-      </tbody>
-    </table> 
-    </div>  
-    <div class="table"  style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
-      <span class="fw-type-h4">Gutscheine</span>
-      <table>
-        <thead>
-          <th class="fw-b-0 fw-type-sm">Kartennummer</th>
-          <th class="fw-b-0 fw-type-sm">Wert</th>
-          <th class="fw-b-0 fw-type-sm">Einlösedatum</th>
-        </thead>
-        <tbody id="gtschn_tableBody">
-
+        <tbody>
+          <tr class="fw-b-0">
+            <td class="fw-b-0 fw-type-sm">Auftragsnummer:</td>
+            <td class="fw-b-0 fw-type-h6" id="warenkorb-auftragsnummer"></td>
+          </tr>
+          <tr>
+            <td class="fw-b-0 fw-type-sm">Bestellnummer:</td>
+            <td class="fw-b-0 fw-type-h6" id="warenkorb-bestellnummer"></td>
+          </tr>
+          <tr>
+            <td class="fw-b-0 fw-type-sm">Lieferdatum:</td>
+            <td class="fw-b-0 fw-type-h6" id="warenkorb-lieferdatum"></td>
+          </tr>
+          <tr>
+            <td class="fw-b-0 fw-type-sm">Zahlbetrag:</td>
+            <td class="fw-b-0 fw-type-h6" id="warenkorb-zahlbetrag"></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="fw-type-sm">Basis Vermittler</th>
+                    <th class="fw-type-sm">Express Vermittler</th>
+                    <th class="fw-type-sm">Sonntag Vermittler</th>
+                    <th class="fw-type-sm">Ausführender Basis</th>
+                    <th class="fw-type-sm">Express Ausführender</th>
+                    <th class="fw-type-sm">Sonntag Ausführender</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td id="v_zuk_bas"></td>
+                    <td id="v_zuk_exp"></td>
+                    <td id="v_zuk_son"></td>
+                    <td id="a_zuk_bas"></td>
+                    <td id="a_zuk_exp"></td>
+                    <td id="a_zuk_son"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-b-0 fw-type-sm">Kartentext:</td>
+            <td class="fw-b-0 fw-type-h6" id="warenkorb-kartentext"></td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <div class="table"  style="height: auto; width: 490px; overflow-x: auto; white-space: nowrap; padding-top: 10px;">
-      <span class="fw-type-h5">Kopfpauschalen</span>
+    <div>
       <table>
         <thead>
-          <th class="fw-b-0 fw-type-sm">Kondition</th>
-          <th class="fw-b-0 fw-type-sm">Konditionstext</th>
-          <th class="fw-b-0 fw-type-sm">Betrag</th>
-          <th class="fw-b-0 fw-type-sm">Einheit</th>
+          <tr>
+            <th class="fw-b-0 fw-type-sm">Position</th>
+            <th class="fw-b-0 fw-type-sm">Material</th>
+            <th class="fw-b-0 fw-type-sm">Menge</th>
+            <th class="fw-b-0 fw-type-sm">Preis brutto</th>
+            <th class="fw-b-0 fw-type-sm">Steuer</th>
+            <th class="fw-b-0 fw-type-sm">Steuer</th>
+            <th class="fw-b-0 fw-type-sm">Kartenart</th>
+            <th class="fw-b-0 fw-type-sm">Größe</th>
+          </tr>
         </thead>
-        <tbody id="kopf_ps_tableBody">
-
+        <tbody id="warenkorb-pos-tableBody">
+          <!-- insert data here -->
         </tbody>
       </table>
+    </div>
+  </div>
+
+    
+    <div id="ausfuehrung-div">
+      <div class="table">
+        <table class="table-details">
+            <tr class="fw-b-0">
+              <td class="fw-b-0 fw-type-sm">Nummer:</td>
+              <td class="fw-b-0 fw-type-h6" id="ausfuehrung-nummer"></td>
+            </tr> 
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Name:</td>
+              <td class="fw-b-0 fw-type-h6" id="ausfuehrung-name"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Addresse:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraggeber-addresse"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Rang:</td>
+              <td class="fw-b-0 fw-type-h6" id="ausfuehrung-rang"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Fax:</td>
+              <td class="fw-b-0 fw-type-h6" id="ausfuehrung-fax"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Telefon:</td>
+              <td class="fw-b-0 fw-type-h6" id="ausfuehrung-telefon"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">E-mail:</td>
+              <td class="fw-b-0 fw-type-h6" id="ausfuehrung-email"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Auftragshinweis:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraghinweis"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Hinweis:</td>
+              <td class="fw-b-0 fw-type-h6" id="hinweis"></td>
+            </tr>
+            
+          </tr>  
+        </table>
+      </div>
+    </div>
+    <div id="empfaenger-div">
+      <div class="table">
+        <table class="table-details">
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Name:</td>
+              <td class="fw-b-0 fw-type-h6" id="empfaenger-name"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Firmenzusatz:</td>
+              <td class="fw-b-0 fw-type-h6" id="empfaenger-firmenzusatz"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Addresse:</td>
+              <td class="fw-b-0 fw-type-h6" id="empfaenger-addresse"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Telefon:</td>
+              <td class="fw-b-0 fw-type-h6" id="empfaenger-telefon"></td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div id="auftraggeber-div">
+      <div class="table">
+        <table class="table-details">
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Name:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraggeber-name"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Firmenzusatz:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraggeber-firmenzusatz"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Addresse:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraggeber-addresse"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Telefon:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraggeber-telefon"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">E-mail:</td>
+              <td class="fw-b-0 fw-type-h6" id="auftraggeber-email"></td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    <div id="vermittler-div">
+      <div class="table">
+        <table class="table-details">
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Nummer:</td>
+              <td class="fw-b-0 fw-type-h6" id="vermittler-nummer"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Aktiv:</td>
+              <td class="fw-b-0 fw-type-h6">
+                <fw-checkbox checked readonly id="vermittler-aktiv"></fw-checkbox>
+              </td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Type:</td>
+              <td class="fw-b-0 fw-type-h6" id="vermittler-typ"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Name:</td>
+              <td class="fw-b-0 fw-type-h6" id="vermittler-name"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Addresse:</td>
+              <td class="fw-b-0 fw-type-h6" id="vermittler-addresse"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Fax:</td>
+              <td class="fw-b-0 fw-type-h6" id="vermittler-fax"></td>
+            </tr>
+            <tr>
+              <td class="fw-b-0 fw-type-sm">Telefon:</td>
+              <td class="fw-b-0 fw-type-h6" id="vermittler-telefon"></td>
+            </tr>
+        </table>
+      </div>
     </div>
   </body>
 

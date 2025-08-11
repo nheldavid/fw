@@ -3,8 +3,9 @@
   "modules": {
     "common": {
       "requests": {
+        "getSchema": {},
         "getData": {},
-        "getSchema": {}
+        "getCartPositionsData": {}
       }
     },
     "support_ticket": {

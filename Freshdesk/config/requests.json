@@ -1,4 +1,15 @@
 {
+  "getSchema": {
+    "schema": {
+      "method": "GET",
+      "host": "<%= iparam.subdomain %>.freshdesk.com",
+      "path": "/api/v2/custom_objects/schemas",
+      "headers": {
+        "Authorization": "Basic <%= encode(iparam.api_key) %>",
+        "Content-Type": "application/json"
+      }
+    }
+  },
   "getData": {
     "schema": {
       "method": "GET",
@@ -10,15 +21,16 @@
       }
     }
   },
-  "getSchema": {
+  "getCartPositionsData": {
     "schema": {
       "method": "GET",
       "host": "<%= iparam.subdomain %>.freshdesk.com",
-      "path": "/api/v2/custom_objects/schemas",
+      "path": "/api/v2/custom_objects/schemas/<%= context.schema_id %>/records?auftragsnummer=<%= context.auftragsnummer %>",
       "headers": {
         "Authorization": "Basic <%= encode(iparam.api_key) %>",
         "Content-Type": "application/json"
       }
     }
   }
+  
 }

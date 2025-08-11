@@ -13,7 +13,13 @@
  * 
  * These field keys are defined in CUSTOM_FIELD_CONFIG below.
  */
-
+var appState = window.appState;
+// const appState = {
+//     client: null,
+//     isInitialized: false,
+//     currentTicket: null,
+//     orderData: null
+// };
 
 // Custom Field Configuration
 // These field keys must match the custom fields configured in Freshdesk
@@ -116,7 +122,7 @@ function initializeDOMElements() {
     elements.orderBtn = document.getElementById('btn-auftragsstatus');
     elements.recipientBtn = document.getElementById('btn-empfaenger');
     elements.clientBtn = document.getElementById('btn-auftraggeber');
-    elements.executionBtn = document.getElementById('btn-execution');
+    elements.executionBtn = document.getElementById('btn-ausfuhrung');
     elements.mediatorBtn = document.getElementById('btn-vermittler');
     elements.cartBtn = document.getElementById('btn-warenkorb');
 }
@@ -129,6 +135,7 @@ function setupEventListeners() {
         elements.retryBtn.addEventListener('click', function() {
             console.log('Retry button clicked');
             loadTicketData();
+            extractCustomObjectData();
         });
     }
 
@@ -649,14 +656,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Element mapping configurations
-const RECIPIENT_ELEMENTS = {
-    name: 'recipient-name',
-    firmenzusatz: 'recipient-firmenzusatz', 
-    address1: 'recipient-addresse',
-    phone1: 'recipient-telefon'
+const EMPFAENGER_ELEMENTS = {
+    name: 'empfaenger-name',
+    firmenzusatz: 'empfaenger-firmenzusatz', 
+    addresse: 'empfaenger-addresse',
+    telefon: 'empfaenger-telefon'
 };
 
-const EXECUTION_ELEMENTS = {
+// Element mapping configurations
+const AUFTRAGGEBER_ELEMENTS = {
+    name: 'autraggerber-name',
+    firmenzusatz: 'autraggerber-firmenzusatz', 
+    addresse: 'autraggerber-addresse',
+    telefon: 'autraggerber-telefon',
+    email: 'autraggerber-email'
+};
+
+const AUSFUEHRUNG_ELEMENTS = {
     nummer: 'ausfuehrung-nummer',
     name: 'ausfuehrung-name',
     addresse: 'ausfuehrung-addresse',
@@ -668,7 +684,7 @@ const EXECUTION_ELEMENTS = {
     hinweis: 'hinweis'
 };
 
-const ORDER_STATUS_ELEMENTS = {
+const AUFTRAGSSTATUS_ELEMENTS = {
     bestelldatum: 'bestelldatum',
     vertriebsweg: 'vertriebsweg',
     auftragsstatus: 'auftragsstatus',
@@ -679,7 +695,7 @@ const ORDER_STATUS_ELEMENTS = {
     trackingnummer: 'trackingnummer'
 };
 
-const MEDIATOR_ELEMENTS = {
+const VERMITTLER_ELEMENTS = {
     vermittler: 'vermittler',
     active: 'vermittler-aktiv',
     typ: 'vermittler-typ',
@@ -689,27 +705,33 @@ const MEDIATOR_ELEMENTS = {
     telefon: 'vermittler-telefon'
 };
 
-const CART_ELEMENTS = {
+const WARENKORB_ELEMENTS = {
     auftragsnummer: 'warenkorb-auftragsnummer',
     bestellnummer: 'warenkorb-bestellnummer',
     lieferdatum: 'warenkorb-lieferdatum',
     zahlbetrag: 'warenkorb-zahlbetrag',
+    v_zuk_bas: 'v_zuk_bas',
+    v_zuk_exp: 'v_zuk_exp',
+    v_zuk_son: 'v_zuk_son',
+    a_zuk_bas: 'a_zuk_bas',
+    a_zuk_exp: 'a_zuk_exp',
+    a_zuk_son: 'a_zuk_son',
     kartentext: 'warenkorb-kartentext'
 }
 
 
 // Main functions - now get data from DOM instead of API
-const showRecipient = () => showModal("Empfänger", "views/recipient.html", RECIPIENT_ELEMENTS);
-const showClient = () => showModal("Auftraggeber", "views/client.html", RECIPIENT_ELEMENTS);
-const showExecution = () => showModal("Ausführung", "views/execution.html", EXECUTION_ELEMENTS);
-const showOrderStatus = () => showModal("Auftragsstatus", "views/modal.html", ORDER_STATUS_ELEMENTS);
-const showMediator = () => showModal("Vermittler", "views/client_details.html", MEDIATOR_ELEMENTS);
-const showCart = () => showModal("Warenkorb", "views/cart.html", CART_ELEMENTS);
+const showRecipient = () => showModal("Empfänger", "views/modal.html", EMPFAENGER_ELEMENTS);
+const showClient = () => showModal("Auftraggeber", "views/modal.html", AUFTRAGGEBER_ELEMENTS);
+const showExecution = () => showModal("Ausführung", "views/modal.html", AUSFUEHRUNG_ELEMENTS);
+const showOrderStatus = () => showModal("Auftragsstatus", "views/modal.html", AUFTRAGSSTATUS_ELEMENTS);
+const showMediator = () => showModal("Vermittler", "views/modal.html", VERMITTLER_ELEMENTS);
+const showCart = () => showModal("Warenkorb", "views/modal.html", WARENKORB_ELEMENTS);
 
 // Generic function to show modals using existing DOM data
 async function showModal(title, template, elementIds) {
     try {
-        const payload = getDataFromElements(elementIds);
+        const payload = getDataFromElements(elementIds, title);
         
         const data = await appState.client.interface.trigger("showModal", {
             title,
@@ -723,7 +745,7 @@ async function showModal(title, template, elementIds) {
 }
 
 // Helper function to extract data from DOM elements
-function getDataFromElements(elementMap) {
+function getDataFromElements(elementMap, title) {
     const payload = {};
     Object.entries(elementMap).forEach(([key, elementId]) => {
         const element = document.getElementById(elementId);
@@ -732,14 +754,8 @@ function getDataFromElements(elementMap) {
 
      // Manually add ticketnummer from appState
     payload.ticketnummer = appState.currentTicket?.id || '';
+    payload.title = title;
 
-    // if (title === "Auftragsstatus") {
-    //     const otdata = getOTtable();
-    //     payload.OTData = otdata;
-    //     console.log(`Payload for ${title}:`, payload);
-    // }
-    
-    
     return payload;    
 }
 
@@ -794,7 +810,7 @@ const DATA_CONFIGS = {
     
     mediator: {
         vermittler: "vermittler",
-        active: "active",
+        active: "vermittler_aktiv",
         typ: "vermittler_lfp_agp",
         name: ["anrede", "name1", "name2", "name3"],
         addresse: {
@@ -810,10 +826,15 @@ const DATA_CONFIGS = {
         bestellnummer: "bestellnummer",
         lieferdatum: "lieferdatum",
         zahlbetrag: "zahlbetrag",
+        v_zuk_bas: "v_zuk_bas", 
+        v_zuk_exp: "v_zuk_exp",
+        v_zuk_son: "v_zuk_son",
+        a_zuk_bas: "a_zuk_bas",
+        a_zuk_exp: "a_zuk_exp",
+        a_zuk_son:  "a_zuk_son",
         kartentext: "kartentext"
     }
 };
-
 
 /**
  * Generic data fetcher with error handling
@@ -845,7 +866,6 @@ const getClientData = () => fetchData('client', 'client');
 const getOrderStatus = () => fetchData('orderStatus', 'order status');
 const getMediatorData = () => fetchData('mediator', 'mediator');
 const getCartData = () => fetchData('cart', 'cart');
-const getOTtable = () => fetchData('ot', 'klassik OT', true);
 
 // // Even more generic version if you want maximum flexibility
 // async function getDataByType(type) {
@@ -867,7 +887,15 @@ function updateElements(data, elementMap) {
     Object.entries(elementMap).forEach(([id, value]) => {
         const element = document.getElementById(id);
         if (element) {
-            element.innerHTML = value || 'Nicht verfügbar';
+            if (id === "trackingnummer"){
+                element.innerHTML = `<a href="https://www.dhl.com/de-de/home/tracking/tracking-parcel.html?submit=1&tracking-id=${value}" target="_blank">${value}</a>`;
+            } else {
+                //if (element.tagName == 'TD') {
+                //   element.value = value || 'Nicht verfügbar';    
+                //} else {
+                    element.innerHTML = value || 'Nicht verfügbar';
+                //}
+            }
         } else {
             console.warn(`Element with ID ${id} not found`);
         }
@@ -900,10 +928,10 @@ async function extractCustomObjectData() {
     });
 
     updateElements(recipient, {
-        'recipient-name': recipient.name,
-        'recipient-firmenzusatz': recipient.firmenzusatz,
-        'recipient-addresse': recipient.address,
-        'recipient-telefon': recipient.phone
+        'empfaenger-name': recipient.name,
+        'empfaenger-firmenzusatz': recipient.firmenzusatz,
+        'empfaenger-addresse': recipient.address,
+        'empfaenger-telefon': recipient.phone
     });
 
     updateElements(client, {
@@ -940,7 +968,13 @@ async function extractCustomObjectData() {
         'warenkorb-bestellnummer': cart.bestellnummer,
         'warenkorb-lieferdatum': cart.lieferdatum,
         'warenkorb-zahlbetrag': cart.zahlbetrag,
-        'warenkorb-kartentext': cart.kartentext
+        'warenkorb-kartentext': cart.kartentext,
+        'v_zuk_bas': cart.v_zuk_bas,
+        'v_zuk_exp': cart.v_zuk_exp,
+        'v_zuk_son': cart.v_zuk_son,
+        'a_zuk_bas': cart.a_zuk_bas,
+        'a_zuk_exp': cart.a_zuk_exp,
+        'a_zuk_son': cart.a_zuk_son
     });
 }
 

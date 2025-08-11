@@ -1,11 +1,20 @@
-// data-utils.js - Reusable utility functions for data fetching
-// Global app state
-const appState = {
-    client: null,
-    isInitialized: false,
-    currentTicket: null,
-    orderData: null
-};
+// data-utils.js - Reusable utility functions for data fetching and shared app state
+
+// Global shared app state
+// Using `window.appState` ensures all scripts in the same page/context share the same reference
+// Ensure we only have one shared appState across all scripts
+if (!window.appState) {
+    window.appState = {
+        client: null,
+        isInitialized: false,
+        currentTicket: null,
+        orderData: null
+    };
+}
+
+// Always use the same reference
+var appState = window.appState;
+
 /**  
  * @param {string} name - The name of the schema to fetch
  */
@@ -51,6 +60,30 @@ async function getData(name) {
     }
 }
 
+// Fetches data based on the schema name and current ticket context
+// Returns parsed JSON data or null if not found
+/**
+ * 
+ * @param {string} name - The name of the schema to fetch data for
+ */
+async function getCartPositionsData(name, auftragsnummer) {
+    try {
+        const schemaID = await getSchemaID(name);
+        if (!schemaID) return null;
+        console.log(auftragsnummer);
+        const data = await appState.client.request.invokeTemplate("getCartPositionsData", {
+            context: { 
+                schema_id: schemaID,
+                auftragsnummer: auftragsnummer
+            } 
+        });
+        
+        return data?.response ? JSON.parse(data.response) : null;
+    } catch (error) {
+        console.error(`Error fetching ${name} data:`, error);
+        return null;
+    }
+}
 
 /**
  * Generic data processing function
