@@ -13,7 +13,29 @@
  * 
  * These field keys are defined in CUSTOM_FIELD_CONFIG below.
  */
-var appState = window.appState;
+// Use the shared appState from window - DO NOT create a new one
+let appState = window.appState;
+
+// If window.appState doesn't exist yet (edge case), create it
+if (!appState) {
+    window.appState = {
+        client: null,
+        isInitialized: false,
+        currentTicket: null,
+        orderData: null,
+
+            // NEW: Add storage for custom object data
+    customObjectData: {
+        execution: null,
+        recipient: null,
+        client: null,
+        orderStatus: null,
+        mediator: null,
+        cart: null
+    }
+    };
+    appState = window.appState;
+}
 // const appState = {
 //     client: null,
 //     isInitialized: false,
@@ -655,110 +677,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-// Element mapping configurations
-const EMPFAENGER_ELEMENTS = {
-    name: 'empfaenger-name',
-    firmenzusatz: 'empfaenger-firmenzusatz', 
-    addresse: 'empfaenger-addresse',
-    telefon: 'empfaenger-telefon'
-};
-
-// Element mapping configurations
-const AUFTRAGGEBER_ELEMENTS = {
-    name: 'autraggerber-name',
-    firmenzusatz: 'autraggerber-firmenzusatz', 
-    addresse: 'autraggerber-addresse',
-    telefon: 'autraggerber-telefon',
-    email: 'autraggerber-email'
-};
-
-const AUSFUEHRUNG_ELEMENTS = {
-    nummer: 'ausfuehrung-nummer',
-    name: 'ausfuehrung-name',
-    addresse: 'ausfuehrung-addresse',
-    rang: 'ausfuehrung-rang',
-    fax: 'ausfuehrung-fax',
-    telefon: 'ausfuehrung-telefon',
-    email: 'ausfuehrung-email',
-    auftragshinweis: 'auftragshinweis',
-    hinweis: 'hinweis'
-};
-
-const AUFTRAGSSTATUS_ELEMENTS = {
-    bestelldatum: 'bestelldatum',
-    vertriebsweg: 'vertriebsweg',
-    auftragsstatus: 'auftragsstatus',
-    freitext: 'freitext',
-    molliwert: 'molliwert',
-    erfassdatum: 'erfassdatum',
-    rechnungsnummer: 'rechnungsnummer',
-    trackingnummer: 'trackingnummer'
-};
-
-const VERMITTLER_ELEMENTS = {
-    vermittler: 'vermittler',
-    active: 'vermittler-aktiv',
-    typ: 'vermittler-typ',
-    name: 'vermittler-name',
-    addresse: 'vermittler-addresse',
-    fax: 'vermittler-fax',
-    telefon: 'vermittler-telefon'
-};
-
-const WARENKORB_ELEMENTS = {
-    auftragsnummer: 'warenkorb-auftragsnummer',
-    bestellnummer: 'warenkorb-bestellnummer',
-    lieferdatum: 'warenkorb-lieferdatum',
-    zahlbetrag: 'warenkorb-zahlbetrag',
-    v_zuk_bas: 'v_zuk_bas',
-    v_zuk_exp: 'v_zuk_exp',
-    v_zuk_son: 'v_zuk_son',
-    a_zuk_bas: 'a_zuk_bas',
-    a_zuk_exp: 'a_zuk_exp',
-    a_zuk_son: 'a_zuk_son',
-    kartentext: 'warenkorb-kartentext'
-}
-
-
-// Main functions - now get data from DOM instead of API
-const showRecipient = () => showModal("Empfänger", "views/modal.html", EMPFAENGER_ELEMENTS);
-const showClient = () => showModal("Auftraggeber", "views/modal.html", AUFTRAGGEBER_ELEMENTS);
-const showExecution = () => showModal("Ausführung", "views/modal.html", AUSFUEHRUNG_ELEMENTS);
-const showOrderStatus = () => showModal("Auftragsstatus", "views/modal.html", AUFTRAGSSTATUS_ELEMENTS);
-const showMediator = () => showModal("Vermittler", "views/modal.html", VERMITTLER_ELEMENTS);
-const showCart = () => showModal("Warenkorb", "views/modal.html", WARENKORB_ELEMENTS);
-
-// Generic function to show modals using existing DOM data
-async function showModal(title, template, elementIds) {
-    try {
-        const payload = getDataFromElements(elementIds, title);
-        
-        const data = await appState.client.interface.trigger("showModal", {
-            title,
-            template,
-            data: payload
-        });
-        console.log(`${title} modal data:`, data);
-    } catch (error) {
-        console.error(`Error with ${title} modal:`, error);
-    }
-}
-
-// Helper function to extract data from DOM elements
-function getDataFromElements(elementMap, title) {
-    const payload = {};
-    Object.entries(elementMap).forEach(([key, elementId]) => {
-        const element = document.getElementById(elementId);
-        payload[key] = element?.innerHTML !== 'N/A' ? element?.innerHTML : '';
-    });
-
-     // Manually add ticketnummer from appState
-    payload.ticketnummer = appState.currentTicket?.id || '';
-    payload.title = title;
-
-    return payload;    
-}
-
 // Configuration objects for each data type
 const DATA_CONFIGS = {
     execution: {
@@ -810,7 +728,7 @@ const DATA_CONFIGS = {
     
     mediator: {
         vermittler: "vermittler",
-        active: "vermittler_aktiv",
+        aktiv: "vermittler_aktiv",
         typ: "vermittler_lfp_agp",
         name: ["anrede", "name1", "name2", "name3"],
         addresse: {
@@ -831,7 +749,7 @@ const DATA_CONFIGS = {
         v_zuk_son: "v_zuk_son",
         a_zuk_bas: "a_zuk_bas",
         a_zuk_exp: "a_zuk_exp",
-        a_zuk_son:  "a_zuk_son",
+        a_zuk_son: "a_zuk_son",
         kartentext: "kartentext"
     }
 };
@@ -859,7 +777,7 @@ async function fetchData(objectType, dataType) {
     }
 }
 
-// Simplified data functions - now just one-liners!
+// Data fetching functions
 const getAusfuehrungData = () => fetchData('execution', 'execution');
 const getRecipientData = () => fetchData('recipient', 'recipient');
 const getClientData = () => fetchData('client', 'client');
@@ -867,64 +785,58 @@ const getOrderStatus = () => fetchData('orderStatus', 'order status');
 const getMediatorData = () => fetchData('mediator', 'mediator');
 const getCartData = () => fetchData('cart', 'cart');
 
-// // Even more generic version if you want maximum flexibility
-// async function getDataByType(type) {
-//     const typeMap = {
-//         execution: { object: 'execution', name: 'execution' },
-//         recipient: { object: 'recipient', name: 'recipient' },
-//         client: { object: 'client', name: 'client' },
-//         orderStatus: { object: 'orderStatus', name: 'order status' },
-//         mediator: { object: 'mediator', name: 'mediator' },
-//         cart: { object: 'cart', name: 'cart' }
-//     };
-    
-//     const config = typeMap[type];
-//     return await config ? fetchData(config.object, config.name) : {};
-// }            
-
-// Generic function to update DOM elements
-function updateElements(data, elementMap) {
-    Object.entries(elementMap).forEach(([id, value]) => {
-        const element = document.getElementById(id);
-        if (element) {
-            if (id === "trackingnummer"){
-                element.innerHTML = `<a href="https://www.dhl.com/de-de/home/tracking/tracking-parcel.html?submit=1&tracking-id=${value}" target="_blank">${value}</a>`;
-            } else {
-                //if (element.tagName == 'TD') {
-                //   element.value = value || 'Nicht verfügbar';    
-                //} else {
-                    element.innerHTML = value || 'Nicht verfügbar';
-                //}
-            }
-        } else {
-            console.warn(`Element with ID ${id} not found`);
-        }
-    });
-}
-
+/**
+ * UPDATED: Extract custom object data and store in appState
+ */
 async function extractCustomObjectData() {
     console.log('Extracting custom object data...');
 
-    const [ausfuehrung, recipient, client, orderStatus, mediator, cart] = await Promise.all([
-        getAusfuehrungData(),
-        getRecipientData(),
-        getClientData(),
-        getOrderStatus(),
-        getMediatorData(),
-        getCartData()
-    ]);
+    try {
+        // Fetch all data in parallel
+        const [execution, recipient, client, orderStatus, mediator, cart] = await Promise.all([
+            getAusfuehrungData(),
+            getRecipientData(),
+            getClientData(),
+            getOrderStatus(),
+            getMediatorData(),
+            getCartData()
+        ]);
 
+        // Store data in appState for modal access
+        appState.customObjectData = {
+            execution,
+            recipient,
+            client,
+            orderStatus,
+            mediator,
+            cart
+        };
+
+        console.log('Custom object data stored in appState:', appState.customObjectData);
+
+        // Update DOM elements (keep existing functionality)
+        updateDOMElements(execution, recipient, client, orderStatus, mediator, cart);
+
+    } catch (error) {
+        console.error('Error extracting custom object data:', error);
+    }
+}
+
+/**
+ * Update DOM elements (separated for clarity)
+ */
+function updateDOMElements(execution, recipient, client, orderStatus, mediator, cart) {
     // Update all elements using the generic function
-    updateElements(ausfuehrung, {
-        'ausfuehrung-nummer': ausfuehrung.nummer,
-        'ausfuehrung-name': ausfuehrung.name,
-        'ausfuehrung-addresse': ausfuehrung.addresse,
-        'ausfuehrung-rang': ausfuehrung.rang,
-        'ausfuehrung-fax': ausfuehrung.fax,
-        'ausfuehrung-telefon': ausfuehrung.telefon,
-        'ausfuehrung-email': ausfuehrung.email,
-        'auftragshinweis': ausfuehrung.auftragshinweis,
-        'hinweis': ausfuehrung.hinweis
+    updateElements(execution, {
+        'ausfuehrung-nummer': execution.nummer,
+        'ausfuehrung-name': execution.name,
+        'ausfuehrung-addresse': execution.addresse,
+        'ausfuehrung-rang': execution.rang,
+        'ausfuehrung-fax': execution.fax,
+        'ausfuehrung-telefon': execution.telefon,
+        'ausfuehrung-email': execution.email,
+        'auftragshinweis': execution.auftragshinweis,
+        'hinweis': execution.hinweis
     });
 
     updateElements(recipient, {
@@ -955,7 +867,7 @@ async function extractCustomObjectData() {
 
     updateElements(mediator, {
         'vermittler': mediator.vermittler,
-        'vermittler-aktiv': mediator.active,
+        'vermittler-aktiv': mediator.aktiv,
         'vermittler-typ': mediator.typ,
         'vermittler-name': mediator.name,
         'vermittler-addresse': mediator.addresse,
@@ -978,3 +890,184 @@ async function extractCustomObjectData() {
     });
 }
 
+function updateElements(data, elementMap) {
+  Object.entries(elementMap).forEach(([id, mapTo]) => {
+    const el = document.getElementById(id);
+    if (!el) {
+      console.warn(`Element with ID "${id}" not found`);
+      return;
+    }
+
+    let value;
+    let keyName;
+
+    if (typeof mapTo === 'string' && mapTo in data) {
+      keyName = mapTo;
+      value = data[keyName];
+    } else if (mapTo === undefined && id in data) {
+      keyName = id;
+      value = data[id];
+    } else {
+      value = mapTo; // direct value
+    }
+
+    el.innerHTML = formatValue(value, keyName, id);
+  });
+}
+
+
+// ========================
+// UPDATED MODAL FUNCTIONS - Now use appState data instead of DOM
+// ========================
+
+// Element mapping configurations for modal display
+const EMPFAENGER_ELEMENTS = {
+    name: 'name',
+    firmenzusatz: 'firmenzusatz', 
+    addresse: 'address',
+    telefon: 'phone'
+};
+
+const AUFTRAGGEBER_ELEMENTS = {
+    name: 'name',
+    firmenzusatz: 'firmenzusatz', 
+    addresse: 'address',
+    telefon: 'phone',
+    email: 'email'
+};
+
+const AUSFUEHRUNG_ELEMENTS = {
+    nummer: 'nummer',
+    name: 'name',
+    addresse: 'addresse',
+    rang: 'rang',
+    fax: 'fax',
+    telefon: 'telefon',
+    email: 'email',
+    auftragshinweis: 'auftragshinweis',
+    hinweis: 'hinweis'
+};
+
+const AUFTRAGSSTATUS_ELEMENTS = {
+    bestelldatum: 'bestelldatum',
+    vertriebsweg: 'vertriebsweg',
+    auftragsstatus: 'auftragsstatus',
+    freitext: 'freitext',
+    molliwert: 'molliwert',
+    erfassdatum: 'erfassdatum',
+    rechnungsnummer: 'rechnungsnummer',
+    trackingnummer: 'trackingnummer'
+};
+
+const VERMITTLER_ELEMENTS = {
+    vermittler: 'vermittler',
+    active: 'aktiv',
+    typ: 'typ',
+    name: 'name',
+    addresse: 'addresse',
+    fax: 'fax',
+    telefon: 'telefon'
+};
+
+const WARENKORB_ELEMENTS = {
+    auftragsnummer: 'auftragsnummer',
+    bestellnummer: 'bestellnummer',
+    lieferdatum: 'lieferdatum',
+    zahlbetrag: 'zahlbetrag',
+    v_zuk_bas: 'v_zuk_bas',
+    v_zuk_exp: 'v_zuk_exp',
+    v_zuk_son: 'v_zuk_son',
+    a_zuk_bas: 'a_zuk_bas',
+    a_zuk_exp: 'a_zuk_exp',
+    a_zuk_son: 'a_zuk_son',
+    kartentext: 'kartentext'
+};
+
+// Updated main functions - now get data from appState instead of DOM
+const showRecipient = () => showModal("Empfänger", "views/modal.html", 'recipient', EMPFAENGER_ELEMENTS);
+const showClient = () => showModal("Auftraggeber", "views/modal.html", 'client', AUFTRAGGEBER_ELEMENTS);
+const showExecution = () => showModal("Ausführung", "views/modal.html", 'execution', AUSFUEHRUNG_ELEMENTS);
+const showOrderStatus = () => showModal("Auftragsstatus", "views/modal.html", 'orderStatus', AUFTRAGSSTATUS_ELEMENTS);
+const showMediator = () => showModal("Vermittler", "views/modal.html", 'mediator', VERMITTLER_ELEMENTS);
+const showCart = () => showModal("Warenkorb", "views/modal.html", 'cart', WARENKORB_ELEMENTS);
+
+/**
+ * UPDATED: Generic function to show modals using appState data
+ * @param {string} title - Modal title
+ * @param {string} template - Template path
+ * @param {string} dataType - Key in appState.customObjectData
+ * @param {Object} fieldMapping - Field mapping configuration
+ */
+async function showModal(title, template, dataType, fieldMapping) {
+    try {
+        // Check if data is available in appState
+        if (!appState.customObjectData || !appState.customObjectData[dataType]) {
+            console.warn(`No ${dataType} data available in appState. Attempting to fetch...`);
+            
+            // Try to extract data if not available
+            await extractCustomObjectData();
+            
+            // Check again after extraction
+            if (!appState.customObjectData || !appState.customObjectData[dataType]) {
+                console.error(`Failed to get ${dataType} data for modal`);
+                return;
+            }
+        }
+
+        // Get data from appState instead of DOM
+        const sourceData = appState.customObjectData[dataType];
+        const payload = getDataFromAppState(sourceData, fieldMapping, title);
+        
+        console.log(`${title} modal data from appState:`, payload);
+
+        const data = await appState.client.interface.trigger("showModal", {
+            title,
+            template,
+            data: payload
+        });
+        
+        console.log(`${title} modal response:`, data);
+    } catch (error) {
+        console.error(`Error with ${title} modal:`, error);
+    }
+}
+
+/**
+ * UPDATED: Helper function to extract data from appState instead of DOM elements
+ * @param {Object} sourceData - Data from appState.customObjectData
+ * @param {Object} fieldMapping - Field mapping configuration
+ * @param {string} title - Modal title
+ * @returns {Object} Formatted payload for modal
+ */
+function getDataFromAppState(sourceData, fieldMapping, title) {
+    const payload = {};
+    
+    // Map fields from appState data using the field mapping
+    Object.entries(fieldMapping).forEach(([payloadKey, sourceKey]) => {
+        const value = sourceData && sourceData[sourceKey];
+        payload[payloadKey] = value && value !== 'Nicht verfügbar' ? value : '';
+    });
+
+    // Add standard fields
+    payload.ticketnummer = appState.currentTicket?.id || '';
+    payload.title = title;
+
+    return payload;    
+}
+
+/**
+ * FALLBACK: Helper function to extract data from DOM elements (backup method)
+ * Keep this as fallback in case appState data is not available
+ */
+function getDataFromElements(elementMap, title) {
+    const payload = {};
+    Object.entries(elementMap).forEach(([key, elementId]) => {
+        const element = document.getElementById(elementId);
+        payload[key] = element?.innerHTML !== 'N/A' && element?.innerHTML !== 'Nicht verfügbar' ? element?.innerHTML : '';
+    });
+
+    payload.ticketnummer = appState.currentTicket?.id || '';
+    payload.title = title;
+
+    return payload;    
+}

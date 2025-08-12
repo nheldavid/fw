@@ -132,7 +132,7 @@ const CONTEXT_CONFIG = {
     }
 }
 
-var appState = window.appState || (window.appState = {
+let modalAppState = window.appState || (window.appState = {
     client: null,
     isInitialized: false,
     currentTicket: null,
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   try {
     // Initialize the app and get client
     const client = await app.initialized();
-    appState.client = client;
+    modalAppState.client = client;
 
     // Get context and ticket data in parallel
     const [context, ticketData] = await Promise.all([
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     ]);
 
     const contextData = context.data;
-    appState.currentTicket = ticketData.ticket;
+    modalAppState.currentTicket = ticketData.ticket;
 
     // Render UI based on context
     renderUI(contextData);
@@ -248,10 +248,10 @@ function renderAusfuehrung(contextData) {
  */
 function renderEmpfaenger(contextData) {
   const fieldMappings = {
-    'autraggerber-name': 'name',
-    'autraggerber-firmenzusatz': 'firmenzusatz', 
-    'autraggerber-addresse': 'addresse',
-    'autraggerber-telefon': 'telefon',
+    'empfaenger-name': 'name',
+    'empfaenger-firmenzusatz': 'firmenzusatz', 
+    'empfaenger-addresse': 'addresse',
+    'empfaenger-telefon': 'telefon',
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
@@ -265,11 +265,11 @@ function renderEmpfaenger(contextData) {
  */
 function renderAuftraggeber(contextData) {
   const fieldMappings = {
-    'autraggerber-name': 'name',
-    'autraggerber-firmenzusatz': 'firmenzusatz', 
-    'autraggerber-addresse': 'addresse',
-    'autraggerber-telefon': 'telefon',
-    'autraggerber-email': 'email'
+    'auftraggeber-name': 'name',
+    'auftraggeber-firmenzusatz': 'firmenzusatz', 
+    'auftraggeber-addresse': 'addresse',
+    'auftraggeber-telefon': 'telefon',
+    'auftraggeber-email': 'email'
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
@@ -283,7 +283,7 @@ function renderAuftraggeber(contextData) {
  */
 function renderVermittler(contextData) {
   const fieldMappings = {
-    'vermittler': 'vermittler',
+    'vermittler-nummer': 'vermittler',
     'vermittler-aktiv': 'active',
     'vermittler-typ': 'typ',
     'vermittler-name': 'name',
@@ -316,22 +316,17 @@ function renderWarenkorb(contextData) {
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
-    updateElement(elementId, contextData[dataKey]);
+    updateElement(elementId,  contextData[dataKey]);
   });
 }
 
-/**
- * Safely updates an element's innerHTML
- * @param {string} elementId - The ID of the element to update
- * @param {*} value - The value to set (will be converted to string)
- */
 function updateElement(elementId, value) {
-  const element = document.getElementById(elementId);
-  if (element) {
-    element.innerHTML = value || '';
-  } else {
+  const el = document.getElementById(elementId);
+  if (!el) {
     console.warn(`Element with ID '${elementId}' not found`);
+    return;
   }
+  el.innerHTML = formatValue(value, elementId);
 }
 
 /**
@@ -558,38 +553,15 @@ async function fetchData(objectType, dataType) {
     }
 }
 
-/**
- * Generate HTML table content from processed data
- * @param {Array} data - Array of processed data objects
- * @returns {string} HTML string for table body
- */
 function generateTableHTML(data) {
-    if (!Array.isArray(data) || data.length === 0) {
-        return '<p>No data available</p>';
-    }
+  if (!Array.isArray(data) || data.length === 0) {
+    return '<p class="fw-type-sm">Nicht verfügbar</p>';
+  }
 
-    return data
-        .map(row => {
-            const cells = Object.entries(row).map(([key, value]) => {
-                // Boolean fields → checkbox
-                if (typeof value === 'boolean' || key.toLowerCase().includes('storniert')) {
-                    const checked = value ? 'checked' : '';
-                    return `<td class="fw-type-sm"><fw-checkbox ${checked} disabled /></td>`;
-                }
-                // Date-like keys → formatted date
-                if (key.toLowerCase().includes('date') || key.toLowerCase().includes('datum')) {
-                    const formattedDate = value ? new Date(value).toLocaleDateString() : '';
-                    return `<td class="fw-type-sm">${formattedDate}</td>`;
-                }
-                // Currency-like keys → formatted as Euro
-                if (key.toLowerCase().includes('amount') || key.toLowerCase().includes('preis')) {
-                    return `<td class="fw-type-sm">${Number(value).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</td>`;
-                }
-                // Default display
-                return `<td class="fw-type-sm">${value ?? ''}</td>`;
-            }).join('');
-
-            return `<tr>${cells}</tr>`;
-        })
-        .join('');
+  return data.map(row => {
+    const cells = Object.entries(row)
+      .map(([key, value]) => `<td class="fw-type-sm">${formatValue(value, key)}</td>`)
+      .join('');
+    return `<tr>${cells}</tr>`;
+  }).join('');
 }

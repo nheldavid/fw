@@ -3,6 +3,9 @@
 // Global shared app state
 // Using `window.appState` ensures all scripts in the same page/context share the same reference
 // Ensure we only have one shared appState across all scripts
+
+// Global shared app state - Single source of truth
+// This ensures all scripts in the same page/context share the same reference
 if (!window.appState) {
     window.appState = {
         client: null,
@@ -12,15 +15,15 @@ if (!window.appState) {
     };
 }
 
-// Always use the same reference
-var appState = window.appState;
+// Export the shared appState for use in other files
+window.appState = window.appState;
 
 /**  
  * @param {string} name - The name of the schema to fetch
  */
 async function getSchemaID(name) {
     try {
-        const schema = await appState.client.request.invokeTemplate("getSchema");
+        const schema = await window.appState.client.request.invokeTemplate("getSchema");
         const schemaid = JSON.parse(schema.response).schemas?.find(s => s.name === name)?.id;
         
         if (!schemaid) {
@@ -46,10 +49,10 @@ async function getData(name) {
         const schemaID = await getSchemaID(name);
         if (!schemaID) return null;
 
-        const data = await appState.client.request.invokeTemplate("getData", {
+        const data = await window.appState.client.request.invokeTemplate("getData", {
             context: { 
                 schema_id: schemaID,
-                ticketnummer: appState.currentTicket?.id
+                ticketnummer: window.appState.currentTicket?.id
             } 
         });
         
@@ -71,7 +74,7 @@ async function getCartPositionsData(name, auftragsnummer) {
         const schemaID = await getSchemaID(name);
         if (!schemaID) return null;
         console.log(auftragsnummer);
-        const data = await appState.client.request.invokeTemplate("getCartPositionsData", {
+        const data = await window.appState.client.request.invokeTemplate("getCartPositionsData", {
             context: { 
                 schema_id: schemaID,
                 auftragsnummer: auftragsnummer
@@ -150,19 +153,62 @@ function getValue(val) {
   return val ?? ''; // Use nullish coalescing to avoid overwriting falsy but valid values like 0 or false
 }
 
-// // Helper function to safely concatenate strings
-// const safeConcat = (...values) => {
-//     const separator = values[values.length - 1];
-    
-//     // Check if last argument is a separator option
-//     if (typeof separator === 'object' && separator.separator) {
-//         const actualValues = values.slice(0, -1);
-//         return actualValues.filter(val => val && val.trim()).join(separator.separator);
-//     }
-    
-//     // Default behavior - join with space
-//     return values.filter(val => val && val.trim()).join(' ');
-// };
+/**
+ * Formats a value based on its key name (already lowercase).
+ * @param {*} value - The value to format
+ * @param {string} [keyName] - Optional key name for formatting logic
+ * @param {string} [elementId] - Optional DOM element ID for special cases (e.g., tracking link)
+ * @returns {string} Formatted HTML string
+ */
+function formatValue(value, keyName = '', elementId = '') {
+  // Lists for formatting logic
+  const booleanKeys = ['storniert', 'active', 'aktiv']; // exact match
+  const dateKeys = ['date', 'datum']; // substring match
+  const currencyKeys = ['amount', 'preis', 'betrag', 'zahlbetrag']; // substring match
+  const numberKeys = ['menge', 'anzahl', 'stück', 'quantity', 'wert', 'molliwert']; // substring match
 
+  // Special: Tracking number → DHL link
+  if ((elementId === 'trackingnummer' || keyName === 'trackingnummer') && value) {
+    const safeVal = encodeURIComponent(String(value));
+    return `<a href="https://www.dhl.com/de-de/home/tracking/tracking-parcel.html?submit=1&tracking-id=${safeVal}" target="_blank" rel="noopener noreferrer">${value}</a>`;
+  }
 
+  // Boolean → checkbox
+  if (typeof value === 'boolean' || (keyName && booleanKeys.includes(keyName))) {
+    const boolVal = (value === true || value === 'true' || value === 1 || value === '1');
+    return `<fw-checkbox ${boolVal ? 'checked' : ''} disabled></fw-checkbox>`;
+  }
 
+  // Date-like → formatted date
+  if (keyName && dateKeys.some(k => keyName.includes(k))) {
+    if (value) {
+      const d = new Date(value);
+      return !isNaN(d.getTime()) ? d.toLocaleDateString() : String(value);
+    }
+    return '';
+  }
+
+  // Currency-like → Euro format
+  if (keyName && currencyKeys.some(k => keyName.includes(k))) {
+    const num = Number(value);
+    return (value !== undefined && value !== null && !isNaN(num))
+      ? num.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+      : '';
+  }
+
+  // Number-like → formatted number
+  if (keyName && numberKeys.some(k => keyName.includes(k))) {
+    const num = Number(value);
+    return (value !== undefined && value !== null && !isNaN(num))
+      ? num.toLocaleString('de-DE')
+      : '';
+  }
+
+  // Default number formatting
+  if (typeof value === 'number') {
+    return value.toLocaleString('de-DE');
+  }
+
+  // Fallback
+  return (value !== undefined && value !== null && value !== '') ? String(value) : 'Nicht verfügbar';
+}
