@@ -36,7 +36,7 @@ const DATA_CONFIGS = {
     },
     warenkorb: 
     {
-      auftragsnummer: 'auftragsnummer',
+      //auftragsnummer: 'auftragsnummer',
       position: 'position',
       material: 'material',
       menge: 'menge',
