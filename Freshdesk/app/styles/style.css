@@ -78,20 +78,20 @@ html {
   margin-bottom: var(--fw-spacing-4, 16px);
 }
 
-/* Information grid layout */
+/* Information grid layout
 .info-grid {
   display: flex;
   flex-direction: column;
   gap: var(--fw-spacing-3, 12px);
   padding: var(--fw-spacing-4, 16px);
-}
+} */
 
 /* Individual information items */
-.info-item {
+/* .info-item {
   display: flex;
   flex-direction: column;
   gap: var(--fw-spacing-1, 4px);
-}
+} */
 
 /* Status badge styling */
 .status-badge {
@@ -110,9 +110,9 @@ html {
     padding: var(--fw-spacing-3, 1px);
   }
   
-  .info-grid {
+  /* .info-grid {
     padding: var(--fw-spacing-3, 4px);
-  }
+  } */
   
   .sidebar-header {
     margin-bottom: var(--fw-spacing-4, 16px);
@@ -301,7 +301,7 @@ fw-accordion-body {
 
 .info-grid table td {
   padding: 8px 6px;
-  text-align: center;
+  text-align: right;
   color: #374151;
   font-weight: 500;
   border-bottom: 1px solid #f3f4f6;
@@ -392,11 +392,6 @@ fw-accordion-body {
     font-size: 8px;
   }
   
-  /* Hide some columns on very narrow screens */
-  .info-grid table th:nth-child(n+5),
-  .info-grid table td:nth-child(n+5) {
-    display: none;
-  }
 }
 
 /* Typography Classes */
@@ -438,4 +433,29 @@ fw-accordion-body {
 .info-item:focus-within {
   outline: 2px solid #6b7280;
   outline-offset: 2px;
+}
+
+.table-vermittler {
+  overflow-x: auto;
+  white-space: nowrap; /* Prevents text wrapping in cells */
+  display: block; /* Required for overflow to work on tables */
+}
+
+/* Optional: Style the scrollbar for better UX */
+.table-vermittler::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-vermittler::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-vermittler::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-vermittler::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
