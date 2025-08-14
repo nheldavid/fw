@@ -132,19 +132,13 @@ const CONTEXT_CONFIG = {
     }
 }
 
-let modalAppState = window.appState || (window.appState = {
-    client: null,
-    isInitialized: false,
-    currentTicket: null,
-    orderData: null
-});
-
+//const modalAppState = window.appState; // use the shared reference
 
 document.addEventListener("DOMContentLoaded", async function() {
   try {
     // Initialize the app and get client
     const client = await app.initialized();
-    modalAppState.client = client;
+    appState.client = client;
 
     // Get context and ticket data in parallel
     const [context, ticketData] = await Promise.all([
@@ -156,7 +150,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     ]);
 
     const contextData = context.data;
-    modalAppState.currentTicket = ticketData.ticket;
+    appState.currentTicket = ticketData.ticket;
 
     // Render UI based on context
     renderUI(contextData);

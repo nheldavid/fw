@@ -1,22 +1,26 @@
 // data-utils.js - Reusable utility functions for data fetching and shared app state
 
-// Global shared app state
-// Using `window.appState` ensures all scripts in the same page/context share the same reference
-// Ensure we only have one shared appState across all scripts
-
-// Global shared app state - Single source of truth
-// This ensures all scripts in the same page/context share the same reference
+// Ensure we only initialize once
 if (!window.appState) {
     window.appState = {
         client: null,
         isInitialized: false,
         currentTicket: null,
-        orderData: null
+        orderData: null,
+        // Always include customObjectData in the base state
+        customObjectData: {
+            execution: null,
+            recipient: null,
+            client: null,
+            orderStatus: null,
+            mediator: null,
+            cart: null
+        }
     };
 }
 
-// Export the shared appState for use in other files
-window.appState = window.appState;
+// Shared reference
+const appState = window.appState;
 
 /**  
  * @param {string} name - The name of the schema to fetch

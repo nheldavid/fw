@@ -1,267 +1,380 @@
-/* Compact Layout for Small Screens */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.4;
-            color: #333;
-            background-color: #f5f5f5;
-            padding: 8px;
-            font-size: 12px;
-        }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f7fa;
+  padding: 20px;
+}
 
-        /* Main Container */
-        div[id$="-div"] {
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 8px;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-        }
+/* Container Styles */
+#auftragsstatus-div,
+#warenkorb-div,
+#ausfuehrung-div,
+#empfaenger-div,
+#auftraggeber-div,
+#vermittler-div {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  margin-bottom: 24px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-        /* Section Headers */
-        .fw-type-h4, .fw-type-h5 {
-            color: #333;
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 8px;
-            padding-bottom: 4px;
-            border-bottom: 1px solid #e0e0e0;
-        }
+#auftragsstatus-div:hover,
+#warenkorb-div:hover,
+#ausfuehrung-div:hover,
+#empfaenger-div:hover,
+#auftraggeber-div:hover,
+#vermittler-div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
 
-        /* Compact Tables */
-        .table {
-            width: 100%;
-            margin-bottom: 8px;
-        }
+/* Section Headers */
+#auftragsstatus-div::before {
+  content: "Auftragsstatus";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #4299e1;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            font-size: 10px;
-            margin-bottom: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
+#warenkorb-div::before {
+  content: "Warenkorb";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #48bb78;
+}
 
-        .table-details {
-            margin-bottom: 8px;
-        }
+#ausfuehrung-div::before {
+  content: "Ausführung";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #ed8936;
+}
 
-        .table-details td {
-            padding: 4px 6px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: top;
-            font-size: 10px;
-        }
+#empfaenger-div::before {
+  content: "Empfänger";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #9f7aea;
+}
 
-        .table-details td:first-child {
-            background-color: #f8fafc;
-            font-weight: 600;
-            color: #475569;
-            width: 80px;
-            border-right: 1px solid #e2e8f0;
-        }
+#auftraggeber-div::before {
+  content: "Auftraggeber";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #f56565;
+}
 
-        .table-details td:last-child {
-            color: #1e293b;
-            font-weight: 500;
-        }
+#vermittler-div::before {
+  content: "Vermittler";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #38b2ac;
+}
 
-        /* Regular Table Headers */
-        th {
-            background: #e5e7eb;
-            color: #374151;
-            padding: 4px 6px;
-            font-weight: 600;
-            text-align: left;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
+/* Info Table Styles */
+.info-details {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
 
-        /* Regular Table Data */
-        td {
-            padding: 4px 6px;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 10px;
-        }
+.info-details td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
 
-        tbody tr:hover {
-            background-color: #f8fafc;
-        }
+.info-details td:first-child {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #4a5568;
+  width: 200px;
+  border-right: 2px solid #e2e8f0;
+}
 
-        tbody tr:nth-child(even) {
-            background-color: #fafbfc;
-        }
+.info-details td:last-child {
+  color: #2d3748;
+  font-weight: 500;
+}
 
-        /* Typography Styles */
-        .fw-type-sm {
-            font-size: 10px;
-            color: #64748b;
-        }
+.info-details tr:last-child td {
+  border-bottom: none;
+}
 
-        .fw-type-h6 {
-            font-size: 11px;
-            font-weight: 600;
-            color: #1e293b;
-        }
 
-        .fw-b-0 {
-            border: none !important;
-        }
 
-        /* Scrollable Tables */
-        div[style*="overflow-x: auto"] {
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            margin-bottom: 8px;
-        }
+/* Sub-details Tables */
+.table-subdetails {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
 
-        div[style*="overflow-x: auto"] table {
-            box-shadow: none;
-            margin: 0;
-        }
+.table-subdetails span {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
 
-        /* Adjust the inline styles for compact view */
-        div[style*="width: 490px"] {
-            width: 100% !important;
-            padding-top: 4px !important;
-        }
+.table-subdetails table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-        div[style*="padding-top: 10px"] {
-            padding-top: 4px !important;
-        }
+.table-subdetails thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 
-        /* Specific Section Styling with thinner borders */
-        #auftragsstatus-div {
-            border-left: 3px solid #10b981;
-        }
+.table-subdetails th {
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: white;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-        #warenkorb-div {
-            border-left: 3px solid #3b82f6;
-        }
+.table-subdetails tbody tr {
+  transition: background-color 0.2s ease;
+}
 
-        #ausfuehrung-div {
-            border-left: 3px solid #f59e0b;
-        }
+.table-subdetails tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
 
-        #empfaenger-div {
-            border-left: 3px solid #8b5cf6;
-        }
+.table-subdetails tbody tr:hover {
+  background-color: #edf2f7;
+}
 
-        #auftraggeber-div {
-            border-left: 3px solid #ef4444;
-        }
+.table-subdetails td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #4a5568;
+  font-size: 0.75rem;
+}
 
-        #vermittler-div {
-            border-left: 3px solid #06b6d4;
-        }
+.table-subdetails tbody tr:last-child td {
+  border-bottom: none;
+}
 
-        /* Checkbox Styling */
-        fw-checkbox {
-            transform: scale(0.9);
-        }
+/* Plain Table Details Styles */
+.table-details {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+}
 
-        /* Ultra Compact Mode for Very Small Screens */
-        @media (max-width: 400px) {
-            body {
-                padding: 4px;
-            }
-            
-            div[id$="-div"] {
-                padding: 8px;
-                margin-bottom: 6px;
-            }
-            
-            .table-details td:first-child {
-                width: 60px;
-                font-size: 9px;
-            }
-            
-            th, td {
-                padding: 3px 4px;
-                font-size: 9px;
-            }
-            
-            .fw-type-h4, .fw-type-h5 {
-                font-size: 12px;
-            }
-        }
+.table-details th,
+.table-details td {
+  padding: 8px 10px;
+  text-align: center;
+  border: 1px solid #d1d5db;
+  font-size: 0.75rem;
+  background-color: white;
+  color: #4b5563;
+  font-weight: normal;
+}
 
-        /* Hide some table columns on very narrow screens */
-        /* @media (max-width: 320px) {
-            #Klassik-OT-table th:nth-child(n+6),
-            #Klassik-OT-table td:nth-child(n+6) {
-                display: none;
-            }
-            
-            table th:nth-child(n+7),
-            table td:nth-child(n+7) {
-                display: none;
-            }
-        } */
+/* Status and highlight styles */
+#auftragsstatus {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
 
-        /* Nested Table in Shopping Cart - Ultra Compact */
-        #warenkorb-div table table {
-            margin-top: 4px;
-            border-radius: 3px;
-            font-size: 9px;
-        }
+/* You can add JavaScript to dynamically assign these classes based on status */
+.status-pending {
+  background-color: #fed7d7;
+  color: #c53030;
+}
 
-        #warenkorb-div table table th {
-            background: #e5e7eb;
-            color: #374151;
-            padding: 3px 4px;
-            font-size: 8px;
-        }
+.status-processing {
+  background-color: #feebc8;
+  color: #dd6b20;
+}
 
-        #warenkorb-div table table td {
-            padding: 3px 4px;
-            text-align: center;
-            font-weight: 500;
-            font-size: 9px;
-        }
+.status-completed {
+  background-color: #c6f6d5;
+  color: #25543e;
+}
 
-        /* Improve text readability at small sizes */
-        .fw-type-sm, .fw-type-h6 {
-            line-height: 1.3;
-        }
+.status-cancelled {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
 
-        /* Status indicator adjustment */
-        #auftragsstatus::before {
-            content: '●';
-            color: #10b981;
-            margin-right: 4px;
-            font-size: 1em;
-        }
+/* Checkbox styling */
+fw-checkbox {
+  transform: scale(1.2);
+}
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
+/* Responsive Design */
+@media (max-width: 1024px) {
+  body {
+    padding: 16px;
+  }
+  
+  #auftragsstatus-div,
+  #warenkorb-div,
+  #ausfuehrung-div,
+  #empfaenger-div,
+  #auftraggeber-div,
+  #vermittler-div {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+}
 
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 2px;
-        }
+@media (max-width: 768px) {
+  body {
+    padding: 12px;
+  }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
+  .info-details td:first-child {
+    width: 140px;
+    font-size: 0.875rem;
+  }
 
-        /* Empty state handling */
-        td:empty::before {
-            content: "—";
-            color: #94a3b8;
-            font-style: italic;
-        }
+  .table-subdetails table {
+    font-size: 0.7rem;
+  }
+
+  .table-subdetails th,
+  .table-subdetails td {
+    padding: 6px 4px;
+  }
+  
+  /* Stack tables vertically on mobile */
+  .table-subdetails {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Convert tables to card layout on very small screens */
+  .info-details,
+  .info-details tbody,
+  .info-details tr,
+  .info-details td {
+    display: block;
+  }
+  
+  .info-details tr {
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    background: white;
+  }
+  
+  .info-details td {
+    border: none;
+    padding: 4px 0;
+  }
+  
+  .info-details td:first-child {
+    background: none;
+    border: none;
+    width: 100%;
+    font-size: 0.8rem;
+    color: #718096;
+    margin-bottom: 4px;
+  }
+  
+  .info-details td:last-child {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
+
+/* Animation for loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    padding: 0;
+  }
+  
+  #auftragsstatus-div,
+  #warenkorb-div,
+  #ausfuehrung-div,
+  #empfaenger-div,
+  #auftraggeber-div,
+  #vermittler-div {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+    margin-bottom: 20px;
+  }
+  
+  .table-subdetails thead {
+    background: #f0f0f0 !important;
+    color: black !important;
+  }
+}

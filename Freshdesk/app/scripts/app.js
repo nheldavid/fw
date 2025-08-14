@@ -13,29 +13,9 @@
  * 
  * These field keys are defined in CUSTOM_FIELD_CONFIG below.
  */
-// Use the shared appState from window - DO NOT create a new one
-let appState = window.appState;
 
-// If window.appState doesn't exist yet (edge case), create it
-if (!appState) {
-    window.appState = {
-        client: null,
-        isInitialized: false,
-        currentTicket: null,
-        orderData: null,
+//const appState = window.appState; // already initialized in data-utils.js
 
-            // NEW: Add storage for custom object data
-    customObjectData: {
-        execution: null,
-        recipient: null,
-        client: null,
-        orderStatus: null,
-        mediator: null,
-        cart: null
-    }
-    };
-    appState = window.appState;
-}
 // const appState = {
 //     client: null,
 //     isInitialized: false,
