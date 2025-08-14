@@ -198,7 +198,7 @@
         }
 
         /* Hide some table columns on very narrow screens */
-        @media (max-width: 320px) {
+        /* @media (max-width: 320px) {
             #Klassik-OT-table th:nth-child(n+6),
             #Klassik-OT-table td:nth-child(n+6) {
                 display: none;
@@ -208,7 +208,7 @@
             table td:nth-child(n+7) {
                 display: none;
             }
-        }
+        } */
 
         /* Nested Table in Shopping Cart - Ultra Compact */
         #warenkorb-div table table {
