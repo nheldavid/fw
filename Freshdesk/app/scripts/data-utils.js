@@ -20,7 +20,7 @@ if (!window.appState) {
 }
 
 // Shared reference
-const appState = window.appState;
+//const appState = window.appState;
 
 /**  
  * @param {string} name - The name of the schema to fetch

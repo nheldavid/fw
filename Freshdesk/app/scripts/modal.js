@@ -134,6 +134,7 @@ const CONTEXT_CONFIG = {
 
 //const modalAppState = window.appState; // use the shared reference
 
+
 document.addEventListener("DOMContentLoaded", async function() {
   try {
     // Initialize the app and get client
