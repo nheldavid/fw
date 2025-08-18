@@ -476,9 +476,13 @@ async function handleAuftragsstatusData(contextData) {
   console.log('Kopfpauschalen Data:', kopfpauschalen);
 
   // Display data in the UI
-  updateElement('Klassik-OT-tableBody', generateTableHTML(ot));
-  updateElement('gtschn_tableBody', generateTableHTML(gutscheine));
-  updateElement('kopf_ps_tableBody', generateTableHTML(kopfpauschalen));
+  //updateElement('Klassik-OT-tableBody', generateTableHTML(ot));
+  //updateElement('gtschn_tableBody', generateTableHTML(gutscheine));
+  //updateElement('kopf_ps_tableBody', generateTableHTML(kopfpauschalen));
+
+  populateOTItems (ot);
+  populateGutscheinItems (gutscheine);
+  populatePauschaleItems (kopfpauschalen);  
 }
 
 /**
@@ -495,7 +499,9 @@ async function handleWarenkorbData(contextData) {
     console.log('Warenkorb Data:', warenkorbData);
     
     // Display warenkorb-specific data in the UI if you have table elements for it
-    updateElement('warenkorb-pos-tableBody', generateTableHTML(warenkorbData));
+    //updateElement('warenkorb-pos-tableBody', generateTableHTML(warenkorbData));
+
+    populatePositionenItems (warenkorbData);
   } catch (error) {
     console.error('Error processing Warenkorb custom data:', error);
   }
@@ -559,4 +565,222 @@ function generateTableHTML(data) {
       .join('');
     return `<tr>${cells}</tr>`;
   }).join('');
+}
+
+function toggleSection(element) {
+    // Get the section content (next sibling element)
+    const sectionContent = element.nextElementSibling;
+    
+    // Toggle the collapsed class on both the title and content
+    element.classList.toggle('collapsed');
+    sectionContent.classList.toggle('collapsed');
+    
+    // Set max-height for smooth animation
+    if (sectionContent.classList.contains('collapsed')) {
+        // Collapsing - set max-height to 0
+        sectionContent.style.maxHeight = '0';
+        sectionContent.style.opacity = '0';
+    } else {
+        // Expanding - set max-height to scroll height for smooth animation
+        sectionContent.style.maxHeight = sectionContent.scrollHeight + 'px';
+        sectionContent.style.opacity = '1';
+        
+        // Reset max-height after animation completes to allow for dynamic content changes
+        setTimeout(() => {
+            if (!sectionContent.classList.contains('collapsed')) {
+                sectionContent.style.maxHeight = 'none';
+            }
+        }, 300); // Match the CSS transition duration
+    }
+}
+
+
+// Populate OT items
+function populateOTItems(otDataArray) {
+    const container = document.getElementById('ot-items-container');
+    const html = otDataArray.map((item, index) => createOTItem(item, index)).join('');
+    container.innerHTML = html;
+}
+
+// Populate gutscheine items
+function populateGutscheinItems(gutscheinDataArray) {
+    const container = document.getElementById('gutscheine-items-container');
+    const html = gutscheinDataArray.map((item, index) => createGutscheinItem(item, index)).join('');
+    container.innerHTML = html;
+}
+
+// Populate gutscheine items
+function populatePauschaleItems(pauschaleDataArray) {
+    const container = document.getElementById('kopfpauschalen-items-container');
+    const html = pauschaleDataArray.map((item, index) => createPauschaleItem(item, index)).join('');
+    container.innerHTML = html;
+}
+
+// Populate gutscheine items
+function populatePositionenItems(positonenDataArray) {
+    const container = document.getElementById('positionen-items-container');
+    const html = positonenDataArray.map((item, index) => createPositionenItem(item, index)).join('');
+    container.innerHTML = html;
+}
+
+// Function to create OT item
+function createOTItem(data, index) {
+  // Convert string values to boolean if needed
+    const isStorniert = data.storniert === true || data.storniert === 'true' || data.storniert === 'Ja' || data.storniert === '1';
+ 
+    return `
+        <div class="cart-item ot-item">
+            <div class="cart-item-header">
+                <span class="position-badge ot-badge">OT ${index + 1}</span>
+                <!-- <span class="item-total">${data.datum} ${data.zeit}</span> -->
+            </div>
+            <div class="details-grid">
+                <div class="detail-item">
+                  <div class="detail-label">Datum</div>
+                  <div class="detail-value">${data.datum}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Ereignis</div>
+                  <div class="detail-value">${data.ereignis}</div>
+                </div>
+                <div class="detail-item full-width">
+                  <div class="detail-label">Text</div>
+                  <div class="detail-value">${data.text}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Ergebnis</div>
+                  <div class="detail-value">
+                    <span class="status-badge status-completed">${data.ergebnis}</span>
+                  </div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Name</div>
+                  <div class="detail-value">${data.name}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Adresse</div>
+                  <div class="detail-value">${data.addresse}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Erfasser</div>
+                  <div class="detail-value">${data.erfasser}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Storniert</div>
+                    <div class="detail-value checkbox-field">
+                        <input type="checkbox" class="checkbox" ${isStorniert ? 'checked' : ''} disabled>
+                        <span>${isStorniert ? 'Ja' : 'Nein'}</span>
+                    </div>
+                </div>
+                <div class="detail-item full-width">
+                  <div class="detail-label">Storniert</div>
+                  <div class="detail-value">${data.storniert_text}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Storniert</div>
+                  <div class="detail-value">${data.storno_datum}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Storniert</div>
+                  <div class="detail-value">${data.storno_erfasser}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Similar functions for Gutscheine and Kopfpauschalen...
+function createGutscheinItem(data, index) {
+    return `
+        <div class="cart-item gutschein-item">
+            <div class="cart-item-header">
+                <span class="position-badge gutschein-badge">Gutschein ${index + 1}</span>
+                <!--<span class="item-total price">${data.wert}</span>-->
+            </div>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <div class="detail-label">Kartennummer</div>
+                    <div class="detail-value">${data.kartennummer}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Wert</div>
+                    <div class="detail-value price">${data.wert}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Einlösedatum</div>
+                    <div class="detail-value">${data.einlosedatum}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createPauschaleItem(data, index) {
+  return `
+    <div class="cart-item pauschale-item">
+      <div class="cart-item-header">
+          <span class="position-badge pauschale-badge">Pauschale ${index + 1}</span>
+          <!--<span class="item-total price">€5.00</span>-->
+      </div>
+      <div class="details-grid">
+        <div class="detail-item">
+            <div class="detail-label">Kondition</div>
+            <div class="detail-value">${data.kondition}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Konditionstext</div>
+            <div class="detail-value">${data.konditionstext}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Betrag</div>
+            <div class="detail-value price">${data.betrag}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Einheit</div>
+            <div class="detail-value">${data.einheit}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function createPositionenItem(data, index) {
+  return `
+  <div class="cart-item">
+    <div class="cart-item-header">
+        <span class="position-badge">Position ${data.position}</span>
+        <!-- <span class="item-total price">€89.99</span> -->
+    </div> 
+    <div class="details-grid">
+      <div class="detail-item">
+        <div class="detail-label">Material</div>
+        <div class="detail-value">${data.material}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Menge</div>
+        <div class="detail-value">${data.menge}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Preis brutto</div>
+        <div class="detail-value price">${data.preis_brutto}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Steuer</div>
+        <div class="detail-value">${data.steuer}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Kartenart</div>
+        <div class="detail-value">${data.kartenart}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Größe</div>
+        <div class="detail-value">${data.variante}</div>
+      </div>
+      <div class="detail-item full-width">
+        <div class="detail-label">Kurztext</div>
+        <div class="detail-value">${data.kurztext}</div>
+      </div>
+    </div>
+  </div>
+  `;
 }

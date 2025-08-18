@@ -111,6 +111,163 @@
               </div>
             </fw-card>
 
+
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-auftragsstatus">
+                <fw-icon name="open-new-tab"></fw-icon>
+              </fw-button>
+              <fw-accordion-title>
+                <!-- <fw-icon name="products"></fw-icon> -->
+                <span>📋 Auftragsstatus</span>
+              </fw-accordion-title>
+              <fw-accordion-body>
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Bestelldatum:</div>
+                    <div class="detail-value" id="bestelldatum"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value" id="auftragsstatus"></div>
+                  </div>
+                  <div class="detail-item full-width">
+                    <div class="detail-label">Vertriebsweg:</div>
+                    <div class="detail-value" id="vertriebsweg"></div>
+                  </div>
+                  <div class="detail-item full-width">
+                    <div class="detail-label">Freitext:</div> 
+                    <div class="detail-value" id="freitext"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Molliwert:</div>
+                    <div class="detail-value" id="molliwert"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Erfassdatum:</div>
+                    <div class="detail-value" id="erfassdatum"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Rechnungsnummer:</div>
+                    <div class="detail-value" id="rechnungsnummer"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Trackingnummer:</div>
+                    <div class="detail-value" id="trackingnummer"></div>
+                  </div>
+                </div>
+              </fw-accordion-body>
+            </fw-accordion>    
+
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-auftraggeber">
+                <fw-icon name="open-new-tab"></fw-icon>
+              </fw-button>
+              <fw-accordion-title>
+                <!-- <fw-icon name="contact"></fw-icon> -->
+                <span>👤 Auftraggeber</span>
+              </fw-accordion-title>
+              <fw-accordion-body>
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value" id="auftraggeber-name"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Firmenzusatz:</div>
+                    <div class="detail-value" id="auftraggeber-firmenzusatz"></div>
+                  </div>
+                  <div class="detail-item full-width">
+                    <div class="detail-label">Addresse:</div>
+                    <div class="detail-value" id="auftraggeber-addresse"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Telefon:</div>
+                    <div class="detail-value" id="auftraggeber-telefon"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">E-mail:</div>
+                    <div class="detail-value" id="auftraggeber-email"></div>
+                  </div>
+                </div>
+              </fw-accordion-body>
+            </fw-accordion>
+                        
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-empfaenger">
+                <fw-icon name="open-new-tab"></fw-icon>
+              </fw-button>
+              <fw-accordion-title>
+                <!-- <fw-icon name="company"></fw-icon> -->
+                <span>📍 Empfänger</span>
+              </fw-accordion-title>
+              <fw-accordion-body>
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value" id="empfaenger-name"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Firmenzusatz:</div>
+                    <div class="detail-value" id="empfaenger-firmenzusatz"></div>
+                  </div>
+                  <div class="detail-item full-width">
+                    <div class="detail-label">Addresse:</div>
+                    <div class="detail-value" id="empfaenger-addresse"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Telefon:</div>
+                    <div class="detail-value" id="empfaenger-telefon"></div>
+                  </div>
+                </div>
+              </fw-accordion-body>
+            </fw-accordion>
+
+                        
+            <fw-accordion>
+              <fw-button class="title-button" size="small" color="link" id="btn-vermittler">
+                <fw-icon name="open-new-tab"></fw-icon>
+              </fw-button>
+              <fw-accordion-title>
+                <!-- <fw-icon name="groups"></fw-icon> -->
+                <span>👨‍💼 Vermittler</span>
+              </fw-accordion-title>
+              <fw-accordion-body>
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Nummer:</div>
+                    <div class="detail-value" id="vermittler"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value" id="vermittler-name"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Typ:</div>
+                    <div class="detail-value" id="vermittler-typ"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Aktiv:</div>
+                    <div class="detail-value checkbox-field" id="vermittler-aktiv">
+                      <input type="checkbox" class="checkbox" checked>
+                      <span>Ja</span>
+                    </div>
+                  </div>
+                  <div class="detail-item full-width">
+                    <div class="detail-label">Addresse:</div>
+                    <div class="detail-value" id="vermittler-addresse"></div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Telefon:</div>
+                    <div class="detail-value" id="vermittler-telefon"></div>
+                  </div>            
+                  <div class="detail-item">
+                    <div class="detail-label">Fax:</div>
+                    <div class="detail-value" id="vermittler-fax"></div>
+                  </div>
+                </div>
+              </fw-accordion-body>
+            </fw-accordion> 
+
             <fw-accordion>
               <fw-button class="title-button" size="small" color="link" id="btn-ausfuhrung">
                 <fw-icon name="open-new-tab"></fw-icon>
@@ -162,161 +319,6 @@
             </fw-accordion>
 
             <fw-accordion>
-              <fw-button class="title-button" size="small" color="link" id="btn-auftraggeber">
-                <fw-icon name="open-new-tab"></fw-icon>
-              </fw-button>
-              <fw-accordion-title>
-                <!-- <fw-icon name="contact"></fw-icon> -->
-                <span>👤 Auftraggeber</span>
-              </fw-accordion-title>
-              <fw-accordion-body>
-                <div class="details-grid">
-                  <div class="detail-item">
-                    <div class="detail-label">Name:</div>
-                    <div class="detail-value" id="auftraggeber-name"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Firmenzusatz:</div>
-                    <div class="detail-value" id="auftraggeber-firmenzusatz"></div>
-                  </div>
-                  <div class="detail-item full-width">
-                    <div class="detail-label">Addresse:</div>
-                    <div class="detail-value" id="auftraggeber-addresse"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Telefon:</div>
-                    <div class="detail-value" id="auftraggeber-telefon"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">E-mail:</div>
-                    <div class="detail-value" id="auftraggeber-email"></div>
-                  </div>
-                </div>
-              </fw-accordion-body>
-            </fw-accordion>
-            
-            <fw-accordion>
-              <fw-button class="title-button" size="small" color="link" id="btn-empfaenger">
-                <fw-icon name="open-new-tab"></fw-icon>
-              </fw-button>
-              <fw-accordion-title>
-                <!-- <fw-icon name="company"></fw-icon> -->
-                <span>📍 Empfänger</span>
-              </fw-accordion-title>
-              <fw-accordion-body>
-                <div class="details-grid">
-                  <div class="detail-item">
-                    <div class="detail-label">Name:</div>
-                    <div class="detail-value" id="empfaenger-name"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Firmenzusatz:</div>
-                    <div class="detail-value" id="empfaenger-firmenzusatz"></div>
-                  </div>
-                  <div class="detail-item full-width">
-                    <div class="detail-label">Addresse:</div>
-                    <div class="detail-value" id="empfaenger-addresse"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Telefon:</div>
-                    <div class="detail-value" id="empfaenger-telefon"></div>
-                  </div>
-                </div>
-              </fw-accordion-body>
-            </fw-accordion>
-
-            <fw-accordion>
-              <fw-button class="title-button" size="small" color="link" id="btn-auftragsstatus">
-                <fw-icon name="open-new-tab"></fw-icon>
-              </fw-button>
-              <fw-accordion-title>
-                <!-- <fw-icon name="products"></fw-icon> -->
-                <span>📋 Auftragsstatus</span>
-              </fw-accordion-title>
-              <fw-accordion-body>
-                <div class="details-grid">
-                  <div class="detail-item">
-                    <div class="detail-label">Bestelldatum:</div>
-                    <div class="detail-value" id="bestelldatum"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Status:</div>
-                    <div class="detail-value" id="auftragsstatus"></div>
-                  </div>
-                  <div class="detail-item full-width">
-                    <div class="detail-label">Vertriebsweg:</div>
-                    <div class="detail-value" id="vertriebsweg"></div>
-                  </div>
-                  <div class="detail-item full-width">
-                    <div class="detail-label">Freitext:</div> 
-                    <div class="detail-value" id="freitext"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Molliwert:</div>
-                    <div class="detail-value" id="molliwert"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Erfassdatum:</div>
-                    <div class="detail-value" id="erfassdatum"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Rechnungsnummer:</div>
-                    <div class="detail-value" id="rechnungsnummer"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Trackingnummer:</div>
-                    <div class="detail-value" id="trackingnummer"></div>
-                  </div>
-                </div>
-              </fw-accordion-body>
-            </fw-accordion>    
-            
-            <fw-accordion>
-              <fw-button class="title-button" size="small" color="link" id="btn-vermittler">
-                <fw-icon name="open-new-tab"></fw-icon>
-              </fw-button>
-              <fw-accordion-title>
-                <!-- <fw-icon name="groups"></fw-icon> -->
-                <span>👨‍💼 Vermittler</span>
-              </fw-accordion-title>
-              <fw-accordion-body>
-                <div class="details-grid">
-                  <div class="detail-item">
-                    <div class="detail-label">Nummer:</div>
-                    <div class="detail-value" id="vermittler"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Name:</div>
-                    <div class="detail-value" id="vermittler-name"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Typ:</div>
-                    <div class="detail-value" id="vermittler-typ"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Aktiv:</div>
-                    <div class="detail-value checkbox-field" id="vermittler-aktiv">
-                      <input type="checkbox" class="checkbox" checked>
-                      <span>Ja</span>
-                    </div>
-                  </div>
-                  <div class="detail-item full-width">
-                    <div class="detail-label">Addresse:</div>
-                    <div class="detail-value" id="vermittler-addresse"></div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-label">Telefon:</div>
-                    <div class="detail-value" id="vermittler-telefon"></div>
-                  </div>            
-                  <div class="detail-item">
-                    <div class="detail-label">Fax:</div>
-                    <div class="detail-value" id="vermittler-fax"></div>
-                  </div>
-                </div>
-              </fw-accordion-body>
-            </fw-accordion> 
-
-            <fw-accordion>
               <fw-button class="title-button" size="small" color="link" id="btn-warenkorb">
                 <fw-icon name="open-new-tab"></fw-icon>
               </fw-button>
@@ -347,25 +349,29 @@
                     <div class="detail-value" id="warenkorb-kartentext"></div>
                   </div>
                   <div class="detail-item full-width">
-                      <table class="table-details">
+                      <table class="table-details" onclick="toggleTableDetails(this)">
                         <tbody>
                           <tr>
-                            <th class="fw-type-sm">Basis<br>Vermittler</th>
-                            <th class="fw-type-sm">Express<br>Vermittler</th>
-                            <th class="fw-type-sm">Sonntag<br>Vermittler</th>
+                            <th class="visible-column">Basis<br>Vermittler</th>
+                            <th class="visible-column">Express<br>Vermittler</th>
                           </tr>
                           <tr>
-                            <td id="v_zuk_bas"></td>
-                            <td id="v_zuk_exp"></td>
-                            <td id="v_zuk_son"></td>
+                            <td class="visible-column" id="v_zuk_bas"></td>
+                            <td class="visible-column" id="v_zuk_exp"></td>
                           </tr>
-                            <th class="fw-type-sm">Ausführender<br>Basis</th>
-                            <th class="fw-type-sm">Express<br>Ausführender</th>
-                            <th class="fw-type-sm">Sonntag<br>Ausführender</th>
+                            <th class="hidden-column">Sonntag<br>Vermittler</th>
+                            <th class="hidden-column">Ausführender<br>Basis</th>
                           <tr>
-                            <td id="a_zuk_bas"></td>
-                            <td id="a_zuk_exp"></td>
-                            <td id="a_zuk_son"></td>
+                            <td class="hidden-column" id="v_zuk_son"></td>
+                            <td class="hidden-column" id="a_zuk_bas"></td>
+                          </tr>
+                          <tr>
+                            <th class="hidden-column">Express<br>Ausführender</th>
+                            <th class="hidden-column">Sonntag<br>Ausführender</th>
+                          </tr>
+                          <tr>
+                            <td class="hidden-column" id="a_zuk_exp"></td>
+                            <td class="hidden-column" id="a_zuk_son"></td>
                           </tr>
                         </tbody>
                       </table>

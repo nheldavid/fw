@@ -216,3 +216,15 @@ function formatValue(value, keyName = '', elementId = '') {
   // Fallback
   return (value !== undefined && value !== null && value !== '') ? String(value) : 'Nicht verfügbar';
 }
+
+function toggleTableDetails(table) {
+    table.classList.toggle('expanded');
+    
+    // Add a subtle animation effect
+    table.style.transition = 'all 0.3s ease';
+    
+    // Optional: Add vibration feedback on mobile devices
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+}
