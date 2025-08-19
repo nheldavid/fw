@@ -784,3 +784,38 @@ function createPositionenItem(data, index) {
   </div>
   `;
 }
+
+function toggleHiddenServices(button) {
+    const hiddenFields = button.closest('.cart-item-content').querySelector('.hidden-service-fields');
+    const btnText = button.querySelector('.btn-text');
+    const itemTotal = button.closest('.cart-item').querySelector('.item-total');
+    const cartItemContent = button.closest('.cart-item-content');
+    
+    hiddenFields.classList.toggle('collapsed');
+    
+    if (hiddenFields.classList.contains('collapsed')) {
+        hiddenFields.style.maxHeight = '0';
+        hiddenFields.style.opacity = '0';
+        btnText.textContent = '4 weitere Services anzeigen';
+        itemTotal.textContent = '2 von 6 Services';
+    } else {
+        hiddenFields.style.maxHeight = hiddenFields.scrollHeight + 'px';
+        hiddenFields.style.opacity = '1';
+        btnText.textContent = 'Weniger anzeigen';
+        itemTotal.textContent = '6 Services';
+    }
+    
+    // Always recalculate and update parent container height
+    setTimeout(() => {
+        if (cartItemContent && !cartItemContent.classList.contains('collapsed')) {
+            cartItemContent.style.maxHeight = cartItemContent.scrollHeight + 'px';
+            
+            // Reset to auto after animation to allow for dynamic content
+            setTimeout(() => {
+                if (!cartItemContent.classList.contains('collapsed')) {
+                    cartItemContent.style.maxHeight = 'auto';
+                }
+            }, 300);
+        }
+    }, 50);
+}

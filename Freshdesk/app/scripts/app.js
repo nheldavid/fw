@@ -860,13 +860,13 @@ function updateDOMElements(execution, recipient, client, orderStatus, mediator, 
         'warenkorb-bestellnummer': cart.bestellnummer,
         'warenkorb-lieferdatum': cart.lieferdatum,
         'warenkorb-zahlbetrag': cart.zahlbetrag,
-        'warenkorb-kartentext': cart.kartentext,
-        'v_zuk_bas': cart.v_zuk_bas,
-        'v_zuk_exp': cart.v_zuk_exp,
-        'v_zuk_son': cart.v_zuk_son,
-        'a_zuk_bas': cart.a_zuk_bas,
-        'a_zuk_exp': cart.a_zuk_exp,
-        'a_zuk_son': cart.a_zuk_son
+        'warenkorb-kartentext': cart.kartentext
+        // 'v_zuk_bas': cart.v_zuk_bas,
+        // 'v_zuk_exp': cart.v_zuk_exp,
+        // 'v_zuk_son': cart.v_zuk_son,
+        // 'a_zuk_bas': cart.a_zuk_bas,
+        // 'a_zuk_exp': cart.a_zuk_exp,
+        // 'a_zuk_son': cart.a_zuk_son
     });
 }
 

@@ -168,8 +168,8 @@ function formatValue(value, keyName = '', elementId = '') {
   // Lists for formatting logic
   const booleanKeys = ['storniert', 'active', 'aktiv']; // exact match
   const dateKeys = ['date', 'datum']; // substring match
-  const currencyKeys = ['amount', 'preis', 'betrag', 'zahlbetrag']; // substring match
-  const numberKeys = ['menge', 'anzahl', 'stück', 'quantity', 'wert', 'molliwert']; // substring match
+  const currencyKeys = ['amount', 'preis', 'betrag', 'preis_brutto']; // substring match
+  const numberKeys = ['menge', 'anzahl', 'stück', 'quantity', 'wert', 'molliwert', 'steuer']; // substring match
 
   // Special: Tracking number → DHL link
   if ((elementId === 'trackingnummer' || keyName === 'trackingnummer') && value) {
@@ -180,7 +180,9 @@ function formatValue(value, keyName = '', elementId = '') {
   // Boolean → checkbox
   if (typeof value === 'boolean' || (keyName && booleanKeys.includes(keyName))) {
     const boolVal = (value === true || value === 'true' || value === 1 || value === '1');
-    return `<fw-checkbox ${boolVal ? 'checked' : ''} disabled></fw-checkbox>`;
+    //return `<fw-checkbox ${boolVal ? 'checked' : ''} disabled></fw-checkbox>`;
+    return `<input type="checkbox" class="checkbox" ${boolVal ? 'checked' : ''} disabled>
+            <span>${boolVal ? 'Ja' : 'Nein'}</span>`;
   }
 
   // Date-like → formatted date
@@ -217,14 +219,3 @@ function formatValue(value, keyName = '', elementId = '') {
   return (value !== undefined && value !== null && value !== '') ? String(value) : 'Nicht verfügbar';
 }
 
-function toggleTableDetails(table) {
-    table.classList.toggle('expanded');
-    
-    // Add a subtle animation effect
-    table.style.transition = 'all 0.3s ease';
-    
-    // Optional: Add vibration feedback on mobile devices
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
-    }
-}

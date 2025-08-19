@@ -4,7 +4,7 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/css/crayons-min.css" />
-    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../styles/modal.css" />
   </head>
   <body>
     
@@ -106,44 +106,69 @@
           <div class="detail-item full-width">
             <div class="detail-label">Kartentext:</div>
             <div class="detail-value" id="warenkorb-kartentext"></div>
-          </div>
-          <div class="detail-item full-width">
-              <table class="table-details" onclick="toggleTableDetails(this)">
-                <tbody>
-                  <tr>
-                    <th class="fw-type-sm visible-column">Basis<br>Vermittler</th>
-                    <th class="fw-type-sm visible-column">Express<br>Vermittler</th>
-                  </tr>
-                  <tr>
-                    <td class="visible-column" id="v_zuk_bas"></td>
-                    <td class="visible-column" id="v_zuk_exp"></td>
-                  </tr>
-                    <th class="fw-type-sm hidden-column">Sonntag<br>Vermittler</th>
-                    <th class="fw-type-sm hidden-column">Ausführender<br>Basis</th>
-                  <tr>
-                    <td class="hidden-column" id="v_zuk_son"></td>
-                    <td class="hidden-column" id="a_zuk_bas"></td>
-                  </tr>
-                  <tr>
-                    <th class="fw-type-sm hidden-column">Express<br>Ausführender</th>
-                    <th class="fw-type-sm hidden-column">Sonntag<br>Ausführender</th>
-                  </tr>
-                  <tr>
-                    <td class="hidden-column" id="a_zuk_exp"></td>
-                    <td class="hidden-column" id="a_zuk_son"></td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>          
+          </div>                 
+        </div>
+        
+      </div>
+
+      <div class="details-section">
+        <!-- Service Level Item with visible/hidden fields -->
+        <div class="cart-item ot-item">
+            <div class="cart-item-header" onclick="toggleCartItem(this)">
+              <span class="position-badge ot-badge">Service-Level</span>
+              <span class="item-total">2 von 6 Services</span>
+            </div>
+            <div class="cart-item-content">
+              <!-- Always visible fields -->
+              <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Basis Vermittler</div>
+                    <div class="detail-value" id="v_zuk_bas">12</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Express Vermittler</div>
+                    <div class="detail-value highlight" id="v_zuk_exp">5</div>
+                  </div>
+              </div>
+              
+              <!-- Hidden fields - shown when expanded -->
+              <div class="hidden-service-fields collapsed">
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-label">Sonntag Vermittler</div>
+                    <div class="detail-value" id="v_zuk_son">0</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Ausführender Basis</div>
+                    <div class="detail-value" id="a_zuk_bas">8</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Express Ausführender</div>
+                    <div class="detail-value highlight" id="a_zuk_exp">3</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-label">Sonntag Ausführender</div>
+                    <div class="detail-value" id="a_zuk_son">0</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Show more button -->
+              <div class="show-more-section">
+                <button class="show-more-btn" onclick="toggleHiddenServices(this)">
+                  <span class="btn-text">4 weitere Services anzeigen</span>
+                </button>
+              </div>
+            </div>
         </div>
       </div>
-        <!-- Warenkorb Items -->
-        <div class="details-section">
-          <div class="section-title-details" onclick="toggleSection(this)">🛒 Positionen</div>
-          <div class="section-content">
-            <div id="positionen-items-container">
-            <!-- Cart Item  -->
-            </div>
+
+      <!-- Warenkorb Items -->
+      <div class="details-section">
+        <div class="section-title-details" onclick="toggleSection(this)">🛒 Positionen</div>
+        <div class="section-content">
+          <div id="positionen-items-container">
+          <!-- Cart Item  -->
           </div>
         </div>
       </div>
