@@ -158,6 +158,65 @@ function getValue(val) {
 }
 
 /**
+ * Formats a phone/fax number for German format
+ * @param {string} value - The phone/fax number to format
+ * @returns {string} Formatted phone/fax number
+ */
+function formatPhoneNumber(value) {
+  if (!value) return '';
+  
+  // Clean the number - remove all non-digits and common separators
+  let cleaned = String(value).replace(/[\s\-\(\)\/\.]/g, '');
+  
+  // Handle international prefix
+  if (cleaned.startsWith('0049')) {
+    cleaned = '+49' + cleaned.substring(4);
+  } else if (cleaned.startsWith('49') && cleaned.length > 10) {
+    cleaned = '+49' + cleaned.substring(2);
+  } else if (cleaned.startsWith('0')) {
+    // German national format, convert to international
+    cleaned = '+49' + cleaned.substring(1);
+  }
+  
+  // Format German numbers (+49 xxx xxxxxxx or +49 xxxx xxxxxx)
+  if (cleaned.startsWith('+49')) {
+    const number = cleaned.substring(3);
+    
+    // Mobile numbers (15x, 16x, 17x, 179x)
+    if (number.match(/^(15|16|17)/)) {
+      if (number.length >= 10) {
+        return `+49 ${number.substring(0, 3)} ${number.substring(3, 6)} ${number.substring(6)}`;
+      }
+    }
+    
+    // Landline numbers - various city codes
+    if (number.length >= 7) {
+      // Try different city code lengths (2-5 digits)
+      for (let cityCodeLength of [5, 4, 3, 2]) {
+        if (number.length >= cityCodeLength + 4) {
+          const cityCode = number.substring(0, cityCodeLength);
+          const localNumber = number.substring(cityCodeLength);
+          
+          // Format local number in groups
+          if (localNumber.length >= 6) {
+            const mid = Math.floor(localNumber.length / 2);
+            return `+49 ${cityCode} ${localNumber.substring(0, mid)} ${localNumber.substring(mid)}`;
+          } else {
+            return `+49 ${cityCode} ${localNumber}`;
+          }
+        }
+      }
+    }
+    
+    // Fallback for other formats
+    return cleaned.replace('+49', '+49 ');
+  }
+  
+  // For non-German numbers or unrecognized format, return as-is with basic spacing
+  return value.replace(/(\d{3,4})(\d{3,4})(\d{3,4})/, '$1 $2 $3').trim();
+}
+
+/**
  * Formats a value based on its key name (already lowercase).
  * @param {*} value - The value to format
  * @param {string} [keyName] - Optional key name for formatting logic
@@ -170,6 +229,9 @@ function formatValue(value, keyName = '', elementId = '') {
   const dateKeys = ['date', 'datum']; // substring match
   const currencyKeys = ['amount', 'preis', 'betrag', 'preis_brutto']; // substring match
   const numberKeys = ['menge', 'anzahl', 'stück', 'quantity', 'wert', 'molliwert', 'steuer']; // substring match
+  const phoneKeys = ['telefon', 'phone', 'fax', 'handy', 'mobil', 'mobile']; // substring match
+  const emailKeys = ['email', 'e-mail', 'mail', 'e_mail']; // substring match
+
 
   // Special: Tracking number → DHL link
   if ((elementId === 'trackingnummer' || keyName === 'trackingnummer') && value) {
@@ -177,10 +239,38 @@ function formatValue(value, keyName = '', elementId = '') {
     return `<a href="https://www.dhl.com/de-de/home/tracking/tracking-parcel.html?submit=1&tracking-id=${safeVal}" target="_blank" rel="noopener noreferrer">${value}</a>`;
   }
 
+  // Email → formatted with clickable mailto link
+  if (keyName && emailKeys.some(k => keyName.includes(k))) {
+    if (value && String(value).includes('@')) {
+      const email = String(value).trim();
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(email)) {
+        return `📧 <a href="mailto:${email}">${email}</a>`;
+      }
+    }
+    return value ? String(value) : '';
+  }
+
+  // Phone/Fax → formatted with clickable link
+  if (keyName && phoneKeys.some(k => keyName.includes(k))) {
+    const formatted = formatPhoneNumber(value);
+    if (formatted && formatted !== '') {
+      // Create clickable tel: link for phones, but not for fax
+      if (keyName.includes('fax')) {
+        return `📠 ${formatted}`;
+      } else {
+        // Remove formatting for tel: link (needs clean number)
+        const cleanForLink = String(value).replace(/[\s\-\(\)\/\.]/g, '');
+        return `📞 <a href="tel:${cleanForLink}">${formatted}</a>`;
+      }
+    }
+    return '';
+  }
+
   // Boolean → checkbox
   if (typeof value === 'boolean' || (keyName && booleanKeys.includes(keyName))) {
     const boolVal = (value === true || value === 'true' || value === 1 || value === '1');
-    //return `<fw-checkbox ${boolVal ? 'checked' : ''} disabled></fw-checkbox>`;
     return `<input type="checkbox" class="checkbox" ${boolVal ? 'checked' : ''} disabled>
             <span>${boolVal ? 'Ja' : 'Nein'}</span>`;
   }
@@ -218,4 +308,3 @@ function formatValue(value, keyName = '', elementId = '') {
   // Fallback
   return (value !== undefined && value !== null && value !== '') ? String(value) : 'Nicht verfügbar';
 }
-

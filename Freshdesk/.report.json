@@ -2,7 +2,57 @@
   "lints": [
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::167: Function 'formatValue' has a complexity of 29. Maximum allowed is 7.",
+      "value": "app\\scripts\\data-utils.js::165: Function 'formatPhoneNumber' has a complexity of 13. Maximum allowed is 7.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::169: Unnecessary escape character: \\(.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::169: Unnecessary escape character: \\).",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::169: Unnecessary escape character: \\/.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::169: Unnecessary escape character: \\..",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::195: 'cityCodeLength' is never reassigned. Use 'const' instead.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::226: Function 'formatValue' has a complexity of 41. Maximum allowed is 7.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::265: Unnecessary escape character: \\(.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::265: Unnecessary escape character: \\).",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::265: Unnecessary escape character: \\/.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\data-utils.js::265: Unnecessary escape character: \\..",
       "type": "lint"
     }
   ],
@@ -18027,30 +18077,5 @@
       "hash": "304f25d94cbbd47a13d43e7516d38dfea920d116"
     }
   },
-  "coverageSummary": {
-    "lines": {
-      "total": 649,
-      "covered": 221,
-      "skipped": 0,
-      "pct": 34.05
-    },
-    "statements": {
-      "total": 693,
-      "covered": 229,
-      "skipped": 0,
-      "pct": 33.04
-    },
-    "functions": {
-      "total": 144,
-      "covered": 45,
-      "skipped": 0,
-      "pct": 31.25
-    },
-    "branches": {
-      "total": 364,
-      "covered": 76,
-      "skipped": 0,
-      "pct": 20.87
-    }
-  }
+  "coverageSummary": {}
 }

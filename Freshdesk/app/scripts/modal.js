@@ -744,7 +744,7 @@ function createPauschaleItem(data, index) {
   `;
 }
 
-function createPositionenItem(data, index) {
+function createPositionenItem(data) {
   return `
   <div class="cart-item">
     <div class="cart-item-header">
