@@ -37,8 +37,13 @@
           <div id="loading-state" class="loading-container">
             <fw-spinner size="medium"></fw-spinner>
             <fw-label value="Loading order information..." color="text-secondary"></fw-label>
+            
           </div>
-          
+          <div class="button">
+            <fw-button size="small" color="link" id="btn-overview" onclick="OpenInNewTab()">
+              <fw-icon name="open-new-tab"></fw-icon>
+            </fw-button>
+          </div>
           <!-- Error State - shown when API calls fail or data is invalid -->
           <div id="error-state" class="error-container" style="display: none;">
             <fw-icon name="alert-triangle" color="warning" size="24"></fw-icon>

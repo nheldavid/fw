@@ -95,6 +95,8 @@ function initializeApp() {
         
         // Load ticket data
         loadTicketData();
+
+        initializeSchemaCache(); // Gets all schemas and populates custom object IDs
         
         extractCustomObjectData();
 
@@ -1050,4 +1052,13 @@ function getDataFromElements(elementMap, title) {
     payload.title = title;
 
     return payload;    
+}
+
+async function OpenInNewTab() {
+    const data = await appState.client.interface.trigger("showModal", {
+            title: "Übersicht",
+            template: "views/overview.html"
+        });
+
+        console.log("Modal response:", data);
 }

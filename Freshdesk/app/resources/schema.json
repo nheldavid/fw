@@ -1,0 +1,183 @@
+{
+  "entities": [
+    {
+      "name": "Auftraggeber",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "anrede", "label": "Anrede" },
+        { "name": "name1", "label": "Name1" },
+        { "name": "name2", "label": "Name2" },
+        { "name": "name3", "label": "Name3" },
+        { "name": "plz", "label": "PLZ" },
+        { "name": "ort", "label": "Ort" },
+        { "name": "strasse", "label": "Strasse" },
+        { "name": "land", "label": "Land" },
+        { "name": "telefon", "label": "Telefon" },
+        { "name": "email", "label": "Email" }
+      ]
+    },
+    {
+      "name": "Ausführung",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "ausfuehrender", "label": "Ausfuehrender" },
+        { "name": "anrede", "label": "Anrede" },
+        { "name": "name1", "label": "Name1" },
+        { "name": "name2", "label": "Name2" },
+        { "name": "name3", "label": "Name3" },
+        { "name": "plz", "label": "PLZ" },
+        { "name": "ort", "label": "Ort" },
+        { "name": "strasse", "label": "Strasse" },
+        { "name": "land", "label": "Land" },
+        { "name": "rang", "label": "Rang" },
+        { "name": "fax", "label": "Fax" },
+        { "name": "telefon", "label": "Telefon" },
+        { "name": "email", "label": "Email" },
+        { "name": "auftragshinweis", "label": "Auftragshinweis" },
+        { "name": "hinweis", "label": "Hinweis" }
+      ]
+    },
+    {
+      "name": "Empfänger",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "anrede", "label": "Anrede" },
+        { "name": "name1", "label": "Name1" },
+        { "name": "name2", "label": "Name2" },
+        { "name": "name3", "label": "Name3" },
+        { "name": "plz", "label": "PLZ" },
+        { "name": "ort", "label": "Ort" },
+        { "name": "strasse", "label": "Strasse" },
+        { "name": "region", "label": "Region" },
+        { "name": "land", "label": "Land" },
+        { "name": "telefon", "label": "Telefon" },
+        { "name": "zusatz", "label": "Zusatz" },
+        { "name": "telefon2", "label": "Telefon2" }
+      ]
+    },
+    {
+      "name": "Vermittler",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "vermittler", "label": "Vermittler" },
+        { "name": "vermittler_aktiv", "label": "Vermittler_aktiv" },
+        { "name": "vermittler_lfp_agp", "label": "Vermittler_LFP_AGP" },
+        { "name": "anrede", "label": "Anrede" },
+        { "name": "name1", "label": "Name1" },
+        { "name": "name2", "label": "Name2" },
+        { "name": "name3", "label": "Name3" },
+        { "name": "plz", "label": "PLZ" },
+        { "name": "ort", "label": "Ort" },
+        { "name": "strasse", "label": "Strasse" },
+        { "name": "region", "label": "Region" },
+        { "name": "land", "label": "Land" },
+        { "name": "fax", "label": "Fax" },
+        { "name": "telefon", "label": "Telefon" }
+      ]
+    },
+    {
+      "name": "Warenkorb",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "auftragsnummer", "label": "Auftragsnummer" },
+        { "name": "bestellnummer", "label": "Bestellnummer" },
+        { "name": "lieferdatum", "label": "Lieferdatum" },
+        { "name": "zahlbetrag", "label": "Zahlbetrag" },
+        { "name": "v_zuk_bas", "label": "V_ZUK_BAS" },
+        { "name": "v_zuk_exp", "label": "V_ZUK_EXP" },
+        { "name": "v_zuk_son", "label": "V_ZUK_SON" },
+        { "name": "a_zuk_bas", "label": "A_ZUK_BAS" },
+        { "name": "a_zuk_exp", "label": "A_ZUK_EXP" },
+        { "name": "a_zuk_son", "label": "A_ZUK_SON" },
+        { "name": "kartentext", "label": "Kartentext" },
+        { "name": "versandkosten", "label": "Versandkosten" },
+        { "name": "position", "label": "Position" },
+        { "name": "material", "label": "Material" },
+        { "name": "menge", "label": "Menge" },
+        { "name": "preis_brutto", "label": "Preis_brutto" },
+        { "name": "steuer", "label": "Steuer" },
+        { "name": "kurztext", "label": "Kurztext" },
+        { "name": "kartenart", "label": "Kartenart" },
+        { "name": "variante", "label": "Variante" }
+      ]
+    },
+    {
+      "name": "Warenkorb_Positionen",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "auftragsnummer", "label": "Auftragsnummer" },
+        { "name": "position", "label": "Position" },
+        { "name": "material", "label": "Material" },
+        { "name": "menge", "label": "Menge" },
+        { "name": "preis_brutto", "label": "Preis_brutto" },
+        { "name": "steuer", "label": "Steuer" },
+        { "name": "kurztext", "label": "Kurztext" },
+        { "name": "kartenart", "label": "Kartenart" },
+        { "name": "variante", "label": "Variante" },
+        { "name": "stckliste", "label": "Stückliste" },
+        { "name": "umsatzsteuer_position", "label": "Umsatzsteuer_Position" },
+        { "name": "material_id", "label": "Material_ID" },
+        { "name": "grusskarte", "label": "Grusskarte" }
+      ]
+    },
+    {
+      "name": "Auftragsstatus",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "bestelldatum", "label": "Bestelldatum" },
+        { "name": "vertriebsweg", "label": "Vertriebsweg" },
+        { "name": "status", "label": "Status" },
+        { "name": "freitext", "label": "Freitext" },
+        { "name": "molliwert", "label": "Molliwert" },
+        { "name": "rechnungsnummer", "label": "Rechnungsnummer" },
+        { "name": "trackingnummer", "label": "Trackingnummer" }
+      ]
+    },
+    {
+      "name": "Auftragsstatus_KLASSIK_OT",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "datum", "label": "Datum" },
+        { "name": "text", "label": "Text" },
+        { "name": "ergebnis", "label": "Ergebnis" },
+        { "name": "name", "label": "Name" },
+        { "name": "strasse_hausnummer", "label": "Strasse_Hausnummer" },
+        { "name": "ort", "label": "Ort" },
+        { "name": "ortsteil", "label": "Ortsteil" },
+        { "name": "erfasser", "label": "Erfasser" },
+        { "name": "storniert", "label": "storniert" },
+        { "name": "storniert_text", "label": "STORNIERT_TEXT" },
+        { "name": "storno_datum", "label": "STORNO_DATUM" },
+        { "name": "storno_erfasser", "label": "STORNO_ERFASSER" }
+      ]
+    },
+    {
+      "name": "Auftragsstatus_KLASSIK_GTSCHN",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "kartennummer", "label": "Kartennummer" },
+        { "name": "wert", "label": "Wert" },
+        { "name": "einlsedatum", "label": "Einlösedatum" }
+      ]
+    },
+    {
+      "name": "Auftragsstatus_KLASSIK_KOPF_PS",
+      "fields": [
+        { "name": "ticket", "label": "Ticket" },
+        { "name": "ticketnummer", "label": "Ticketnummer" },
+        { "name": "kondition", "label": "Kondition" },
+        { "name": "konditionstext", "label": "Konditionstext" },
+        { "name": "betrag", "label": "Betrag" },
+        { "name": "einheit", "label": "Einheit" }
+      ]
+    }
+  ]
+}
