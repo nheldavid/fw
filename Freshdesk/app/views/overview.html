@@ -59,7 +59,7 @@
         
         .field {
             /* background-color: #b3d9ff; */
-            border: 1px solid #666;
+            /* border: 1px solid #666; */
             padding: 1px 3px;
             margin-right: 4px;
             font-size: 10px;
@@ -91,6 +91,12 @@
             margin: 4px 0;
         }
         
+        .gray-bg {
+            background-color: #f0f0f0;
+            padding: 4px;
+            margin: 4px 0;
+        }
+
         .red-border {
             /* border: 2px solid #ff0000 !important; */
             background-color: white !important;
@@ -213,13 +219,12 @@
         <!-- Warenkorb Section -->
         <div class="section-container">
             <div class="section-title">Warenkorb:</div>
+            <div class="section-title">Positionen</div>
             <div class="section-content cart-item-container">
-                <div class="section-title">Positionen</div>
-                
-                <div class="green-line">
+                <div class="green-line gray-bg">
                     <div class="row">
                         <span class="label field-xs">Position:</span>
-                        <span class="field-s" id="total_position">10</span>
+                        <!-- <span class="field-s" id="total_position">10</span> -->
                         <span class="label field-m">Material:</span>
                         <span class="label field-m">Bezeichnung:</span>
                         <span class="label field-s">Menge:</span>
@@ -251,10 +256,6 @@
                         <span class="field field-full red-border" id="blumengrusstext" style="margin-left: 93px;">BLUMENGRUSSTEXT</span>
                     </div>
                 </div>
-                
-                <div class="dots">.</div>
-                <div class="dots">.</div>
-                <div class="dots">.</div>
             </div>
         </div>
         
