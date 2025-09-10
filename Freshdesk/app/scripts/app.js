@@ -1,5 +1,376 @@
 /**
- * Fleurop Freshdesk App - Main Application Logic
+ * Generic data fetcher with error handling - Updated to store raw data
+ * @param {string} objectType - Type of custom object to fetch
+ * @param {string} dataType - Human readable name for logging
+ * @returns {Object} Processed data or empty object
+ */
+async function fetchData(objectType, dataType) {
+    try {
+        const obj = await getData(CUSTOM_OBJECTS[objectType]);
+        const rawData = obj?.records?.[0]?.data;
+        
+        if (!rawData) {
+            console.warn(`No ${dataType} data found`);
+            return {};
+        }
+        
+        // Store raw data using the enhanced data-utils functions
+        const processedData = processData(rawData, DATA_CONFIGS[objectType]);
+        
+        // Store both raw and processed data in appState
+        setCustomObjectData(objectType, processedData, rawData, null);
+        
+        return processedData;
+    } catch (error) {
+        console.error(`Error fetching ${dataType} data:`, error);
+        return {};
+    }
+}
+
+/**
+ * Modal-specific data fetcher - Updated to store raw data
+ * @param {string} objectType - Type of modal custom object to fetch
+ * @param {string} dataType - Human readable name for logging
+ * @returns {Array} Processed data array or empty array
+ */
+async function fetchModalData(objectType, dataType) {
+    try {
+        const obj = await getData(MODAL_CUSTOM_OBJECTS[objectType]);
+        const rawDataArray = obj?.records?.map(record => record.data);
+        
+        if (!rawDataArray || rawDataArray.length === 0) {
+            console.warn(`No ${dataType} data found`);
+            return [];
+        }
+        
+        // Process the data
+        const processedDataArray = processMultipleRecords(rawDataArray, DATA_CONFIGS[objectType]);
+        
+        // Store both raw and processed data in appState
+        setModalObjectData(objectType, processedDataArray, rawDataArray, null);
+        
+        return processedDataArray;
+    } catch (error) {
+        console.error(`Error fetching ${dataType} data:`, error);
+        return [];
+    }
+}
+
+/**
+ * Fetch Warenkorb positions data - Updated to store raw data
+ * @returns {Array} Processed warenkorb positions data
+ */
+async function fetchWarenkorbPositionsData() {
+    try {
+        // Get auftragsnummer from the main warenkorb data
+        const auftragsnummer = appState.customObjectData?.warenkorb?.auftragsnummer || 
+                              getRawCustomObjectData('warenkorb')?.auftragsnummer;
+        
+        if (!auftragsnummer) {
+            console.warn('No auftragsnummer found for warenkorb positions');
+            return [];
+        }
+        
+        const obj = await getWarenkorbPositionsData(MODAL_CUSTOM_OBJECTS.warenkorbPositionen, auftragsnummer);
+        const rawDataArray = obj?.records?.map(record => record.data);
+        
+        if (!rawDataArray || rawDataArray.length === 0) {
+            console.warn('No warenkorb positions data found');
+            return [];
+        }
+        
+        // Process the data
+        const processedDataArray = processMultipleRecords(rawDataArray, DATA_CONFIGS.warenkorbPositionen);
+        
+        // Store both raw and processed data in appState
+        setModalObjectData('warenkorbPositionen', processedDataArray, rawDataArray, null);
+        
+        return processedDataArray;
+    } catch (error) {
+        console.error('Error fetching warenkorb positions data:', error);
+        return [];
+    }
+}
+
+/**
+ * Update DOM elements (separated for clarity)
+ */
+function updateDOMElements(ausfuehrung, empfaenger, auftraggeber, auftragsstatus, vermittler, warenkorb) {
+    // Update all elements using the generic function
+    updateElements(ausfuehrung, {
+        'ausfuehrung-nummer': ausfuehrung.nummer,
+        'ausfuehrung-name': ausfuehrung.name,
+        'ausfuehrung-addresse': ausfuehrung.addresse,
+        'ausfuehrung-rang': ausfuehrung.rang,
+        'ausfuehrung-fax': ausfuehrung.fax,
+        'ausfuehrung-telefon': ausfuehrung.telefon,
+        'ausfuehrung-email': ausfuehrung.email,
+        'auftragshinweis': ausfuehrung.auftragshinweis,
+        'hinweis': ausfuehrung.hinweis
+    });
+
+    updateElements(empfaenger, {
+        'empfaenger-name': empfaenger.name,
+        'empfaenger-firmenzusatz': empfaenger.firmenzusatz,
+        'empfaenger-addresse': empfaenger.address,
+        'empfaenger-telefon': empfaenger.phone
+    });
+
+    updateElements(auftraggeber, {
+        'auftraggeber-name': auftraggeber.name,
+        'auftraggeber-firmenzusatz': auftraggeber.firmenzusatz,
+        'auftraggeber-addresse': auftraggeber.address,
+        'auftraggeber-telefon': auftraggeber.phone,
+        'auftraggeber-email': auftraggeber.email
+    });
+
+    updateElements(auftragsstatus, {
+        'bestelldatum': auftragsstatus.bestelldatum,
+        'vertriebsweg': auftragsstatus.vertriebsweg,
+        'auftragsstatus': auftragsstatus.auftragsstatus,
+        'freitext': auftragsstatus.freitext,
+        'molliwert': auftragsstatus.molliwert,
+        'erfassdatum': auftragsstatus.erfassdatum,
+        'rechnungsnummer': auftragsstatus.rechnungsnummer,
+        'trackingnummer': auftragsstatus.trackingnummer
+    });
+
+    updateElements(vermittler, {
+        'vermittler': vermittler.vermittler,
+        'vermittler-aktiv': vermittler.aktiv,
+        'vermittler-typ': vermittler.typ,
+        'vermittler-name': vermittler.name,
+        'vermittler-addresse': vermittler.addresse,
+        'vermittler-fax': vermittler.fax,
+        'vermittler-telefon': vermittler.telefon
+    });
+
+    updateElements(warenkorb, {
+        'warenkorb-auftragsnummer': warenkorb.auftragsnummer,
+        'warenkorb-bestellnummer': warenkorb.bestellnummer,
+        'warenkorb-lieferdatum': warenkorb.lieferdatum,
+        'warenkorb-zahlbetrag': warenkorb.zahlbetrag,
+        'warenkorb-kartentext': warenkorb.kartentext
+    });
+}
+
+function updateElements(data, elementMap) {
+    Object.entries(elementMap).forEach(([id, mapTo]) => {
+        const el = document.getElementById(id);
+        if (!el) {
+            console.warn(`Element with ID "${id}" not found`);
+            return;
+        }
+
+        let value;
+        let keyName;
+
+        if (typeof mapTo === 'string' && mapTo in data) {
+            keyName = mapTo;
+            value = data[keyName];
+        } else if (mapTo === undefined && id in data) {
+            keyName = id;
+            value = data[id];
+        } else {
+            value = mapTo; // direct value
+        }
+
+        el.innerHTML = formatValue(value, keyName, id);
+    });
+}
+
+// ========================
+// MODAL FUNCTIONS - Now use centrally extracted data from appState
+// ========================
+
+// Element mapping configurations for modal display
+const EMPFAENGER_ELEMENTS = {
+    name: 'name',
+    firmenzusatz: 'firmenzusatz', 
+    addresse: 'address',
+    telefon: 'phone'
+};
+
+const AUFTRAGGEBER_ELEMENTS = {
+    name: 'name',
+    firmenzusatz: 'firmenzusatz', 
+    addresse: 'address',
+    telefon: 'phone',
+    email: 'email'
+};
+
+const AUSFUEHRUNG_ELEMENTS = {
+    nummer: 'nummer',
+    name: 'name',
+    addresse: 'addresse',
+    rang: 'rang',
+    fax: 'fax',
+    telefon: 'telefon',
+    email: 'email',
+    auftragshinweis: 'auftragshinweis',
+    hinweis: 'hinweis'
+};
+
+const AUFTRAGSSTATUS_ELEMENTS = {
+    bestelldatum: 'bestelldatum',
+    vertriebsweg: 'vertriebsweg',
+    auftragsstatus: 'auftragsstatus',
+    freitext: 'freitext',
+    molliwert: 'molliwert',
+    erfassdatum: 'erfassdatum',
+    rechnungsnummer: 'rechnungsnummer',
+    trackingnummer: 'trackingnummer'
+};
+
+const VERMITTLER_ELEMENTS = {
+    vermittler: 'vermittler',
+    active: 'aktiv',
+    typ: 'typ',
+    name: 'name',
+    addresse: 'addresse',
+    fax: 'fax',
+    telefon: 'telefon'
+};
+
+const WARENKORB_ELEMENTS = {
+    auftragsnummer: 'auftragsnummer',
+    bestellnummer: 'bestellnummer',
+    lieferdatum: 'lieferdatum',
+    zahlbetrag: 'zahlbetrag',
+    v_zuk_bas: 'v_zuk_bas',
+    v_zuk_exp: 'v_zuk_exp',
+    v_zuk_son: 'v_zuk_son',
+    a_zuk_bas: 'a_zuk_bas',
+    a_zuk_exp: 'a_zuk_exp',
+    a_zuk_son: 'a_zuk_son',
+    kartentext: 'kartentext'
+};
+
+// Updated main functions - now get data from centrally extracted appState
+const showEmpfaenger = () => showModal("Empfänger", "views/modal.html", 'empfaenger', EMPFAENGER_ELEMENTS);
+const showAuftraggeber = () => showModal("Auftraggeber", "views/modal.html", 'auftraggeber', AUFTRAGGEBER_ELEMENTS);
+const showAusfuehrung = () => showModal("Ausführung", "views/modal.html", 'ausfuehrung', AUSFUEHRUNG_ELEMENTS);
+const showAuftragsstatus = () => showModal("Auftragsstatus", "views/modal.html", 'auftragsstatus', AUFTRAGSSTATUS_ELEMENTS);
+const showVermittler = () => showModal("Vermittler", "views/modal.html", 'vermittler', VERMITTLER_ELEMENTS);
+const showWarenkorb = () => showModal("Warenkorb", "views/modal.html", 'warenkorb', WARENKORB_ELEMENTS);
+
+/**
+ * Generic function to show modals using centrally extracted appState data
+ * @param {string} title - Modal title
+ * @param {string} template - Template path
+ * @param {string} dataType - Key in appState.customObjectData
+ * @param {Object} fieldMapping - Field mapping configuration
+ */
+async function showModal(title, template, dataType, fieldMapping) {
+    try {
+        // Check if data is available in appState (should be already loaded centrally)
+        if (!appState.customObjectData || !appState.customObjectData[dataType]) {
+            console.warn(`No ${dataType} data available in appState. Data should have been loaded centrally.`);
+            return;
+        }
+
+        // Get data from centrally extracted appState
+        const sourceData = appState.customObjectData[dataType];
+        const payload = getDataFromAppState(sourceData, fieldMapping, title);
+        
+        console.log(`${title} modal data from centrally extracted appState:`, payload);
+
+        const data = await  appState.client.interface.trigger("showModal", {
+            title,
+            template,
+            data: payload
+        });
+        
+        console.log(`${title} modal response:`, data);
+    } catch (error) {
+        console.error(`Error with ${title} modal:`, error);
+    }
+}
+
+/**
+ * Helper function to extract data from centrally loaded appState
+ * @param {Object} sourceData - Data from appState.customObjectData
+ * @param {Object} fieldMapping - Field mapping configuration
+ * @param {string} title - Modal title
+ * @returns {Object} Formatted payload for modal
+ */
+function getDataFromAppState(sourceData, fieldMapping, title) {
+    const payload = {};
+    
+    // Map fields from centrally loaded appState data using the field mapping
+    Object.entries(fieldMapping).forEach(([payloadKey, sourceKey]) => {
+        const value = sourceData && sourceData[sourceKey];
+        payload[payloadKey] = value && value !== 'Nicht verfügbar' ? value : '';
+    });
+
+    // Add standard fields
+    payload.ticketnummer = appState.currentTicket?.id || '';
+    payload.title = title;
+
+    return payload;    
+}
+
+/**
+ * UPDATED ShowOverview - uses centrally extracted data
+ */
+async function ShowOverview() {
+    try {
+        // Data should already be available from central extraction
+        if (!appState.rawCustomObjectData) {
+            console.error('No raw custom object data available in appState. Central extraction may have failed.');
+            return;
+        }
+
+        // Create payload with raw data only
+        const payload = {
+            // Basic ticket information
+            ticketnummer: appState.currentTicket?.id || '',
+            ticketSubject: appState.currentTicket?.subject || '',
+            title: "Übersicht",
+            
+            // Order data from custom fields
+            orderData: appState.orderData || {},
+            
+            // Raw data for ShowOverview
+            ausfuehrung: getRawCustomObjectData('ausfuehrung'),
+            empfaenger: getRawCustomObjectData('empfaenger'),
+            auftraggeber: getRawCustomObjectData('auftraggeber'),
+            auftragsstatus: getRawCustomObjectData('auftragsstatus'),
+            vermittler: getRawCustomObjectData('vermittler'),
+            warenkorb: getRawCustomObjectData('warenkorb'),
+            modalData: {
+                ot: getRawModalObjectData('ot'),
+                gutscheine: getRawModalObjectData('gutscheine'),
+                kopfpauschalen: getRawModalObjectData('kopfpauschalen'),
+                warenkorbPositionen: getRawModalObjectData('warenkorbPositionen')
+            }
+        };
+
+        console.log('Overview modal payload with raw data:', payload);
+
+        // Send to modal with raw data
+        const data = await appState.client.interface.trigger("showModal", {
+            title: "Übersicht",
+            template: "views/overview.html", 
+            data: payload
+        });
+
+        console.log("Overview modal response:", data);
+        
+    } catch (error) {
+        console.error('Error with Overview modal:', error);
+        // Optional: Show user-friendly error message
+        if (appState.client && appState.client.interface) {
+            appState.client.interface.trigger("showNotify", {
+                type: "error",
+                message: "Failed to load overview data"
+            });
+        }
+    }
+}
+
+/**
+ *Fleurop Freshdesk App - Main Application Logic
  * This file contains the core functionality for the ticket sidebar app
  * 
  * CUSTOM FIELD SETUP REQUIREMENTS:
@@ -14,15 +385,6 @@
  * These field keys are defined in CUSTOM_FIELD_CONFIG below.
  */
 
-//const appState = window.appState; // already initialized in data-utils.js
-
-// const appState = {
-//     client: null,
-//     isInitialized: false,
-//     currentTicket: null,
-//     orderData: null
-// };
-
 // Custom Field Configuration
 // These field keys must match the custom fields configured in Freshdesk
 const CUSTOM_FIELD_CONFIG = {
@@ -30,7 +392,7 @@ const CUSTOM_FIELD_CONFIG = {
     customerEmail: 'cf_customer_email', // Single line text field
     orderNumber: 'cf_order_number',      // Single line text field
     deliveryDate: 'cf_delivery_date',    // Date field
-    orderStatus: 'cf_order_status',       // Dropdown field
+    auftragsstatus: 'cf_order_status',       // Dropdown field
 };
 
 // Field display names for logging and debugging
@@ -39,20 +401,25 @@ const FIELD_DISPLAY_NAMES = {
     [CUSTOM_FIELD_CONFIG.customerEmail]: 'Customer Email',
     [CUSTOM_FIELD_CONFIG.orderNumber]: 'Order Number',
     [CUSTOM_FIELD_CONFIG.deliveryDate]: 'Delivery Date',
-    [CUSTOM_FIELD_CONFIG.orderStatus]: 'Order Status'
-
+    [CUSTOM_FIELD_CONFIG.auftragsstatus]: 'Order Status'
 };
 
 const CUSTOM_OBJECTS = {
-    execution: 'Ausführung',
-    recipient: 'Empfänger',
-    client: 'Auftraggeber',
-    orderStatus: 'Auftragsstatus',
-    mediator: 'Vermittler',
-    cart: 'Warenkorb'
+    ausfuehrung: 'Ausführung',
+    empfaenger: 'Empfänger',
+    auftraggeber: 'Auftraggeber',
+    auftragsstatus: 'Auftragsstatus',
+    vermittler: 'Vermittler',
+    warenkorb: 'Warenkorb'
 };
 
-
+// Additional custom objects for modal data
+const MODAL_CUSTOM_OBJECTS = {
+    ot: 'Auftragsstatus_KLASSIK_OT',
+    gutscheine: 'Auftragsstatus_KLASSIK_GTSCHN',
+    kopfpauschalen: 'Auftragsstatus_KLASSIK_KOPF_PS',
+    warenkorbPositionen: 'Warenkorb_Positionen'
+};
 
 // DOM elements - Crayons Web Components
 const elements = {
@@ -64,7 +431,7 @@ const elements = {
     customerEmail: null,
     orderNumber: null,
     deliveryDate: null,
-    orderStatus: null
+    auftragsstatus: null
 };
 
 /**
@@ -90,19 +457,20 @@ function initializeApp() {
     // Initialize Freshworks client
     app.initialized().then(function(client) {
         console.log('Freshworks client initialized');
-        appState.client = client;
+         appState.client = client;
         appState.isInitialized = true;
         
         // Load ticket data
         loadTicketData();
 
-        initializeSchemaCache(); // Gets all schemas and populates custom object IDs
+        // Initialize schema cache
+        initializeSchemaCache();
         
-        extractCustomObjectData();
+        // Extract ALL custom object data at once
+        extractAllCustomObjectData();
 
         // Set up event listeners
         setupEventListeners();
-
         
     }).catch(function(error) {
         console.error('Failed to initialize Freshworks client:', error);
@@ -122,13 +490,13 @@ function initializeDOMElements() {
     elements.customerEmail = document.getElementById('customer-email');
     elements.orderNumber = document.getElementById('order-number');
     elements.deliveryDate = document.getElementById('delivery-date');
-    elements.orderStatus = document.getElementById('order-status');
+    elements.auftragsstatus = document.getElementById('order-status');
     elements.orderBtn = document.getElementById('btn-auftragsstatus');
-    elements.recipientBtn = document.getElementById('btn-empfaenger');
-    elements.clientBtn = document.getElementById('btn-auftraggeber');
-    elements.executionBtn = document.getElementById('btn-ausfuhrung');
-    elements.mediatorBtn = document.getElementById('btn-vermittler');
-    elements.cartBtn = document.getElementById('btn-warenkorb');
+    elements.empfaengerBtn = document.getElementById('btn-empfaenger');
+    elements.auftraggeberBtn = document.getElementById('btn-auftraggeber');
+    elements.ausfuehrungBtn = document.getElementById('btn-ausfuhrung');
+    elements.vermittlerBtn = document.getElementById('btn-vermittler');
+    elements.warenkorbBtn = document.getElementById('btn-warenkorb');
 }
 
 /**
@@ -139,17 +507,16 @@ function setupEventListeners() {
         elements.retryBtn.addEventListener('click', function() {
             console.log('Retry button clicked');
             loadTicketData();
-            extractCustomObjectData();
+            extractAllCustomObjectData();
         });
     }
 
-    elements.orderBtn?.addEventListener('click', showOrderStatus);
-    elements.recipientBtn?.addEventListener('click', showRecipient);
-    elements.clientBtn?.addEventListener('click', showClient);
-    elements.executionBtn?.addEventListener('click', showExecution);
-    elements.mediatorBtn?.addEventListener('click', showMediator);
-    elements.cartBtn?.addEventListener('click', showCart);
-
+    elements.orderBtn?.addEventListener('click', showAuftragsstatus);
+    elements.empfaengerBtn?.addEventListener('click', showEmpfaenger);
+    elements.auftraggeberBtn?.addEventListener('click', showAuftraggeber);
+    elements.ausfuehrungBtn?.addEventListener('click', showAusfuehrung);
+    elements.vermittlerBtn?.addEventListener('click', showVermittler);
+    elements.warenkorbBtn?.addEventListener('click', showWarenkorb);
 }
 
 /**
@@ -159,14 +526,14 @@ function loadTicketData() {
     console.log('Loading ticket data...');
     showLoadingState();
     
-    if (!appState.client) {
+    if (! appState.client) {
         console.error('Freshworks client not initialized');
         showErrorState('App not properly initialized');
         return;
     }
     
     // Get ticket data using Freshworks client API
-    appState.client.data.get('ticket')
+     appState.client.data.get('ticket')
         .then(function(data) {
             console.log('Ticket data received successfully:', {
                 hasTicket: !!data.ticket,
@@ -252,6 +619,7 @@ function extractOrderInformation(ticket) {
         showErrorState('Failed to process ticket data');
     }
 }
+
 /**
  * Initialize order data with default values
  */
@@ -261,7 +629,7 @@ function initializeOrderData() {
         customerEmail: 'Not available',
         orderNumber: 'Not available',
         deliveryDate: 'Not available',
-        orderStatus: 'Not available'
+        auftragsstatus: 'Not available'
     };
 }
 
@@ -294,9 +662,9 @@ function processCustomFields(customFields) {
         'date'
     );
     
-    extractedData.orderStatus = extractAndValidateField(
+    extractedData.auftragsstatus = extractAndValidateField(
         customFields, 
-        CUSTOM_FIELD_CONFIG.orderStatus, 
+        CUSTOM_FIELD_CONFIG.auftragsstatus, 
         'string'
     );
 
@@ -324,7 +692,7 @@ function logExtractionResults(extractedData) {
         customerEmail: extractedData.customerEmail ? 'Found' : 'Missing',
         orderNumber: extractedData.orderNumber ? 'Found' : 'Missing',
         deliveryDate: extractedData.deliveryDate ? 'Found' : 'Missing',
-        orderStatus: extractedData.orderStatus ? 'Found' : 'Missing'
+        auftragsstatus: extractedData.auftragsstatus ? 'Found' : 'Missing'
     });
 }
 
@@ -335,11 +703,9 @@ function logExtractionResults(extractedData) {
 function updateOrderDataWithExtractedValues(extractedData) {
     if (extractedData.customerName) appState.orderData.customerName = extractedData.customerName;
     if (extractedData.customerEmail) appState.orderData.customerEmail = extractedData.customerEmail;
-
     if (extractedData.orderNumber) appState.orderData.orderNumber = extractedData.orderNumber;
-
     if (extractedData.deliveryDate) appState.orderData.deliveryDate = extractedData.deliveryDate;
-    if (extractedData.orderStatus) appState.orderData.orderStatus = extractedData.orderStatus;
+    if (extractedData.auftragsstatus) appState.orderData.auftragsstatus = extractedData.auftragsstatus;
 }
 
 /**
@@ -520,10 +886,10 @@ function updateUIElements() {
     }
     
     // Update order status with appropriate color
-    if (elements.orderStatus) {
-        elements.orderStatus.setAttribute('value', appState.orderData.orderStatus);
-        const statusColor = getStatusColor(appState.orderData.orderStatus);
-        elements.orderStatus.setAttribute('color', statusColor);
+    if (elements.auftragsstatus) {
+        elements.auftragsstatus.setAttribute('value', appState.orderData.auftragsstatus);
+        const statusColor = getStatusColor(appState.orderData.auftragsstatus);
+        elements.auftragsstatus.setAttribute('color', statusColor);
     }
 }
 
@@ -641,7 +1007,7 @@ function simulateTicketData() {
             [CUSTOM_FIELD_CONFIG.customerName]: 'Maria Schmidt',
             [CUSTOM_FIELD_CONFIG.orderNumber]: 'FLR-2025-001234',
             [CUSTOM_FIELD_CONFIG.deliveryDate]: '2025-02-14',
-            [CUSTOM_FIELD_CONFIG.orderStatus]: 'Processing'
+            [CUSTOM_FIELD_CONFIG.auftragsstatus]: 'Processing'
         }
     };
     
@@ -659,145 +1025,160 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-// Configuration objects for each data type
-const DATA_CONFIGS = {
-    execution: {
-        nummer: "ausfuehrender",
-        name: ["anrede", "name1", "name2", "name3"],
-        addresse: {
-            fields: ["plz", "ort", "strasse", "land"],
-            separator: "<br>"
-        },
-        rang: "rang",
-        fax: "fax",
-        telefon: "telefon",
-        email: "email",
-        auftragshinweis: "auftragshinweis",
-        hinweis: "hinweis"
-    },
+// // Configuration objects for each data type
+// const DATA_CONFIGS = {
+//     ausfuehrung: {
+//         nummer: "ausfuehrender",
+//         name: ["anrede", "name1", "name2", "name3"],
+//         addresse: {
+//             fields: ["plz", "ort", "strasse", "land"],
+//             separator: "<br>"
+//         },
+//         rang: "rang",
+//         fax: "fax",
+//         telefon: "telefon",
+//         email: "email",
+//         auftragshinweis: "auftragshinweis",
+//         hinweis: "hinweis"
+//     },
     
-    recipient: {
-        name: ["anrede", "name1", "name2"],
-        firmenzusatz: "name3",
-        address: {
-            fields: ["plz", "ort", "strasse", "region", "land"],
-            separator: "<br>"
-        },
-        phone: "telefon"
-    },
+//     empfaenger: {
+//         name: ["anrede", "name1", "name2"],
+//         firmenzusatz: "name3",
+//         address: {
+//             fields: ["plz", "ort", "strasse", "region", "land"],
+//             separator: "<br>"
+//         },
+//         phone: "telefon"
+//     },
     
-    client: {
-        name: ["anrede", "name1", "name2"],
-        firmenzusatz: "name3",
-        address: {
-            fields: ["plz", "ort", "strasse", "region", "land"],
-            separator: "<br>"
-        },
-        phone: "telefon",
-        email: "email"
-    },
+//     auftraggeber: {
+//         name: ["anrede", "name1", "name2"],
+//         firmenzusatz: "name3",
+//         address: {
+//             fields: ["plz", "ort", "strasse", "region", "land"],
+//             separator: "<br>"
+//         },
+//         phone: "telefon",
+//         email: "email"
+//     },
     
-    orderStatus: {
-        bestelldatum: "bestelldatum",
-        vertriebsweg: "vertriebsweg",
-        auftragsstatus: "status",
-        freitext: "freitext",
-        molliwert: "molliwert",
-        erfassdatum: "erfassdatum",
-        rechnungsnummer: "rechnungsnummer",
-        trackingnummer: "trackingnummer"
-    },
+//     auftragsstatus: {
+//         bestelldatum: "bestelldatum",
+//         vertriebsweg: "vertriebsweg",
+//         auftragsstatus: "status",
+//         freitext: "freitext",
+//         molliwert: "molliwert",
+//         erfassdatum: "erfassdatum",
+//         rechnungsnummer: "rechnungsnummer",
+//         trackingnummer: "trackingnummer"
+//     },
     
-    mediator: {
-        vermittler: "vermittler",
-        aktiv: "vermittler_aktiv",
-        typ: "vermittler_lfp_agp",
-        name: ["anrede", "name1", "name2", "name3"],
-        addresse: {
-            fields: ["plz", "ort", "strasse", "region", "land"],
-            separator: "<br>"
-        },
-        fax: "fax",
-        telefon: "telefon"
-    },
+//     vermittler: {
+//         vermittler: "vermittler",
+//         aktiv: "vermittler_aktiv",
+//         typ: "vermittler_lfp_agp",
+//         name: ["anrede", "name1", "name2", "name3"],
+//         addresse: {
+//             fields: ["plz", "ort", "strasse", "region", "land"],
+//             separator: "<br>"
+//         },
+//         fax: "fax",
+//         telefon: "telefon"
+//     },
     
-    cart: {
-        auftragsnummer: "auftragsnummer",
-        bestellnummer: "bestellnummer",
-        lieferdatum: "lieferdatum",
-        zahlbetrag: "zahlbetrag",
-        v_zuk_bas: "v_zuk_bas", 
-        v_zuk_exp: "v_zuk_exp",
-        v_zuk_son: "v_zuk_son",
-        a_zuk_bas: "a_zuk_bas",
-        a_zuk_exp: "a_zuk_exp",
-        a_zuk_son: "a_zuk_son",
-        kartentext: "kartentext"
-    }
-};
+//     warenkorb: {
+//         auftragsnummer: "auftragsnummer",
+//         bestellnummer: "bestellnummer",
+//         lieferdatum: "lieferdatum",
+//         zahlbetrag: "zahlbetrag",
+//         v_zuk_bas: "v_zuk_bas", 
+//         v_zuk_exp: "v_zuk_exp",
+//         v_zuk_son: "v_zuk_son",
+//         a_zuk_bas: "a_zuk_bas",
+//         a_zuk_exp: "a_zuk_exp",
+//         a_zuk_son: "a_zuk_son",
+//         kartentext: "kartentext"
+//     },
+
+//     // Modal-specific data configurations
+//     ot: {
+//         datum: ["datum", "uhrzeit"],
+//         ereignis: "ereignis",
+//         text: "text",
+//         ergebnis: "ergebnis",
+//         name: "name",
+//         addresse: {
+//             fields: ["strasse_hausnummer","plz", "ort", "ortsteil"],
+//             separator: "<br>"
+//         },
+//         erfasser: "erfasser",
+//         storniert: "storniert",
+//         storniert_text: "storniert_text",
+//         storno_datum: "storno_datum",
+//         storno_erfasser: "storno_erfasser"
+//     },
+    
+//     gutscheine: {
+//         kartennummer: "kartennummer",
+//         wert: "wert",
+//         einlosedatum: "einlsedatum",
+//     },
+    
+//     kopfpauschalen: {
+//         kondition: "kondition",
+//         konditionstext: "konditionstext",
+//         betrag: "betrag",
+//         einheit: "einheit"
+//     },
+    
+//     warenkorbPositionen: {
+//         position: 'position',
+//         material: 'material',
+//         menge: 'menge',
+//         preis_brutto: 'preis_brutto',
+//         steuer: 'steuer',
+//         kurztext: 'kurztext',
+//         kartenart: 'kartenart',
+//         variante: 'variante'
+//     }
+// };
 
 /**
- * Generic data fetcher with error handling
- * @param {string} objectType - Type of custom object to fetch
- * @param {string} dataType - Human readable name for logging
- * @returns {Object} Processed data or empty object
+ * CENTRALIZED: Extract ALL custom object data at once
+ * This replaces the individual extraction functions in modal.js and overview.js
  */
-async function fetchData(objectType, dataType) {
-    try {
-        const obj = await getData(CUSTOM_OBJECTS[objectType]);
-        const data = obj?.records?.[0]?.data;
-        
-        if (!data) {
-            console.warn(`No ${dataType} data found`);
-            return {};
-        }
-        
-        return processData(data, DATA_CONFIGS[objectType]);
-    } catch (error) {
-        console.error(`Error fetching ${dataType} data:`, error);
-        return {};
-    }
-}
-
-// Data fetching functions
-const getAusfuehrungData = () => fetchData('execution', 'execution');
-const getRecipientData = () => fetchData('recipient', 'recipient');
-const getClientData = () => fetchData('client', 'client');
-const getOrderStatus = () => fetchData('orderStatus', 'order status');
-const getMediatorData = () => fetchData('mediator', 'mediator');
-const getCartData = () => fetchData('cart', 'cart');
-
-/**
- * UPDATED: Extract custom object data and store in appState
- */
-async function extractCustomObjectData() {
-    console.log('Extracting custom object data...');
+async function extractAllCustomObjectData() {
+    console.log('Extracting ALL custom object data centrally...');
 
     try {
-        // Fetch all data in parallel
-        const [execution, recipient, client, orderStatus, mediator, cart] = await Promise.all([
-            getAusfuehrungData(),
-            getRecipientData(),
-            getClientData(),
-            getOrderStatus(),
-            getMediatorData(),
-            getCartData()
+        // Fetch all basic custom objects in parallel
+        const [ausfuehrung, empfaenger, auftraggeber, auftragsstatus, vermittler, warenkorb] = await Promise.all([
+            fetchData('ausfuehrung', 'ausfuehrung'),
+            fetchData('empfaenger', 'empfaenger'),
+            fetchData('auftraggeber', 'auftraggeber'),
+            fetchData('auftragsstatus', 'order status'),
+            fetchData('vermittler', 'vermittler'),
+            fetchData('warenkorb', 'warenkorb')
         ]);
 
-        // Store data in appState for modal access
+        // Store basic custom object data in appState
         appState.customObjectData = {
-            execution,
-            recipient,
-            client,
-            orderStatus,
-            mediator,
-            cart
+            ausfuehrung,
+            empfaenger,
+            auftraggeber,
+            auftragsstatus,
+            vermittler,
+            warenkorb
         };
 
-        console.log('Custom object data stored in appState:', appState.customObjectData);
+        console.log('Basic custom object data stored:', appState.customObjectData);
+
+        // Extract modal-specific data (OT, Gutscheine, etc.)
+        await extractModalSpecificData();
 
         // Update DOM elements (keep existing functionality)
-        updateDOMElements(execution, recipient, client, orderStatus, mediator, cart);
+        updateDOMElements(ausfuehrung, empfaenger, auftraggeber, auftragsstatus, vermittler, warenkorb);
 
     } catch (error) {
         console.error('Error extracting custom object data:', error);
@@ -805,260 +1186,33 @@ async function extractCustomObjectData() {
 }
 
 /**
- * Update DOM elements (separated for clarity)
+ * Extract modal-specific data (OT, Gutscheine, Kopfpauschalen, Warenkorb positions)
  */
-function updateDOMElements(execution, recipient, client, orderStatus, mediator, cart) {
-    // Update all elements using the generic function
-    updateElements(execution, {
-        'ausfuehrung-nummer': execution.nummer,
-        'ausfuehrung-name': execution.name,
-        'ausfuehrung-addresse': execution.addresse,
-        'ausfuehrung-rang': execution.rang,
-        'ausfuehrung-fax': execution.fax,
-        'ausfuehrung-telefon': execution.telefon,
-        'ausfuehrung-email': execution.email,
-        'auftragshinweis': execution.auftragshinweis,
-        'hinweis': execution.hinweis
-    });
-
-    updateElements(recipient, {
-        'empfaenger-name': recipient.name,
-        'empfaenger-firmenzusatz': recipient.firmenzusatz,
-        'empfaenger-addresse': recipient.address,
-        'empfaenger-telefon': recipient.phone
-    });
-
-    updateElements(client, {
-        'auftraggeber-name': client.name,
-        'auftraggeber-firmenzusatz': client.firmenzusatz,
-        'auftraggeber-addresse': client.address,
-        'auftraggeber-telefon': client.phone,
-        'auftraggeber-email': client.email
-    });
-
-    updateElements(orderStatus, {
-        'bestelldatum': orderStatus.bestelldatum,
-        'vertriebsweg': orderStatus.vertriebsweg,
-        'auftragsstatus': orderStatus.auftragsstatus,
-        'freitext': orderStatus.freitext,
-        'molliwert': orderStatus.molliwert,
-        'erfassdatum': orderStatus.erfassdatum,
-        'rechnungsnummer': orderStatus.rechnungsnummer,
-        'trackingnummer': orderStatus.trackingnummer
-    });
-
-    updateElements(mediator, {
-        'vermittler': mediator.vermittler,
-        'vermittler-aktiv': mediator.aktiv,
-        'vermittler-typ': mediator.typ,
-        'vermittler-name': mediator.name,
-        'vermittler-addresse': mediator.addresse,
-        'vermittler-fax': mediator.fax,
-        'vermittler-telefon': mediator.telefon
-    });
-
-    updateElements(cart, {
-        'warenkorb-auftragsnummer': cart.auftragsnummer,
-        'warenkorb-bestellnummer': cart.bestellnummer,
-        'warenkorb-lieferdatum': cart.lieferdatum,
-        'warenkorb-zahlbetrag': cart.zahlbetrag,
-        'warenkorb-kartentext': cart.kartentext
-        // 'v_zuk_bas': cart.v_zuk_bas,
-        // 'v_zuk_exp': cart.v_zuk_exp,
-        // 'v_zuk_son': cart.v_zuk_son,
-        // 'a_zuk_bas': cart.a_zuk_bas,
-        // 'a_zuk_exp': cart.a_zuk_exp,
-        // 'a_zuk_son': cart.a_zuk_son
-    });
-}
-
-function updateElements(data, elementMap) {
-  Object.entries(elementMap).forEach(([id, mapTo]) => {
-    const el = document.getElementById(id);
-    if (!el) {
-      console.warn(`Element with ID "${id}" not found`);
-      return;
-    }
-
-    let value;
-    let keyName;
-
-    if (typeof mapTo === 'string' && mapTo in data) {
-      keyName = mapTo;
-      value = data[keyName];
-    } else if (mapTo === undefined && id in data) {
-      keyName = id;
-      value = data[id];
-    } else {
-      value = mapTo; // direct value
-    }
-
-    el.innerHTML = formatValue(value, keyName, id);
-  });
-}
-
-
-// ========================
-// UPDATED MODAL FUNCTIONS - Now use appState data instead of DOM
-// ========================
-
-// Element mapping configurations for modal display
-const EMPFAENGER_ELEMENTS = {
-    name: 'name',
-    firmenzusatz: 'firmenzusatz', 
-    addresse: 'address',
-    telefon: 'phone'
-};
-
-const AUFTRAGGEBER_ELEMENTS = {
-    name: 'name',
-    firmenzusatz: 'firmenzusatz', 
-    addresse: 'address',
-    telefon: 'phone',
-    email: 'email'
-};
-
-const AUSFUEHRUNG_ELEMENTS = {
-    nummer: 'nummer',
-    name: 'name',
-    addresse: 'addresse',
-    rang: 'rang',
-    fax: 'fax',
-    telefon: 'telefon',
-    email: 'email',
-    auftragshinweis: 'auftragshinweis',
-    hinweis: 'hinweis'
-};
-
-const AUFTRAGSSTATUS_ELEMENTS = {
-    bestelldatum: 'bestelldatum',
-    vertriebsweg: 'vertriebsweg',
-    auftragsstatus: 'auftragsstatus',
-    freitext: 'freitext',
-    molliwert: 'molliwert',
-    erfassdatum: 'erfassdatum',
-    rechnungsnummer: 'rechnungsnummer',
-    trackingnummer: 'trackingnummer'
-};
-
-const VERMITTLER_ELEMENTS = {
-    vermittler: 'vermittler',
-    active: 'aktiv',
-    typ: 'typ',
-    name: 'name',
-    addresse: 'addresse',
-    fax: 'fax',
-    telefon: 'telefon'
-};
-
-const WARENKORB_ELEMENTS = {
-    auftragsnummer: 'auftragsnummer',
-    bestellnummer: 'bestellnummer',
-    lieferdatum: 'lieferdatum',
-    zahlbetrag: 'zahlbetrag',
-    v_zuk_bas: 'v_zuk_bas',
-    v_zuk_exp: 'v_zuk_exp',
-    v_zuk_son: 'v_zuk_son',
-    a_zuk_bas: 'a_zuk_bas',
-    a_zuk_exp: 'a_zuk_exp',
-    a_zuk_son: 'a_zuk_son',
-    kartentext: 'kartentext'
-};
-
-// Updated main functions - now get data from appState instead of DOM
-const showRecipient = () => showModal("Empfänger", "views/modal.html", 'recipient', EMPFAENGER_ELEMENTS);
-const showClient = () => showModal("Auftraggeber", "views/modal.html", 'client', AUFTRAGGEBER_ELEMENTS);
-const showExecution = () => showModal("Ausführung", "views/modal.html", 'execution', AUSFUEHRUNG_ELEMENTS);
-const showOrderStatus = () => showModal("Auftragsstatus", "views/modal.html", 'orderStatus', AUFTRAGSSTATUS_ELEMENTS);
-const showMediator = () => showModal("Vermittler", "views/modal.html", 'mediator', VERMITTLER_ELEMENTS);
-const showCart = () => showModal("Warenkorb", "views/modal.html", 'cart', WARENKORB_ELEMENTS);
-
-/**
- * UPDATED: Generic function to show modals using appState data
- * @param {string} title - Modal title
- * @param {string} template - Template path
- * @param {string} dataType - Key in appState.customObjectData
- * @param {Object} fieldMapping - Field mapping configuration
- */
-async function showModal(title, template, dataType, fieldMapping) {
+async function extractModalSpecificData() {
     try {
-        // Check if data is available in appState
-        if (!appState.customObjectData || !appState.customObjectData[dataType]) {
-            console.warn(`No ${dataType} data available in appState. Attempting to fetch...`);
-            
-            // Try to extract data if not available
-            await extractCustomObjectData();
-            
-            // Check again after extraction
-            if (!appState.customObjectData || !appState.customObjectData[dataType]) {
-                console.error(`Failed to get ${dataType} data for modal`);
-                return;
+        // Fetch modal-specific data in parallel
+        const [ot, gutscheine, kopfpauschalen, warenkorbPositionen] = await Promise.all([
+            fetchModalData('ot', 'OT'),
+            fetchModalData('gutscheine', 'Gutscheine'),
+            fetchModalData('kopfpauschalen', 'Kopfpauschalen'),
+            fetchWarenkorbPositionsData()
+        ]);
+
+        // Extend appState.customObjectData with modal-specific data
+        appState.customObjectData = {
+            ...appState.customObjectData,
+            modalData: {
+                ot,
+                gutscheine,
+                kopfpauschalen,
+                warenkorbPositionen
             }
-        }
+        };
 
-        // Get data from appState instead of DOM
-        const sourceData = appState.customObjectData[dataType];
-        const payload = getDataFromAppState(sourceData, fieldMapping, title);
-        
-        console.log(`${title} modal data from appState:`, payload);
+        console.log('Modal-specific data stored:', appState.customObjectData.modalData);
 
-        const data = await appState.client.interface.trigger("showModal", {
-            title,
-            template,
-            data: payload
-        });
-        
-        console.log(`${title} modal response:`, data);
     } catch (error) {
-        console.error(`Error with ${title} modal:`, error);
+        console.error('Error extracting modal-specific data:', error);
     }
 }
 
-/**
- * UPDATED: Helper function to extract data from appState instead of DOM elements
- * @param {Object} sourceData - Data from appState.customObjectData
- * @param {Object} fieldMapping - Field mapping configuration
- * @param {string} title - Modal title
- * @returns {Object} Formatted payload for modal
- */
-function getDataFromAppState(sourceData, fieldMapping, title) {
-    const payload = {};
-    
-    // Map fields from appState data using the field mapping
-    Object.entries(fieldMapping).forEach(([payloadKey, sourceKey]) => {
-        const value = sourceData && sourceData[sourceKey];
-        payload[payloadKey] = value && value !== 'Nicht verfügbar' ? value : '';
-    });
-
-    // Add standard fields
-    payload.ticketnummer = appState.currentTicket?.id || '';
-    payload.title = title;
-
-    return payload;    
-}
-
-/**
- * FALLBACK: Helper function to extract data from DOM elements (backup method)
- * Keep this as fallback in case appState data is not available
- */
-function getDataFromElements(elementMap, title) {
-    const payload = {};
-    Object.entries(elementMap).forEach(([key, elementId]) => {
-        const element = document.getElementById(elementId);
-        payload[key] = element?.innerHTML !== 'N/A' && element?.innerHTML !== 'Nicht verfügbar' ? element?.innerHTML : '';
-    });
-
-    payload.ticketnummer = appState.currentTicket?.id || '';
-    payload.title = title;
-
-    return payload;    
-}
-
-async function OpenInNewTab() {
-    const data = await appState.client.interface.trigger("showModal", {
-            title: "Übersicht",
-            template: "views/overview.html"
-        });
-
-        console.log("Modal response:", data);
-}

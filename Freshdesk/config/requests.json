@@ -21,7 +21,7 @@
       }
     }
   },
-  "getCartPositionsData": {
+  "getWarenkorbPositionsData": {
     "schema": {
       "method": "GET",
       "host": "<%= iparam.subdomain %>.freshdesk.com",

@@ -5,7 +5,7 @@
       "requests": {
         "getSchema": {},
         "getData": {},
-        "getCartPositionsData": {}
+        "getWarenkorbPositionsData": {}
       }
     },
     "support_ticket": {

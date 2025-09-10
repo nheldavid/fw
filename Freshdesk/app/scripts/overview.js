@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     renderUI(contextData);
     
     // Extract custom object data with context information
-    await extractCustomObjectData(contextData.title, contextData);
+    //await extractCustomObjectData(contextData);
 
   } catch (error) {
     console.error('App initialization failed:', error);
@@ -30,14 +30,16 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 function renderUI(context) {
   
-renderAuftragsstatus(context);
+  renderAuftragsstatus(context);
   renderAusfuehrung(context);
   renderEmpfaenger(context);
-  renderAuftraggeber(context);
-  renderVermittler(context);
   renderWarenkorb(context);
-  renderKonditionen(context);
-  renderGutscheine(context);
+
+
+  populatePositionenItems(context.modalData.warenkorbPositionen);
+  populateGutscheinItems(context.modalData.gutscheine);
+  populatePauschaleItems(context.modalData.kopfpauschalen);
+  populateOTItems(context.modalData.ot);
 
   // Additional rendering functions can be called here
 
@@ -51,16 +53,25 @@ function renderAuftragsstatus(contextData) {
   const fields = [
     'bestelldatum',
     'vertriebsweg', 
-    'auftragsstatus',
+    'status',
     'freitext',
-    'molliwert',
-    'erfassdatum',
-    'rechnungsnummer',
+    // 'molliwert',
+    // 'erfassdatum',
+    // 'rechnungsnummer',
     'trackingnummer'
   ];
 
   fields.forEach(field => {
-    updateElement(field, contextData[field]);
+    updateElement(field, contextData.auftragsstatus[field]);
+  });
+
+  // Store context data in appState for overview
+  if (!appState.customObjectData.auftragsstatus) {
+    appState.customObjectData.auftragsstatus = {};
+  }
+  
+  fields.forEach(field => {
+    appState.customObjectData.auftragsstatus[field] = contextData[field] || '';
   });
 }
 
@@ -70,9 +81,15 @@ function renderAuftragsstatus(contextData) {
  */
 function renderAusfuehrung(contextData) {
   const fieldMappings = {
-    'ausfuehrung-nummer': 'nummer',
-    'ausfuehrung-name': 'name',
-    'ausfuehrung-addresse': 'addresse',
+    'ausfuehrender': 'ausfuehrender',
+    'ausfuehrung-anrede': 'anrede',
+    'ausfuehrung-name1': 'name1',
+    'ausfuehrung-name2': 'name2',
+    'ausfuehrung-name3': 'name3',
+    'ausfuehrung-strasse': 'strasse',
+    'ausfuehrung-land': 'land',
+    'ausfuehrung-plz': 'plz',
+    'ausfuehrung-ort': 'ort',
     'ausfuehrung-rang': 'rang',
     'ausfuehrung-fax': 'fax',
     'ausfuehrung-telefon': 'telefon',
@@ -82,7 +99,7 @@ function renderAusfuehrung(contextData) {
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
-    updateElement(elementId, contextData[dataKey]);
+    updateElement(elementId, contextData.ausfuehrung[dataKey]);
   });
 }
 
@@ -92,14 +109,19 @@ function renderAusfuehrung(contextData) {
  */
 function renderEmpfaenger(contextData) {
   const fieldMappings = {
-    'empfaenger-name': 'name',
-    'empfaenger-firmenzusatz': 'firmenzusatz', 
-    'empfaenger-addresse': 'addresse',
-    'empfaenger-telefon': 'telefon',
+    'empf-anrede': 'anrede',
+    'empf-name1': 'name1',
+    'empf-name2': 'name2',
+    'empf-name3': 'name3',
+    'empf-strasse': 'strasse',
+    'empf-land': 'land',
+    'empf-ort': 'ort',
+    'empf-region': 'region',
+    'empf-telefon': 'telefon',
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
-    updateElement(elementId, contextData[dataKey]);
+    updateElement(elementId, contextData.empfaenger[dataKey]);
   });
 }
 
@@ -146,21 +168,22 @@ function renderVermittler(contextData) {
  */
 function renderWarenkorb(contextData) {
   const fieldMappings = {
-    'warenkorb-auftragsnummer': 'auftragsnummer',
-    'warenkorb-bestellnummer': 'bestellnummer',
-    'warenkorb-lieferdatum': 'lieferdatum',
-    'warenkorb-zahlbetrag': 'zahlbetrag',
-    'v_zuk_bas': 'v_zuk_bas',
-    'v_zuk_exp': 'v_zuk_exp',
-    'v_zuk_son': 'v_zuk_son',
-    'a_zuk_bas': 'a_zuk_bas',
-    'a_zuk_exp': 'a_zuk_exp',
-    'a_zuk_son': 'a_zuk_son',
-    'warenkorb-kartentext': 'kartentext'
+    // 'warenkorb-auftragsnummer': 'auftragsnummer',
+    // 'warenkorb-bestellnummer': 'bestellnummer',
+    'lieferdatum': 'lieferdatum',
+    'zahlbetrag': 'zahlbetrag',
+    // 'v_zuk_bas': 'v_zuk_bas',
+    // 'v_zuk_exp': 'v_zuk_exp',
+    // 'v_zuk_son': 'v_zuk_son',
+    // 'a_zuk_bas': 'a_zuk_bas',
+    // 'a_zuk_exp': 'a_zuk_exp',
+    // 'a_zuk_son': 'a_zuk_son',
+    'kartenart': 'kartenart',
+    'kartentext': 'kartentext'
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
-    updateElement(elementId,  contextData[dataKey]);
+    updateElement(elementId,  contextData.warenkorb[dataKey]);
   });
 }
 
@@ -171,6 +194,42 @@ function updateElement(elementId, value) {
     return;
   }
   el.innerHTML = formatValue(value, elementId);
+}
+
+/**
+ * Context-aware custom data extraction wrapper
+//  * @param {string} contextTitle - The context title
+ * @param {Object} contextData - The context data
+ */
+async function extractCustomObjectData(contextData) {
+  try {
+
+    handleAuftragsstatusData(contextData);
+    await handleWarenkorbData(contextData);
+
+    // // const config = CONTEXT_CONFIG[contextTitle];
+    
+    // // if (config && config.customDataHandler) {
+    //   // Call the specific handler for this context type
+    //   // const handlerName = config.customDataHandler;
+      
+    //   // Use switch statement to handle different contexts
+    //   switch (contextTitle) {
+    //     case "Auftragsstatus":
+    //       await 
+    //       break;
+    //     case "Warenkorb":
+          
+    //       break;
+    //     default:
+    //       console.warn(`No custom data handler implemented for context '${contextTitle}'`);
+    //   }
+    // // } else {
+    // //   console.log(`No custom data extraction needed for context '${contextTitle}'`);
+    // // }
+  } catch (error) {
+    console.error(`Error extracting custom data for context '${contextTitle}':`, error);
+  }
 }
 
 /**
@@ -228,149 +287,145 @@ async function handleWarenkorbData(contextData) {
 
 // Populate OT items
 function populateOTItems(otDataArray) {
-    const container = document.getElementById('ot-items-container');
-    const html = otDataArray.map((item, index) => createOTItem(item, index)).join('');
+    const container = document.querySelector('.ot-items-container');
+    const html = otDataArray.map((item) => createOTItem(item)).join('');
     container.innerHTML = html;
 }
 
 // Populate gutscheine items
 function populateGutscheinItems(gutscheinDataArray) {
-    const container = document.getElementById('gutscheine-items-container');
-    const html = gutscheinDataArray.map((item, index) => createGutscheinItem(item, index)).join('');
+    const container = document.querySelector('.guts-items-container');
+    const html = gutscheinDataArray.map((item) => createGutscheinItem(item)).join('');
     container.innerHTML = html;
 }
 
 // Populate gutscheine items
 function populatePauschaleItems(pauschaleDataArray) {
-    const container = document.getElementById('kopfpauschalen-items-container');
-    const html = pauschaleDataArray.map((item, index) => createPauschaleItem(item, index)).join('');
+    const container = document.querySelector('.kopfpauschalen-items-container');
+    const html = pauschaleDataArray.map((item) => createPauschaleItem(item)).join('');
     container.innerHTML = html;
 }
 
 // Populate gutscheine items
 function populatePositionenItems(positonenDataArray) {
-    const container = document.getElementById('positionen-items-container');
-    const html = positonenDataArray.map((item, index) => createPositionenItem(item, index)).join('');
+    const container = document.querySelector('.positionen-items-container');
+    const html = positonenDataArray.map((item) => createPositionenItem(item)).join('');
     container.innerHTML = html;
 }
 
 // Function to create OT item
-function createOTItem(data, index) {
+function createOTItem(data) {
   // Convert string values to boolean if needed
     const isStorniert = data.storniert === true || data.storniert === 'true' || data.storniert === 'Ja' || data.storniert === '1';
  
     return `
-        <div class="cart-item ot-item">
-            <div class="cart-item-header">
-                <span class="position-badge ot-badge">OT ${index + 1}</span>
-                <!-- <span class="item-total">${data.datum} ${data.zeit}</span> -->
-            </div>
-            <div class="details-grid">
-                <div class="detail-item">
-                  <div class="detail-label">Datum</div>
-                  <div class="detail-value">${data.datum}</div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Ereignis</div>
-                  <div class="detail-value">${data.ereignis}</div>
-                </div>
-                <div class="detail-item full-width">
-                  <div class="detail-label">Text</div>
-                  <div class="detail-value">${data.text}</div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Ergebnis</div>
-                  <div class="detail-value">
-                    <span class="status-badge status-completed">${data.ergebnis}</span>
-                  </div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Name</div>
-                  <div class="detail-value">${data.name}</div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Adresse</div>
-                  <div class="detail-value">${data.addresse}</div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Erfasser</div>
-                  <div class="detail-value">${data.erfasser}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Storniert</div>
-                    <div class="detail-value checkbox-field">
-                        <input type="checkbox" class="checkbox" ${isStorniert ? 'checked' : ''} disabled>
-                        <span>${isStorniert ? 'Ja' : 'Nein'}</span>
-                    </div>
-                </div>
-                <div class="detail-item full-width">
-                  <div class="detail-label">Storniert</div>
-                  <div class="detail-value">${data.storniert_text}</div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Storniert</div>
-                  <div class="detail-value">${data.storno_datum}</div>
-                </div>
-                <div class="detail-item">
-                  <div class="detail-label">Storniert</div>
-                  <div class="detail-value">${data.storno_erfasser}</div>
-                </div>
-            </div>
-        </div>
+        <div class="blue-bg" >
+          <div class="row">
+              <span class="label field-m">Ereignis:</span>
+              <span class="label field-m">Bezeichnung::</span>
+              <span class="label field-m">Erfasst:</span>
+              <span class="label field-m">Erfasser:</span>
+          </div>
+
+          <div class="row">
+              <span class="field field-m" id="ot-ereignis">${data.ereignis}</span>
+              <span class="field field-m" id="ot-text">${data.text}</span>
+              <span class="field field-m" id="ot-datum">${data.storno_datum}</span>
+              <span class="field field-m" id="ot-uhrzeit">${data.storno_uhrzeit}</span>
+              <span class="field field-m" id="ot-erfasser">${data.erfasser}</span>
+          </div>
+          
+          <div class="row">
+              <span class="label">Karte hinterlassen?</span>
+              <span class="label" style="margin-left: 5px;">Klärung?</span>
+              <!-- <span class="label">Checkbox:</span> -->
+              <span class="label" style="margin-left: 140px;">Herkunft:</span>
+          </div>
+
+          <div class="row">
+              <span class="field field-xs red-border" id="karte_hinterlassen"></span>
+              <span class="field field-m red-border" id="klarung" style="margin-left: 42px;"></span>
+              <span class="field field-m red-border" id="herkunft" style="margin-left: 87px;"></span>
+          </div>
+          
+          <div class="row">
+              <span class="label field-m">Anrufergebnis:</span>
+              
+              <span class="label">Ergänzende Angabe:</span>
+              
+          </div>
+          
+          <div class="row">
+              <span class="field field-s" id="ot-ergebnis">${data.ergebnis}</span>
+              <span class="field field-l red-border" id="erganzende-angabe"></span>
+          </div>
+
+          
+          <div class="row">
+              <span class="field field-m" id="">${data.name}</span>
+              <span class="field field-m">${data.plz}</span>
+              <span class="field field-m">${data.ort}</span>
+              <span class="field field-m">${data.ortsteil}</span>
+          </div>
+
+          <div class="row">
+              <span class="label">Bemerkung:</span>
+          </div>
+
+          <div class="row">
+              <span class="field field-full red-border"></span>
+          </div>
+
+          <div class="row">
+              <span class="label">Abweichung der Ware:</span>
+          </div>
+
+          <div class="row">
+              <span class="field field-full red-border"></span>
+          </div>
+          
+          <div class="row">
+              <span class="label">Widerruf?</span>
+          </div>
+
+          <div class="row">
+              <span class="field field-m">${isStorniert ? 'Ja' : 'Nein'}</span>
+          </div>
+      </div>
     `;
 }
 
 // Similar functions for Gutscheine and Kopfpauschalen...
-function createGutscheinItem(data, index) {
+function createGutscheinItem(data) {
     return `
-        <div class="cart-item gutschein-item">
-            <div class="cart-item-header">
-                <span class="position-badge gutschein-badge">Gutschein ${index + 1}</span>
-                <!--<span class="item-total price">${data.wert}</span>-->
-            </div>
-            <div class="details-grid">
-                <div class="detail-item">
-                    <div class="detail-label">Kartennummer</div>
-                    <div class="detail-value">${data.kartennummer}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Wert</div>
-                    <div class="detail-value price">${data.wert}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Einlösedatum</div>
-                    <div class="detail-value">${data.einlosedatum}</div>
-                </div>
-            </div>
-        </div>
+      <div class="pink-bg">
+      <div class="row">
+          <span class="label field-m">Gutscheinnummer:</span>
+          <span class="label" style="margin-left: 10px;">Wert:</span>
+      </div>
+
+      <div class="row">
+          <span class="field field-m" id="guts-kartennumer">${data.kartennummer}</span>
+          <span class="field field-m" id="guts-wert">${data.wert}</span>
+      </div>
+      
+      <div class="row">
+          <span class="label">Datum und Zeit der Einlösung:</span>
+      </div>
+      
+      <div class="row">
+          <span class="field field-m" id="guts-einl-datum">${data.einlsedatum}</span>
+          <span class="field field-m" id="guts-einl-zeit">${data.einlsezeit}</span>
+      </div>
+  </div>
     `;
 }
 
-function createPauschaleItem(data, index) {
+function createPauschaleItem(data) {
   return `
-    <div class="cart-item pauschale-item">
-      <div class="cart-item-header">
-          <span class="position-badge pauschale-badge">Pauschale ${index + 1}</span>
-          <!--<span class="item-total price">€5.00</span>-->
-      </div>
-      <div class="details-grid">
-        <div class="detail-item">
-            <div class="detail-label">Kondition</div>
-            <div class="detail-value">${data.kondition}</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Konditionstext</div>
-            <div class="detail-value">${data.konditionstext}</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Betrag</div>
-            <div class="detail-value price">${data.betrag}</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Einheit</div>
-            <div class="detail-value">${data.einheit}</div>
-        </div>
-      </div>
+    <div class="row">
+      <span class="field field-m" id="kondition">${data.konditionstext}</span>
+      <span class="field field-m" id="konditionstext">${data.betrag}</span>
     </div>
   `;
 }
@@ -387,10 +442,10 @@ function createPositionenItem(data) {
     </div>
 
     <div class="row">
-        <span class="field field-m" id="position">${data.}</span>
-        <span class="field field-m" id="material">MATERIAL</span>
-        <span class="field field-m" id="bezeichnung">MAKTX</span>
-        <span class="field field-s" id="menge">MENGE</span>
+        <span class="field field-m" id="position">${data.position}</span>
+        <span class="field field-m" id="material">${data.material}</span>
+        <span class="field field-m" id="bezeichnung">${data.material_id}</span>
+        <span class="field field-s" id="menge">${data.menge}</span>
     </div>
     
     <div class="row">
@@ -400,17 +455,17 @@ function createPositionenItem(data) {
     </div>
 
     <div class="row">
-        <span class="field field-m" id="preis_brutto" style="margin-left: 93px;">BR_PREIS</span>
-        <span class="field field-s" id="steuer">UMSST</span>
-        <span class="field field-m" id="variante">VARIANTE</span>
+        <span class="field field-m" id="preis_brutto" style="margin-left: 93px;">${data.preis_brutto}</span>
+        <span class="field field-s" id="steuer">${data.steuer}</span>
+        <span class="field field-m" id="variante">${data.variante}</span>
     </div>
     
     <div class="row">
         <span class="label"  style="margin-left: 93px;">Artikelbeschreibung:</span>
     </div>
     <div class="row">
-        <span class="field field-full red-border" id="blumengrusstext" style="margin-left: 93px;">BLUMENGRUSSTEXT</span>
+        <span class="field field-full red-border" id="blumengrusstext" style="margin-left: 93px;"></span>
     </div>
-</div>
+  </div>
   `;
 }
