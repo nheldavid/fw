@@ -322,17 +322,17 @@ function createOTItem(data) {
         <div class="blue-bg" >
           <div class="row">
               <span class="label field-m">Ereignis:</span>
-              <span class="label field-m">Bezeichnung::</span>
-              <span class="label field-m">Erfasst:</span>
+              <span class="label field-m">Bezeichnung:</span>
+              <span class="label field-l">Erfasst:</span>
               <span class="label field-m">Erfasser:</span>
           </div>
 
           <div class="row">
-              <span class="field field-m" id="ot-ereignis">${data.ereignis}</span>
-              <span class="field field-m" id="ot-text">${data.text}</span>
-              <span class="field field-m" id="ot-datum">${data.storno_datum}</span>
-              <span class="field field-m" id="ot-uhrzeit">${data.storno_uhrzeit}</span>
-              <span class="field field-m" id="ot-erfasser">${data.erfasser}</span>
+              <span class="field field-m">${data.ereignis}</span>
+              <span class="field field-m">${data.text}</span>
+              <span class="field field-m">${data.storno_datum}</span>
+              <span class="field field-m">${data.storno_uhrzeit}</span>
+              <span class="field field-m">${data.erfasser}</span>
           </div>
           
           <div class="row">
@@ -343,23 +343,20 @@ function createOTItem(data) {
           </div>
 
           <div class="row">
-              <span class="field field-xs red-border" id="karte_hinterlassen"></span>
-              <span class="field field-m red-border" id="klarung" style="margin-left: 42px;"></span>
-              <span class="field field-m red-border" id="herkunft" style="margin-left: 87px;"></span>
+              <span class="field field-xs red-border"></span>
+              <span class="field field-m red-border" style="margin-left: 42px;"></span>
+              <span class="field field-m red-border" style="margin-left: 87px;"></span>
           </div>
           
           <div class="row">
               <span class="label field-m">Anrufergebnis:</span>
-              
               <span class="label">Ergänzende Angabe:</span>
-              
           </div>
           
           <div class="row">
               <span class="field field-s" id="ot-ergebnis">${data.ergebnis}</span>
               <span class="field field-l red-border" id="erganzende-angabe"></span>
           </div>
-
           
           <div class="row">
               <span class="field field-m" id="">${data.name}</span>
@@ -434,7 +431,7 @@ function createPositionenItem(data) {
   return `
   <div class="green-line gray-bg">
     <div class="row">
-        <span class="label field-xs">Position:</span>
+        <span class="label field-m">Position:</span>
         <!-- <span class="field-s" id="total_position">10</span> -->
         <span class="label field-m">Material:</span>
         <span class="label field-m">Bezeichnung:</span>

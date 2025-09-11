@@ -1,5 +1,5 @@
 {
-  "entities": [
+  "schemas": [
     {
       "name": "Auftraggeber",
       "fields": [
@@ -155,7 +155,8 @@
         { "name": "storniert", "label": "storniert" },
         { "name": "storniert_text", "label": "STORNIERT_TEXT" },
         { "name": "storno_datum", "label": "STORNO_DATUM" },
-        { "name": "storno_erfasser", "label": "STORNO_ERFASSER" }
+        { "name": "storno_erfasser", "label": "STORNO_ERFASSER" },
+        { "name": "storno_uhrzeit", "label": "STORNO_UHRZEIT" }
       ]
     },
     {
@@ -165,7 +166,8 @@
         { "name": "ticketnummer", "label": "Ticketnummer" },
         { "name": "kartennummer", "label": "Kartennummer" },
         { "name": "wert", "label": "Wert" },
-        { "name": "einlsedatum", "label": "Einlösedatum" }
+        { "name": "einlsedatum", "label": "Einlösedatum" },
+        { "name": "einlsezeit", "label": "Einlösezeit" }
       ]
     },
     {
