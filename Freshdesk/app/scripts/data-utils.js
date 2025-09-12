@@ -46,6 +46,9 @@ async function getAllSchemaIDs() {
     try {
         const schema = await window.appState.client.request.invokeTemplate("getSchema");
         const allSchemas = JSON.parse(schema.response).schemas;
+
+        console.log('Fetched all schemas:', allSchemas);
+        console.log('schema:', schema);
         
         if (!allSchemas || !Array.isArray(allSchemas)) {
             console.warn('No schemas found or invalid format');
