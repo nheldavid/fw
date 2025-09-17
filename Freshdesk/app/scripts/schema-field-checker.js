@@ -289,7 +289,7 @@ function categorizeFieldsForUI(newFields) {
  * @param {string} sectionName - Name of the UI section
  * @param {Array} newFields - Array of new fields to add
  */
-async function updateOverviewSection(sectionName, newFields) {
+function updateOverviewSection(sectionName, newFields) {
     if (!newFields || newFields.length === 0) {
         return;
     }
@@ -354,7 +354,7 @@ function findSectionContainer(sectionName) {
  * @param {string} sectionName - Section name for styling context
  * @returns {Element|null} Created DOM element
  */
-function createFieldElement(field, sectionName) {
+function createFieldElement(field) {
     try {
         // Create a row container
         const row = document.createElement('div');
@@ -399,7 +399,7 @@ function createFieldElement(field, sectionName) {
  * @param {Element} container - The container element
  * @param {string} sectionName - Section name
  */
-function updateSectionStyling(container, sectionName) {
+function updateSectionStyling(container) {
     // Add a class to indicate the section has new fields
     container.classList.add('has-new-fields');
     

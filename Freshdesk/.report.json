@@ -2,82 +2,97 @@
   "lints": [
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::301: Async function 'getData' has a complexity of 9. Maximum allowed is 7.",
+      "value": "app\\scripts\\app.js::316: Async function 'ShowOverview' has a complexity of 8. Maximum allowed is 7.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::323: Do not access Object.prototype method 'hasOwnProperty' from target object.",
+      "value": "app\\scripts\\data-utils.js::304: Async function 'getData' has a complexity of 9. Maximum allowed is 7.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::341: Async function 'getwarenkorbPositionsData' has a complexity of 9. Maximum allowed is 7.",
+      "value": "app\\scripts\\data-utils.js::326: Do not access Object.prototype method 'hasOwnProperty' from target object.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::473: Function 'formatPhoneNumber' has a complexity of 13. Maximum allowed is 7.",
+      "value": "app\\scripts\\data-utils.js::344: Async function 'getWarenkorbPositionsData' has a complexity of 9. Maximum allowed is 7.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::477: Unnecessary escape character: \\(.",
+      "value": "app\\scripts\\data-utils.js::476: Function 'formatPhoneNumber' has a complexity of 13. Maximum allowed is 7.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::477: Unnecessary escape character: \\).",
+      "value": "app\\scripts\\data-utils.js::480: Unnecessary escape character: \\(.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::477: Unnecessary escape character: \\/.",
+      "value": "app\\scripts\\data-utils.js::480: Unnecessary escape character: \\).",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::477: Unnecessary escape character: \\..",
+      "value": "app\\scripts\\data-utils.js::480: Unnecessary escape character: \\/.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::503: 'cityCodeLength' is never reassigned. Use 'const' instead.",
+      "value": "app\\scripts\\data-utils.js::480: Unnecessary escape character: \\..",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::534: Function 'formatValue' has a complexity of 41. Maximum allowed is 7.",
+      "value": "app\\scripts\\data-utils.js::506: 'cityCodeLength' is never reassigned. Use 'const' instead.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::571: Unnecessary escape character: \\(.",
+      "value": "app\\scripts\\data-utils.js::537: Function 'formatValue' has a complexity of 41. Maximum allowed is 7.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::571: Unnecessary escape character: \\).",
+      "value": "app\\scripts\\data-utils.js::574: Unnecessary escape character: \\(.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::571: Unnecessary escape character: \\/.",
+      "value": "app\\scripts\\data-utils.js::574: Unnecessary escape character: \\).",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\data-utils.js::571: Unnecessary escape character: \\..",
+      "value": "app\\scripts\\data-utils.js::574: Unnecessary escape character: \\/.",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\modal.js::122: Function 'renderUI' has a complexity of 10. Maximum allowed is 7.",
+      "value": "app\\scripts\\data-utils.js::574: Unnecessary escape character: \\..",
       "type": "lint"
     },
     {
       "severity": 1,
-      "value": "app\\scripts\\modal.js::289: Function 'renderModalData' has a complexity of 10. Maximum allowed is 7.",
+      "value": "app\\scripts\\modal.js::135: Async function 'renderUI' has a complexity of 10. Maximum allowed is 7.",
+      "type": "lint"
+    },
+    {
+      "severity": 1,
+      "value": "app\\scripts\\modal.js::412: Function 'renderModalData' has a complexity of 10. Maximum allowed is 7.",
+      "type": "lint"
+    },
+    {
+      "severity": 2,
+      "value": "app\\scripts\\schema-field-checker.js::357: 'sectionName' is defined but never used.",
+      "type": "lint"
+    },
+    {
+      "severity": 2,
+      "value": "app\\scripts\\schema-field-checker.js::402: 'sectionName' is defined but never used.",
       "type": "lint"
     }
   ],
