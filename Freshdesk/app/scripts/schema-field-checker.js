@@ -255,8 +255,8 @@ function categorizeFieldsForUI(newFields) {
     // Map schema names to UI sections
     const schemaToSection = {
         'Auftragsstatus': 'auftragsstatus',
-        'AusfÃ¼hrung': 'ausfuehrung',
-        'EmpfÃ¤nger': 'empfaenger',
+        'Ausführung': 'ausfuehrung',
+        'Empfänger': 'empfaenger',
         'Auftraggeber': 'auftraggeber',
         'Vermittler': 'vermittler',
         'Warenkorb': 'warenkorb',
@@ -441,8 +441,8 @@ function updateDataConfigs(newFields) {
 function getConfigKeyForSchema(schemaName) {
     const mapping = {
         'Auftragsstatus': 'auftragsstatus',
-        'AusfÃ¼hrung': 'ausfuehrung',
-        'EmpfÃ¤nger': 'empfaenger',
+        'Ausführung': 'ausfuehrung',
+        'Empfänger': 'empfaenger',
         'Auftraggeber': 'auftraggeber',
         'Vermittler': 'vermittler',
         'Warenkorb': 'warenkorb',
@@ -463,15 +463,18 @@ async function runSchemaFieldCheck() {
     try {
         // You would load your actual data here
         // For demo purposes, using the document data structure
-        const apiResult = [
-            // This would be loaded from your simplified_result.json
-            // For now, using a sample structure
-        ];
+        const apiResult = window.appState.allSchemas;
         
-        const schemaData = {
-            // This would be loaded from your schema.json
-            schemas: []
-        };
+        // [
+        //     // This would be loaded from your simplified_result.json
+        //     // For now, using a sample structure
+        // ];
+        
+        const schemaData = JSON.parse(await window.fs.readFile('../custom/schema.json', {encoding: 'utf8'}));
+        // {
+        //     // This would be loaded from your schema.json
+        //     schemas: []
+        // };
         
         // Run the check
         const analysis = await checkAndUpdateSchemaFields(apiResult, schemaData);
