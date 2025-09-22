@@ -10,6 +10,25 @@ if (!window.appState) {
         // Add global schema storage
         allSchemas: null,
         schemaIDs: {},
+        newFieldsCollection: {
+            allNewFields: {},           // All new fields organized by schema
+            fieldsByType: {},           // New fields organized by field type
+            fieldsByPage: {},           // New fields mapped to UI pages/contexts
+            collectionMetadata: {
+                lastUpdated: null,
+                totalNewFields: 0,
+                schemasCovered: []
+            }
+        },
+        // Schema comparison results
+        schemaComparison: {
+            baselineSchemas: null,
+            currentSchemas: null,
+            newFields: {},
+            removedFields: {},
+            modifiedFields: {},
+            lastComparisonDate: null
+        },
         // Processed custom object data
         customObjectData: {
             ausfuehrung: null,
@@ -38,13 +57,21 @@ if (!window.appState) {
     };
 }
 
+/** Fetches the complete schema list from Freshdesk
+ * @returns {Promise<Object>} The full schema response object
+ */
+async function getSchema() {
+    return await window.appState.client.request.invokeTemplate("getSchema");
+}
+
 /**
  * Fetches all schemas and stores them globally
  * @returns {Promise<Object>} Object with schema names as keys and IDs as values
  */
 async function getAllSchemaIDs() {
     try {
-        const schema = await window.appState.client.request.invokeTemplate("getSchema");
+        
+        const schema = await getSchema();
         const allSchemas = JSON.parse(schema.response).schemas;
 
         console.log('Fetched all schemas:', allSchemas);
@@ -346,7 +373,7 @@ async function getWarenkorbPositionsData(name, auftragsnummer, storeInCustomObje
         const schemaID = await getSchemaID(name);
         if (!schemaID) return null;
         
-        console.log(auftragsnummer);
+        //console.log(auftragsnummer);
         const data = await window.appState.client.request.invokeTemplate("getWarenkorbPositionsData", {
             context: { 
                 schema_id: schemaID,
@@ -617,6 +644,840 @@ function formatValue(value, keyName = '', elementId = '') {
 
     // Fallback
     return (value !== undefined && value !== null && value !== '') ? String(value) : 'Nicht verfügbar';
+}
+
+async function loadJsonFile(filePath) {
+  try {
+    const response = await fetch(filePath);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error loading JSON file:", error);
+  }
+}
+
+/**
+ * Compare schemas from loadJsonFile (baseline) and getSchema (current)
+ * @param {string} jsonFilePath - Path to the baseline JSON schema file
+ * @returns {Promise<Object>} Comparison results with new fields detected
+ */
+async function compareSchemas(jsonFilePath = 'JSON/schema.json') {
+    try {
+        console.log('Starting schema comparison...');
+        
+        // Load baseline schema from JSON file
+        const baselineData = await loadJsonFile(jsonFilePath);
+        const currentSchemaResponse = await getSchema();
+        const currentData = JSON.parse(currentSchemaResponse.response);
+        
+        if (!baselineData || !currentData) {
+            console.error('Failed to load schema data for comparison');
+            return null;
+        }
+        
+        const baselineSchemas = baselineData.schemas || [];
+        const currentSchemas = currentData.schemas || [];
+        
+        // Store schemas in appState for reference
+        window.appState.schemaComparison.baselineSchemas = baselineSchemas;
+        window.appState.schemaComparison.currentSchemas = currentSchemas;
+        window.appState.schemaComparison.lastComparisonDate = new Date().toISOString();
+        
+        // Perform detailed comparison
+        const comparison = performDetailedSchemaComparison(baselineSchemas, currentSchemas);
+        
+        // Store results
+        window.appState.schemaComparison.newFields = comparison.newFields;
+        window.appState.schemaComparison.removedFields = comparison.removedFields;
+        window.appState.schemaComparison.modifiedFields = comparison.modifiedFields;
+        
+        console.log('Schema comparison completed:', {
+            totalNewFields: Object.keys(comparison.newFields).length,
+            totalRemovedFields: Object.keys(comparison.removedFields).length,
+            totalModifiedFields: Object.keys(comparison.modifiedFields).length
+        });
+        
+        return comparison;
+        
+    } catch (error) {
+        console.error('Error comparing schemas:', error);
+        return null;
+    }
+}
+
+/**
+ * Perform detailed comparison between baseline and current schemas
+ * @param {Array} baselineSchemas - Baseline schema array from JSON file
+ * @param {Array} currentSchemas - Current schema array from API
+ * @returns {Object} Detailed comparison results
+ */
+function performDetailedSchemaComparison(baselineSchemas, currentSchemas) {
+    const newFields = {};
+    const removedFields = {};
+    const modifiedFields = {};
+    
+    // Create maps for easier lookup
+    const baselineMap = createSchemaMap(baselineSchemas);
+    const currentMap = createSchemaMap(currentSchemas);
+    
+    // Check for new and modified schemas
+    currentSchemas.forEach(currentSchema => {
+        const schemaName = currentSchema.name;
+        const baselineSchema = baselineMap[schemaName];
+        
+        if (!baselineSchema) {
+            // Completely new schema
+            newFields[schemaName] = {
+                type: 'new_schema',
+                schema: currentSchema,
+                fields: extractSchemaFields(currentSchema)
+            };
+            console.log(`🆕 New schema detected: ${schemaName}`);
+        } else {
+            // Compare existing schema for field changes
+            const fieldComparison = compareSchemaFields(baselineSchema, currentSchema);
+            if (fieldComparison.hasChanges) {
+                if (fieldComparison.newFields.length > 0) {
+                    newFields[schemaName] = {
+                        type: 'new_fields',
+                        schema: currentSchema,
+                        newFields: fieldComparison.newFields,
+                        allFields: extractSchemaFields(currentSchema)
+                    };
+                    console.log(`🆕 New fields in ${schemaName}:`, fieldComparison.newFields);
+                }
+                
+                if (fieldComparison.removedFields.length > 0) {
+                    removedFields[schemaName] = {
+                        type: 'removed_fields',
+                        removedFields: fieldComparison.removedFields
+                    };
+                }
+                
+                if (fieldComparison.modifiedFields.length > 0) {
+                    modifiedFields[schemaName] = {
+                        type: 'modified_fields',
+                        modifiedFields: fieldComparison.modifiedFields
+                    };
+                }
+            }
+        }
+    });
+    
+    // Check for removed schemas
+    baselineSchemas.forEach(baselineSchema => {
+        const schemaName = baselineSchema.name;
+        if (!currentMap[schemaName]) {
+            removedFields[schemaName] = {
+                type: 'removed_schema',
+                schema: baselineSchema
+            };
+            console.log(`🗑️ Removed schema: ${schemaName}`);
+        }
+    });
+    
+    return { newFields, removedFields, modifiedFields };
+}
+
+/**
+ * Create a map of schemas by name for easier lookup
+ * @param {Array} schemas - Array of schema objects
+ * @returns {Object} Map of schema name to schema object
+ */
+function createSchemaMap(schemas) {
+    const map = {};
+    schemas.forEach(schema => {
+        if (schema.name) {
+            map[schema.name] = schema;
+        }
+    });
+    return map;
+}
+
+/**
+ * Extract field information from a schema
+ * @param {Object} schema - Schema object
+ * @returns {Array} Array of field objects
+ */
+function extractSchemaFields(schema) {
+    const fields = [];
+    
+    if (schema.fields && Array.isArray(schema.fields)) {
+        schema.fields.forEach(field => {
+            fields.push({
+                name: field.name,
+                //type: field.type,
+                label: field.label
+                //required: field.required || false,
+                //options: field.options || null
+            });
+        });
+    }
+    
+    return fields;
+}
+
+/**
+ * Compare fields between two schemas
+ * @param {Object} baselineSchema - Baseline schema
+ * @param {Object} currentSchema - Current schema
+ * @returns {Object} Field comparison results
+ */
+function compareSchemaFields(baselineSchema, currentSchema) {
+    const baselineFields = extractSchemaFields(baselineSchema);
+    const currentFields = extractSchemaFields(currentSchema);
+    
+    const baselineFieldMap = {};
+    const currentFieldMap = {};
+    
+    // Create field maps
+    baselineFields.forEach(field => {
+        baselineFieldMap[field.name] = field;
+    });
+    
+    currentFields.forEach(field => {
+        currentFieldMap[field.name] = field;
+    });
+    
+    const newFields = [];
+    const removedFields = [];
+    const modifiedFields = [];
+    
+    // Check for new and modified fields
+    currentFields.forEach(currentField => {
+        const baselineField = baselineFieldMap[currentField.name];
+        
+        if (!baselineField) {
+            newFields.push(currentField);
+        } else {
+            // Check if field properties have changed
+            const hasChanged = hasFieldChanged(baselineField, currentField);
+            if (hasChanged) {
+                modifiedFields.push({
+                    name: currentField.name,
+                    baseline: baselineField,
+                    current: currentField,
+                    changes: getFieldChanges(baselineField, currentField)
+                });
+            }
+        }
+    });
+    
+    // Check for removed fields
+    baselineFields.forEach(baselineField => {
+        if (!currentFieldMap[baselineField.name]) {
+            removedFields.push(baselineField);
+        }
+    });
+    
+    return {
+        hasChanges: newFields.length > 0 || removedFields.length > 0 || modifiedFields.length > 0,
+        newFields,
+        removedFields,
+        modifiedFields
+    };
+}
+
+/**
+ * Check if a field has changed between baseline and current
+ * @param {Object} baselineField - Baseline field object
+ * @param {Object} currentField - Current field object
+ * @returns {boolean} True if field has changed
+ */
+function hasFieldChanged(baselineField, currentField) {
+    return (
+        baselineField.type !== currentField.type ||
+        baselineField.label !== currentField.label ||
+        baselineField.required !== currentField.required ||
+        JSON.stringify(baselineField.options) !== JSON.stringify(currentField.options)
+    );
+}
+
+/**
+ * Get specific changes between baseline and current field
+ * @param {Object} baselineField - Baseline field object
+ * @param {Object} currentField - Current field object
+ * @returns {Array} Array of change descriptions
+ */
+function getFieldChanges(baselineField, currentField) {
+    const changes = [];
+    
+    if (baselineField.type !== currentField.type) {
+        changes.push(`Type changed from ${baselineField.type} to ${currentField.type}`);
+    }
+    
+    if (baselineField.label !== currentField.label) {
+        changes.push(`Label changed from "${baselineField.label}" to "${currentField.label}"`);
+    }
+    
+    if (baselineField.required !== currentField.required) {
+        changes.push(`Required changed from ${baselineField.required} to ${currentField.required}`);
+    }
+    
+    if (JSON.stringify(baselineField.options) !== JSON.stringify(currentField.options)) {
+        changes.push('Options changed');
+    }
+    
+    return changes;
+}
+
+/**
+ * Get new fields detected in the comparison
+ * @returns {Object} Object containing new fields by schema name
+ */
+function getNewFieldsDetected() {
+    return window.appState.schemaComparison.newFields || {};
+}
+
+/**
+ * Get new fields for a specific schema
+ * @param {string} schemaName - Name of the schema
+ * @returns {Array|null} Array of new fields or null if schema not found
+ */
+function getNewFieldsForSchema(schemaName) {
+    const newFields = window.appState.schemaComparison.newFields;
+    
+    if (!newFields || !newFields[schemaName]) {
+        return null;
+    }
+    
+    const schemaData = newFields[schemaName];
+    
+    if (schemaData.type === 'new_schema') {
+        return schemaData.fields;
+    } else if (schemaData.type === 'new_fields') {
+        return schemaData.newFields;
+    }
+    
+    return null;
+}
+
+/**
+ * Generate dynamic UI elements for new fields
+ * @param {string} schemaName - Name of the schema
+ * @param {string} containerSelector - CSS selector for the container to insert elements
+ * @returns {string} HTML string for new field elements
+ */
+function generateDynamicUIElements(schemaName, containerSelector = null) {
+    const newFields = getNewFieldsForSchema(schemaName);
+    
+    if (!newFields || newFields.length === 0) {
+        return '';
+    }
+    
+    let html = '<!-- Dynamically generated fields -->\n';
+    
+    newFields.forEach(field => {
+        const fieldId = `dynamic-${schemaName.toLowerCase()}-${field.name}`;
+        const fieldLabel = field.label || field.name;
+        
+        html += `<div class="dynamic-field" data-field-name="${field.name}" data-schema="${schemaName}">\n`;
+        html += `    <span class="label">${fieldLabel}:</span>\n`;
+        html += `    <span class="field field-m" id="${fieldId}"></span>\n`;
+        html += `</div>\n`;
+    });
+    
+    // If container selector is provided, insert the HTML
+    if (containerSelector && typeof document !== 'undefined') {
+        const container = document.querySelector(containerSelector);
+        if (container) {
+            container.innerHTML += html;
+            console.log(`✅ Dynamic UI elements added to ${containerSelector} for ${schemaName}`);
+        } else {
+            console.warn(`Container ${containerSelector} not found for dynamic elements`);
+        }
+    }
+    
+    return html;
+}
+
+/**
+ * Initialize schema comparison and generate dynamic elements
+ * @param {string} jsonFilePath - Path to baseline schema JSON file
+ * @param {Object} uiConfig - Configuration for UI element generation
+ * @returns {Promise<Object>} Comparison results
+ */
+async function initializeSchemaComparisonAndUI(jsonFilePath = 'JSON/schema.json', uiConfig = {}) {
+    try {
+        // Perform schema comparison
+        const comparison = await compareSchemas(jsonFilePath);
+
+        console.log('comparison result', comparison);
+
+        if (!comparison) {
+            console.error('Schema comparison failed');
+            return null;
+        }
+        
+        // Generate dynamic UI elements for schemas with new fields
+        Object.keys(comparison.newFields).forEach(schemaName => {
+            const containerSelector = uiConfig[schemaName];
+            if (containerSelector) {
+                generateDynamicUIElements(schemaName, containerSelector);
+            } else {
+                console.log(`No UI container configured for schema: ${schemaName}`);
+                // Generate HTML but don't insert it
+                const html = generateDynamicUIElements(schemaName);
+                console.log(`Generated HTML for ${schemaName}:`, html);
+            }
+        });
+        
+        return comparison;
+        
+    } catch (error) {
+        console.error('Error initializing schema comparison and UI:', error);
+        return null;
+    }
+}
+
+/**
+ * Update dynamic field values with data
+ * @param {string} schemaName - Name of the schema
+ * @param {Object} data - Data object containing field values
+ */
+function updateDynamicFieldValues(schemaName, data) {
+    const newFields = getNewFieldsForSchema(schemaName);
+    
+    if (!newFields || !data) {
+        return;
+    }
+    
+    newFields.forEach(field => {
+        const fieldId = `dynamic-${schemaName.toLowerCase()}-${field.name}`;
+        const element = document.getElementById(fieldId);
+        
+        if (element && data[field.name] !== undefined) {
+            const formattedValue = formatValue(data[field.name], field.name.toLowerCase(), fieldId);
+            element.innerHTML = formattedValue;
+        }
+    });
+}
+
+/**
+ * Collect and organize all new fields detected in schema comparison
+ * @param {Object} comparisonResults - Results from compareSchemas function
+ * @returns {Object} Organized collection of new fields
+ */
+function collectNewFields(comparisonResults) {
+    if (!comparisonResults || !comparisonResults.newFields) {
+        console.warn('No comparison results provided for field collection');
+        return null;
+    }
+    
+    const collection = {
+        allNewFields: {},
+        fieldsByType: {},
+        fieldsByPage: {},
+        collectionMetadata: {
+            lastUpdated: new Date().toISOString(),
+            totalNewFields: 0,
+            schemasCovered: []
+        }
+    };
+    
+    let totalFields = 0;
+    
+    // Process each schema with new fields
+    Object.entries(comparisonResults.newFields).forEach(([schemaName, schemaData]) => {
+        const fieldsToProcess = getFieldsFromSchemaData(schemaData);
+        
+        if (fieldsToProcess && fieldsToProcess.length > 0) {
+            // Store all new fields for this schema
+            collection.allNewFields[schemaName] = {
+                schemaType: schemaData.type,
+                fields: fieldsToProcess,
+                fieldCount: fieldsToProcess.length
+            };
+            
+            // Organize by field type
+            fieldsToProcess.forEach(field => {
+                if (!collection.fieldsByType[field.type]) {
+                    collection.fieldsByType[field.type] = [];
+                }
+                collection.fieldsByType[field.type].push({
+                    schemaName,
+                    field
+                });
+            });
+            
+            totalFields += fieldsToProcess.length;
+            collection.collectionMetadata.schemasCovered.push(schemaName);
+        }
+    });
+    
+    collection.collectionMetadata.totalNewFields = totalFields;
+    
+    // Store in global appState
+    window.appState.newFieldsCollection = collection;
+    
+    console.log(`📦 Collected ${totalFields} new fields from ${collection.collectionMetadata.schemasCovered.length} schemas:`, 
+                collection.collectionMetadata.schemasCovered);
+    
+    return collection;
+}
+
+/**
+ * Extract fields from schema data regardless of type
+ * @param {Object} schemaData - Schema data from comparison results
+ * @returns {Array} Array of field objects
+ */
+function getFieldsFromSchemaData(schemaData) {
+    switch (schemaData.type) {
+        case 'new_schema':
+            return schemaData.fields || [];
+        case 'new_fields':
+            return schemaData.newFields || [];
+        default:
+            console.warn(`Unknown schema data type: ${schemaData.type}`);
+            return [];
+    }
+}
+
+/**
+ * Map new fields to specific UI pages/contexts for targeted updates
+ * @param {Object} pageMapping - Mapping of schema names to page contexts
+ * @returns {Object} Fields organized by page context
+ */
+function mapFieldsToPages(pageMapping = {}) {
+    const collection = window.appState.newFieldsCollection;
+    
+    if (!collection || !collection.allNewFields) {
+        console.warn('No new fields collection available for page mapping');
+        return {};
+    }
+    
+    const defaultPageMapping = {
+        'Empfänger': ['overview', 'modal'],
+        'Auftraggeber': ['overview', 'modal'],
+        'Ausführung': ['overview', 'modal'],
+        'Auftragsstatus': ['overview', 'modal'],
+        'Vermittler': ['modal'],
+        'Warenkorb': ['overview', 'modal'],
+        'Warenkorb_Positionen': ['overview'],
+        'Auftragsstatus_KLASSIK_OT': ['overview'],
+        'Auftragsstatus_KLASSIK_GTSCHN': ['overview'],
+        'Auftragsstatus_KLASSIK_KOPF_PS': ['overview']
+    };
+    
+    const mapping = { ...defaultPageMapping, ...pageMapping };
+    const fieldsByPage = {};
+    
+    // Initialize page containers
+    ['overview', 'modal', 'sidebar'].forEach(page => {
+        fieldsByPage[page] = {};
+    });
+    
+    // Map fields to pages
+    Object.entries(collection.allNewFields).forEach(([schemaName, schemaInfo]) => {
+        const pages = mapping[schemaName] || ['overview']; // default to overview
+        
+        pages.forEach(page => {
+            if (!fieldsByPage[page][schemaName]) {
+                fieldsByPage[page][schemaName] = [];
+            }
+            fieldsByPage[page][schemaName] = schemaInfo.fields;
+        });
+    });
+    
+    // Store in collection
+    collection.fieldsByPage = fieldsByPage;
+    window.appState.newFieldsCollection = collection;
+    
+    console.log('📋 Fields mapped to pages:', Object.keys(fieldsByPage).map(page => 
+        `${page}: ${Object.keys(fieldsByPage[page]).length} schemas`
+    ).join(', '));
+    
+    return fieldsByPage;
+}
+
+/**
+ * Get new fields for a specific use case
+ * @param {Object} options - Options for field retrieval
+ * @returns {Object|Array} Filtered new fields
+ */
+function getNewFieldsFor(options = {}) {
+    const collection = window.appState.newFieldsCollection;
+    
+    if (!collection) {
+        console.warn('No new fields collection available');
+        return null;
+    }
+    
+    const { schema, type, page, format = 'object' } = options;
+    
+    // Get by schema name
+    if (schema) {
+        const schemaFields = collection.allNewFields[schema];
+        return schemaFields ? schemaFields.fields : [];
+    }
+    
+    // Get by field type
+    if (type) {
+        return collection.fieldsByType[type] || [];
+    }
+    
+    // Get by page context
+    if (page) {
+        return collection.fieldsByPage[page] || {};
+    }
+    
+    // Return all fields in requested format
+    if (format === 'flat') {
+        const allFields = [];
+        Object.entries(collection.allNewFields).forEach(([schemaName, schemaInfo]) => {
+            schemaInfo.fields.forEach(field => {
+                allFields.push({ ...field, schemaName });
+            });
+        });
+        return allFields;
+    }
+    
+    return collection.allNewFields;
+}
+
+/**
+ * Create a reusable configuration object for new fields
+ * @returns {Object} Configuration object with field mappings
+ */
+function createNewFieldsConfig() {
+    const collection = window.appState.newFieldsCollection;
+    
+    if (!collection) {
+        console.warn('No new fields collection available for config creation');
+        return {};
+    }
+    
+    const config = {
+        // Data processing configs for new fields
+        dataConfigs: {},
+        
+        // UI element mappings for new fields
+        uiMappings: {},
+        
+        // Container selectors for dynamic insertion
+        containers: {
+            overview: {},
+            modal: {}
+        },
+        
+        // Field metadata for formatting
+        fieldMetadata: {}
+    };
+    
+    Object.entries(collection.allNewFields).forEach(([schemaName, schemaInfo]) => {
+        // Create data config for this schema's new fields
+        config.dataConfigs[schemaName] = {};
+        config.uiMappings[schemaName] = {};
+        config.fieldMetadata[schemaName] = {};
+        
+        schemaInfo.fields.forEach(field => {
+            const fieldName = field.name;
+            
+            // Simple field mapping (can be enhanced based on field type)
+            config.dataConfigs[schemaName][fieldName] = fieldName;
+            
+            // UI element ID mapping
+            const elementId = `dynamic-${schemaName.toLowerCase()}-${fieldName}`;
+            config.uiMappings[schemaName][elementId] = fieldName;
+            
+            // Store field metadata for later use
+            config.fieldMetadata[schemaName][fieldName] = {
+                type: field.type,
+                label: field.label,
+                required: field.required,
+                options: field.options
+            };
+        });
+        
+        // Set container selectors based on schema
+        config.containers.overview[schemaName] = getContainerSelectorForSchema(schemaName, 'overview');
+        config.containers.modal[schemaName] = getContainerSelectorForSchema(schemaName, 'modal');
+    });
+    
+    console.log('⚙️ Created configuration for new fields:', {
+        schemas: Object.keys(config.dataConfigs).length,
+        totalFields: Object.values(config.dataConfigs).reduce((sum, schema) => 
+            sum + Object.keys(schema).length, 0)
+    });
+    
+    return config;
+}
+
+/**
+ * Get appropriate container selector for schema and context
+ * @param {string} schemaName - Name of the schema
+ * @param {string} context - UI context ('overview', 'modal')
+ * @returns {string} CSS selector for container
+ */
+function getContainerSelectorForSchema(schemaName, context) {
+    const selectorMap = {
+        overview: {
+            'Empfänger': '.empf-insertion-point',
+            'Ausführung': '.ausf-insertion-point',
+            'Auftraggeber': '.auftraggeber-insertion-point',
+            'Auftragsstatus': '.auftragsstatus-insertion-point',
+            'Warenkorb': '.warenkorb-insertion-point'
+        },
+        modal: {
+            'Empfänger': '.modal-empf-insertion-point',
+            'Ausführung': '.modal-ausf-insertion-point',
+            'Auftraggeber': '.modal-auftraggeber-insertion-point',
+            'Auftragsstatus': '.modal-auftragsstatus-insertion-point',
+            'Warenkorb': '.modal-warenkorb-insertion-point'
+        }
+    };
+    
+    return selectorMap[context]?.[schemaName] || `.${schemaName.toLowerCase()}-new-fields`;
+}
+
+/**
+ * Export new fields collection to different formats for external use
+ * @param {string} format - Export format ('json', 'csv', 'html')
+ * @returns {string} Exported data in requested format
+ */
+function exportNewFields(format = 'json') {
+    const collection = window.appState.newFieldsCollection;
+    
+    if (!collection) {
+        console.warn('No new fields collection to export');
+        return null;
+    }
+    
+    switch (format.toLowerCase()) {
+        case 'json':
+            return JSON.stringify(collection, null, 2);
+            
+        case 'csv':
+            return exportNewFieldsAsCSV(collection);
+            
+        case 'html':
+            return exportNewFieldsAsHTML(collection);
+            
+        default:
+            console.warn(`Unknown export format: ${format}`);
+            return JSON.stringify(collection, null, 2);
+    }
+}
+
+/**
+ * Export new fields as CSV format
+ * @param {Object} collection - New fields collection
+ * @returns {string} CSV formatted string
+ */
+function exportNewFieldsAsCSV(collection) {
+    const rows = [['Schema', 'Field Name', 'Field Type', 'Label', 'Required']];
+    
+    Object.entries(collection.allNewFields).forEach(([schemaName, schemaInfo]) => {
+        schemaInfo.fields.forEach(field => {
+            rows.push([
+                schemaName,
+                field.name,
+                field.type,
+                field.label || '',
+                field.required || false
+            ]);
+        });
+    });
+    
+    return rows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+}
+
+/**
+ * Export new fields as HTML table format
+ * @param {Object} collection - New fields collection
+ * @returns {string} HTML formatted string
+ */
+function exportNewFieldsAsHTML(collection) {
+    let html = '<table border="1"><thead><tr><th>Schema</th><th>Field Name</th><th>Type</th><th>Label</th><th>Required</th></tr></thead><tbody>';
+    
+    Object.entries(collection.allNewFields).forEach(([schemaName, schemaInfo]) => {
+        schemaInfo.fields.forEach(field => {
+            html += `<tr>
+                <td>${schemaName}</td>
+                <td>${field.name}</td>
+                <td>${field.type}</td>
+                <td>${field.label || ''}</td>
+                <td>${field.required || false}</td>
+            </tr>`;
+        });
+    });
+    
+    html += '</tbody></table>';
+    return html;
+}
+
+/**
+ * Complete initialization function that collects new fields and creates config
+ * @param {string} jsonFilePath - Path to baseline schema JSON
+ * @param {Object} pageMapping - Custom page mapping (optional)
+ * @returns {Promise<Object>} Complete new fields setup
+ */
+async function initializeNewFieldsCollection(jsonFilePath = 'JSON/schema.json', pageMapping = {}) {
+    try {
+        // Perform schema comparison
+        const comparison = await compareSchemas(jsonFilePath);
+        
+        if (!comparison) {
+            console.error('Schema comparison failed - cannot collect new fields');
+            return null;
+        }
+        
+        // Collect and organize new fields
+        const collection = collectNewFields(comparison);
+        
+        if (!collection || collection.collectionMetadata.totalNewFields === 0) {
+            console.log('No new fields detected in comparison');
+            return { collection: null, config: null, pageMapping: {} };
+        }
+        
+        // Map fields to pages
+        const fieldsByPage = mapFieldsToPages(pageMapping);
+        
+        // Create reusable config
+        const config = createNewFieldsConfig();
+        
+        console.log(`🎯 New fields collection initialized: ${collection.collectionMetadata.totalNewFields} fields from ${collection.collectionMetadata.schemasCovered.length} schemas`);
+        
+        return {
+            collection,
+            config,
+            fieldsByPage,
+            metadata: collection.collectionMetadata
+        };
+        
+    } catch (error) {
+        console.error('Error initializing new fields collection:', error);
+        return null;
+    }
+}
+
+/**
+ * Debug function to show collected new fields information
+ */
+function debugNewFieldsCollection() {
+    const collection = window.appState.newFieldsCollection;
+    
+    console.log('=== NEW FIELDS COLLECTION DEBUG ===');
+    
+    if (!collection) {
+        console.log('No new fields collection found');
+        return;
+    }
+    
+    console.log('Collection metadata:', collection.collectionMetadata);
+    console.log('Schemas with new fields:', Object.keys(collection.allNewFields));
+    console.log('Field types found:', Object.keys(collection.fieldsByType));
+    console.log('Pages configured:', Object.keys(collection.fieldsByPage || {}));
+    
+    // Show details for each schema
+    Object.entries(collection.allNewFields).forEach(([schema, info]) => {
+        console.log(`\n${schema} (${info.schemaType}):`, 
+                   info.fields.map(f => `${f.name} (${f.type})`));
+    });
 }
 
 // DATA_CONFIGS - All configurations in one place

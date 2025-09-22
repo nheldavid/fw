@@ -135,6 +135,7 @@
         { "name": "status", "label": "Status" },
         { "name": "freitext", "label": "Freitext" },
         { "name": "molliwert", "label": "Molliwert" },
+        { "name": "erfassdatum", "label": "Erfassdatum" },
         { "name": "rechnungsnummer", "label": "Rechnungsnummer" },
         { "name": "trackingnummer", "label": "Trackingnummer" }
       ]
@@ -145,10 +146,12 @@
         { "name": "ticket", "label": "Ticket" },
         { "name": "ticketnummer", "label": "Ticketnummer" },
         { "name": "datum", "label": "Datum" },
+        { "name": "ereignis", "label": "Ereignis" },
         { "name": "text", "label": "Text" },
         { "name": "ergebnis", "label": "Ergebnis" },
         { "name": "name", "label": "Name" },
         { "name": "strasse_hausnummer", "label": "Strasse_Hausnummer" },
+        { "name": "plz", "label": "PLZ" },
         { "name": "ort", "label": "Ort" },
         { "name": "ortsteil", "label": "Ortsteil" },
         { "name": "erfasser", "label": "Erfasser" },

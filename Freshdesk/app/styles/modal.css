@@ -63,6 +63,10 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
+.section-group {
+    display: none;
+}
+
 .section-title {
     font-size: 16px;
     font-weight: 600;
@@ -199,6 +203,11 @@ body {
     width: 16px;
     height: 16px;
     accent-color: #4CAF50;
+}
+
+.spinner {
+    margin: auto;
+    width: 10%;
 }
 
 .timeline-section {

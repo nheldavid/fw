@@ -469,6 +469,17 @@ function initializeApp() {
         // Extract ALL custom object data at once
         extractAllCustomObjectData();
 
+        // Initialize schema cache
+        //initializeSchemaCache();
+        
+        // Compare schemas and generate dynamic UI
+        // const uiConfig = {
+        //     'Empfänger': '.empf-insertion-point',
+        //     'Ausführung': '.ausf-insertion-point'
+        // };
+        
+        // initializeSchemaComparisonAndUI('JSON/schema.json', uiConfig);
+
         // Set up event listeners
         setupEventListeners();
         
@@ -1053,13 +1064,29 @@ async function extractAllCustomObjectData() {
             warenkorb
         };
 
-        console.log('Basic custom object data stored:', appState.customObjectData);
-
         // Extract modal-specific data (OT, Gutscheine, etc.)
         await extractModalSpecificData();
 
         // Update DOM elements (keep existing functionality)
         updateDOMElements(ausfuehrung, empfaenger, auftraggeber, auftragsstatus, vermittler, warenkorb);
+
+        // Initialize new fields collection
+        const newFieldsSetup = initializeNewFieldsCollection('JSON/schema.json');
+
+        console.log('New fields setup:', newFieldsSetup);
+        
+        if (newFieldsSetup && newFieldsSetup.collection) {
+            console.log(`Found ${newFieldsSetup.metadata.totalNewFields} new fields!`);
+            
+            // Now you can use the collected fields for various purposes
+            const config = newFieldsSetup.config;
+            // Store config for later use
+            window.appState.newFieldsConfig = config;
+
+            console.log('New fields configuration:', config);
+        }
+
+        console.log('Basic custom object data stored:', appState.customObjectData);
 
     } catch (error) {
         console.error('Error extracting custom object data:', error);

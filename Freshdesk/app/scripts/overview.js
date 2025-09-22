@@ -16,8 +16,14 @@ document.addEventListener("DOMContentLoaded", async function() {
     const contextData = context.data;
     appState.currentTicket = ticketData.ticket;
 
+    // NEW: Initialize schema comparison and dynamic fields
+    await initializeDynamicFieldsForOverview();
+
     // Render UI based on context
     renderUI(contextData);
+
+    // NEW: Render dynamic fields after main UI
+    renderDynamicFields(contextData);
     
     // Extract custom object data with context information
     //await extractCustomObjectData(contextData);
@@ -27,6 +33,169 @@ document.addEventListener("DOMContentLoaded", async function() {
     showErrorMessage('Failed to initialize application. Please refresh the page.');
   }
 });
+
+/**
+ * NEW: Initialize dynamic fields for overview page
+ */
+async function initializeDynamicFieldsForOverview() {
+  try {
+    console.log('Initializing dynamic fields for overview...');
+    
+    // Initialize new fields collection
+    const newFieldsSetup = await initializeNewFieldsCollection('JSON/schema.json');
+    
+    if (newFieldsSetup && newFieldsSetup.collection) {
+      console.log(`Detected ${newFieldsSetup.metadata.totalNewFields} new fields for overview`);
+      
+      // Generate and insert dynamic UI elements
+      const overviewFields = getNewFieldsFor({ page: 'overview' });
+      
+      if (overviewFields && Object.keys(overviewFields).length > 0) {
+        insertDynamicElementsInOverview(overviewFields);
+      }
+    } else {
+      console.log('No new fields detected for overview');
+    }
+  } catch (error) {
+    console.error('Error initializing dynamic fields:', error);
+  }
+}
+
+/**
+ * NEW: Insert dynamic elements into overview HTML
+ * @param {Object} overviewFields - Fields organized by schema for overview page
+ */
+function insertDynamicElementsInOverview(overviewFields) {
+  const insertionPoints = {
+    'Empfänger': '.empf-insertion-point',
+    'Ausführung': '.ausf-insertion-point',
+    'Auftraggeber': '.auftraggeber-insertion-point',
+    'Auftragsstatus': '.auftragsstatus-insertion-point',
+    'Warenkorb': '.warenkorb-insertion-point',
+    'Vermittler': '.vermittler-insertion-point'
+  };
+
+  Object.entries(overviewFields).forEach(([schemaName, fields]) => {
+    const containerSelector = insertionPoints[schemaName];
+    const container = document.querySelector(containerSelector);
+    
+    if (container && fields && fields.length > 0) {
+      const dynamicHTML = generateOverviewFieldsHTML(schemaName, fields);
+      container.innerHTML = dynamicHTML;
+      console.log(`Added ${fields.length} dynamic fields for ${schemaName} in overview`);
+    } else if (!container) {
+      console.warn(`Container not found for ${schemaName}: ${containerSelector}`);
+    }
+  });
+}
+
+/**
+ * NEW: Generate HTML specifically formatted for overview page layout
+ * @param {string} schemaName - Name of the schema
+ * @param {Array} fields - Array of new field objects
+ * @returns {string} HTML string formatted for overview
+ */
+function generateOverviewFieldsHTML(schemaName, fields) {
+  let html = '<!-- Dynamic fields for ' + schemaName + ' -->\n';
+  
+  // Group fields for better layout (2 fields per row)
+  for (let i = 0; i < fields.length; i += 2) {
+    const field1 = fields[i];
+    const field2 = fields[i + 1];
+    
+    html += '<div class="row">\n';
+    
+    // First field
+    html += `  <span class="label field-m">${field1.label || field1.name}:</span>\n`;
+    
+    // Second field (if exists)
+    if (field2) {
+      html += `  <span class="label field-m">${field2.label || field2.name}:</span>\n`;
+    }
+    
+    html += '</div>\n';
+    
+    html += '<div class="row">\n';
+    
+    // First field value
+    const fieldId1 = `dynamic-${schemaName.toLowerCase().replace('ä', 'ae').replace('ü', 'ue').replace('ö', 'oe')}-${field1.name}`;
+    html += `  <span class="field field-m" id="${fieldId1}" data-field-name="${field1.name}" data-schema="${schemaName}"></span>\n`;
+    
+    // Second field value (if exists)
+    if (field2) {
+      const fieldId2 = `dynamic-${schemaName.toLowerCase().replace('ä', 'ae').replace('ü', 'ue').replace('ö', 'oe')}-${field2.name}`;
+      html += `  <span class="field field-m" id="${fieldId2}" data-field-name="${field2.name}" data-schema="${schemaName}"></span>\n`;
+    }
+    
+    html += '</div>\n';
+  }
+  
+  return html;
+}
+
+/**
+ * NEW: Render dynamic fields with data
+ * @param {Object} contextData - Context data from modal
+ */
+function renderDynamicFields(contextData) {
+  const collection = window.appState.newFieldsCollection;
+  
+  if (!collection || !collection.fieldsByPage || !collection.fieldsByPage.overview) {
+    return;
+  }
+  
+  const overviewFields = collection.fieldsByPage.overview;
+  
+  Object.entries(overviewFields).forEach(([schemaName, fields]) => {
+    if (!fields || fields.length === 0) return;
+    
+    // Get raw data for this schema from context
+    const schemaData = getDynamicSchemaData(contextData, schemaName);
+    
+    if (schemaData) {
+      updateDynamicFieldsInOverview(schemaName, fields, schemaData);
+    }
+  });
+}
+
+/**
+ * NEW: Get schema data from context for dynamic fields
+ * @param {Object} contextData - Context data
+ * @param {string} schemaName - Name of the schema
+ * @returns {Object|null} Schema data or null
+ */
+function getDynamicSchemaData(contextData, schemaName) {
+  const schemaMap = {
+    'Empfänger': contextData.empfaenger,
+    'Ausführung': contextData.ausfuehrung,
+    'Auftraggeber': contextData.auftraggeber,
+    'Auftragsstatus': contextData.auftragsstatus,
+    'Warenkorb': contextData.warenkorb,
+    'Vermittler': contextData.vermittler
+  };
+  
+  return schemaMap[schemaName] || null;
+}
+
+/**
+ * NEW: Update dynamic field values in overview
+ * @param {string} schemaName - Name of the schema
+ * @param {Array} fields - Array of field objects
+ * @param {Object} schemaData - Data for this schema
+ */
+function updateDynamicFieldsInOverview(schemaName, fields, schemaData) {
+  fields.forEach(field => {
+    const fieldId = `dynamic-${schemaName.toLowerCase().replace('ä', 'ae').replace('ü', 'ue').replace('ö', 'oe')}-${field.name}`;
+    const element = document.getElementById(fieldId);
+    
+    if (element && schemaData && schemaData[field.name] !== undefined) {
+      const formattedValue = formatValue(schemaData[field.name], field.name.toLowerCase(), fieldId);
+      element.innerHTML = formattedValue;
+    } else if (element) {
+      element.innerHTML = 'Nicht verfügbar';
+    }
+  });
+}
 
 function renderUI(context) {
   
@@ -183,7 +352,7 @@ function renderWarenkorb(contextData) {
   };
 
   Object.entries(fieldMappings).forEach(([elementId, dataKey]) => {
-    updateElement(elementId,  contextData.warenkorb[dataKey]);
+    updateElement(elementId, contextData.warenkorb[dataKey]);
   });
 }
 
@@ -284,7 +453,6 @@ async function handleWarenkorbData(contextData) {
   }
 }
 
-
 // Populate OT items
 function populateOTItems(otDataArray) {
     const container = document.querySelector('.ot-items-container');
@@ -319,103 +487,103 @@ function createOTItem(data) {
     const isStorniert = data.storniert === true || data.storniert === 'true' || data.storniert === 'Ja' || data.storniert === '1';
  
     return `
-        <div class="blue-bg" >
-          <div class="row">
-              <span class="label field-m">Ereignis:</span>
-              <span class="label field-m">Bezeichnung:</span>
-              <span class="label field-l">Erfasst:</span>
-              <span class="label field-m">Erfasser:</span>
-          </div>
+      <div class="blue-bg" >
+        <div class="row">
+          <span class="label field-m">Ereignis:</span>
+          <span class="label field-m">Bezeichnung:</span>
+          <span class="label field-l">Erfasst:</span>
+          <span class="label field-m">Erfasser:</span>
+        </div>
 
-          <div class="row">
-              <span class="field field-m">${data.ereignis}</span>
-              <span class="field field-m">${data.text}</span>
-              <span class="field field-m">${data.storno_datum}</span>
-              <span class="field field-m">${data.storno_uhrzeit}</span>
-              <span class="field field-m">${data.erfasser}</span>
-          </div>
-          
-          <div class="row">
-              <span class="label">Karte hinterlassen?</span>
-              <span class="label" style="margin-left: 5px;">Klärung?</span>
-              <!-- <span class="label">Checkbox:</span> -->
-              <span class="label" style="margin-left: 140px;">Herkunft:</span>
-          </div>
+        <div class="row">
+          <span class="field field-m">${data.ereignis}</span>
+          <span class="field field-m">${data.text}</span>
+          <span class="field field-m">${data.storno_datum}</span>
+          <span class="field field-m">${data.storno_uhrzeit}</span>
+          <span class="field field-m">${data.erfasser}</span>
+        </div>
+        
+        <div class="row">
+          <span class="label">Karte hinterlassen?</span>
+          <span class="label" style="margin-left: 5px;">Klärung?</span>
+          <!-- <span class="label">Checkbox:</span> -->
+          <span class="label" style="margin-left: 140px;">Herkunft:</span>
+        </div>
 
-          <div class="row">
-              <span class="field field-xs red-border"></span>
-              <span class="field field-m red-border" style="margin-left: 42px;"></span>
-              <span class="field field-m red-border" style="margin-left: 87px;"></span>
-          </div>
-          
-          <div class="row">
-              <span class="label field-m">Anrufergebnis:</span>
-              <span class="label">Ergänzende Angabe:</span>
-          </div>
-          
-          <div class="row">
-              <span class="field field-s" id="ot-ergebnis">${data.ergebnis}</span>
-              <span class="field field-l red-border" id="erganzende-angabe"></span>
-          </div>
-          
-          <div class="row">
-              <span class="field field-m" id="">${data.name}</span>
-              <span class="field field-m">${data.plz}</span>
-              <span class="field field-m">${data.ort}</span>
-              <span class="field field-m">${data.ortsteil}</span>
-          </div>
+        <div class="row">
+          <span class="field field-xs red-border"></span>
+          <span class="field field-m red-border" style="margin-left: 42px;"></span>
+          <span class="field field-m red-border" style="margin-left: 87px;"></span>
+        </div>
+        
+        <div class="row">
+          <span class="label field-m">Anrufergebnis:</span>
+          <span class="label">Ergänzende Angabe:</span>
+        </div>
+        
+        <div class="row">
+          <span class="field field-s" id="ot-ergebnis">${data.ergebnis}</span>
+          <span class="field field-l red-border" id="erganzende-angabe"></span>
+        </div>
+        
+        <div class="row">
+          <span class="field field-m" id="">${data.name}</span>
+          <span class="field field-m">${data.plz}</span>
+          <span class="field field-m">${data.ort}</span>
+          <span class="field field-m">${data.ortsteil}</span>
+        </div>
 
-          <div class="row">
-              <span class="label">Bemerkung:</span>
-          </div>
+        <div class="row">
+          <span class="label">Bemerkung:</span>
+        </div>
 
-          <div class="row">
-              <span class="field field-full red-border"></span>
-          </div>
+        <div class="row">
+          <span class="field field-full red-border"></span>
+        </div>
 
-          <div class="row">
-              <span class="label">Abweichung der Ware:</span>
-          </div>
+        <div class="row">
+          <span class="label">Abweichung der Ware:</span>
+        </div>
 
-          <div class="row">
-              <span class="field field-full red-border"></span>
-          </div>
-          
-          <div class="row">
-              <span class="label">Widerruf?</span>
-          </div>
+        <div class="row">
+          <span class="field field-full red-border"></span>
+        </div>
+        
+        <div class="row">
+          <span class="label">Widerruf?</span>
+        </div>
 
-          <div class="row">
-              <span class="field field-m">${isStorniert ? 'Ja' : 'Nein'}</span>
-          </div>
-      </div>
-    `;
+        <div class="row">
+          <span class="field field-m">${isStorniert ? 'Ja' : 'Nein'}</span>
+        </div>
+    </div>
+  `;
 }
 
 // Similar functions for Gutscheine and Kopfpauschalen...
 function createGutscheinItem(data) {
-    return `
-      <div class="pink-bg">
+  return `
+    <div class="pink-bg">
       <div class="row">
-          <span class="label field-m">Gutscheinnummer:</span>
-          <span class="label" style="margin-left: 10px;">Wert:</span>
+        <span class="label field-m">Gutscheinnummer:</span>
+        <span class="label" style="margin-left: 10px;">Wert:</span>
       </div>
 
       <div class="row">
-          <span class="field field-m" id="guts-kartennumer">${data.kartennummer}</span>
-          <span class="field field-m" id="guts-wert">${data.wert}</span>
+        <span class="field field-m" id="guts-kartennumer">${data.kartennummer}</span>
+        <span class="field field-m" id="guts-wert">${data.wert}</span>
       </div>
       
       <div class="row">
-          <span class="label">Datum und Zeit der Einlösung:</span>
+        <span class="label">Datum und Zeit der Einlösung:</span>
       </div>
       
       <div class="row">
-          <span class="field field-m" id="guts-einl-datum">${data.einlsedatum}</span>
-          <span class="field field-m" id="guts-einl-zeit">${data.einlsezeit}</span>
+        <span class="field field-m" id="guts-einl-datum">${data.einlsedatum}</span>
+        <span class="field field-m" id="guts-einl-zeit">${data.einlsezeit}</span>
       </div>
-  </div>
-    `;
+    </div>
+  `;
 }
 
 function createPauschaleItem(data) {
@@ -431,37 +599,37 @@ function createPositionenItem(data) {
   return `
   <div class="green-line gray-bg">
     <div class="row">
-        <span class="label field-m">Position:</span>
-        <!-- <span class="field-s" id="total_position">10</span> -->
-        <span class="label field-m">Material:</span>
-        <span class="label field-m">Bezeichnung:</span>
-        <span class="label field-s">Menge:</span>
+      <span class="label field-m">Position:</span>
+      <!-- <span class="field-s" id="total_position">10</span> -->
+      <span class="label field-m">Material:</span>
+      <span class="label field-m">Bezeichnung:</span>
+      <span class="label field-s">Menge:</span>
     </div>
 
     <div class="row">
-        <span class="field field-m" id="position">${data.position}</span>
-        <span class="field field-m" id="material">${data.material}</span>
-        <span class="field field-m" id="bezeichnung">${data.material_id}</span>
-        <span class="field field-s" id="menge">${data.menge}</span>
+      <span class="field field-m" id="position">${data.position}</span>
+      <span class="field field-m" id="material">${data.material}</span>
+      <span class="field field-m" id="bezeichnung">${data.material_id}</span>
+      <span class="field field-s" id="menge">${data.menge}</span>
     </div>
     
     <div class="row">
-        <span class="label field-m" style="margin-left: 93px;">Preis brutto:</span>
-        <span class="label field-m">Steuer:</span>
-        <span class="label field-m">Größe:</span>
+      <span class="label field-m" style="margin-left: 93px;">Preis brutto:</span>
+      <span class="label field-m">Steuer:</span>
+      <span class="label field-m">Größe:</span>
     </div>
 
     <div class="row">
-        <span class="field field-m" id="preis_brutto" style="margin-left: 93px;">${data.preis_brutto}</span>
-        <span class="field field-s" id="steuer">${data.steuer}</span>
-        <span class="field field-m" id="variante">${data.variante}</span>
+      <span class="field field-m" id="preis_brutto" style="margin-left: 93px;">${data.preis_brutto}</span>
+      <span class="field field-s" id="steuer">${data.steuer}</span>
+      <span class="field field-m" id="variante">${data.variante}</span>
     </div>
     
     <div class="row">
-        <span class="label"  style="margin-left: 93px;">Artikelbeschreibung:</span>
+      <span class="label"  style="margin-left: 93px;">Artikelbeschreibung:</span>
     </div>
     <div class="row">
-        <span class="field field-full red-border" id="blumengrusstext" style="margin-left: 93px;"></span>
+      <span class="field field-full red-border" id="blumengrusstext" style="margin-left: 93px;"></span>
     </div>
   </div>
   `;

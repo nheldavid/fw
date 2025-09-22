@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         const contextData = context.data;
         appState.currentTicket = ticketData.ticket;
 
+        
         console.log('Context Data:', contextData);
 
         // Initialize schema cache for modal data extraction
@@ -136,7 +137,7 @@ async function renderUI(contextData) {
     const { title } = contextData;
     
     // Hide all sections initially
-    hideAllSections();
+    //hideAllSections();
     
     // Get configuration for this context
     const config = CONTEXT_CONFIG[title];
@@ -236,6 +237,7 @@ async function fetchModalData(objectType, dataType) {
         }
         
         return processMultipleRecords(data, DATA_CONFIGS[objectType]);
+
     } catch (error) {
         console.error(`Error fetching ${dataType} data:`, error);
         return [];
@@ -471,6 +473,10 @@ function hideAllSections() {
  * @param {string} sectionId - The ID of the section to show
  */
 function showSection(sectionId) {
+    const spinner = document.querySelector('.spinner');
+    if (spinner) {
+        spinner.style.display = 'none';
+    }
     toggleElement(sectionId, true);
 }
 
