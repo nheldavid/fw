@@ -327,6 +327,7 @@ async function ShowOverview() {
             ticketnummer: appState.currentTicket?.id || '',
             ticketSubject: appState.currentTicket?.subject || '',
             title: "Übersicht",
+            schemaResult: appState.schemaComparison || {},
             
             // Order data from custom fields
             orderData: appState.orderData || {},
