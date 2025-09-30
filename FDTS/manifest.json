@@ -1,0 +1,22 @@
+{
+  "platform-version": "3.0",
+  "modules": {
+    "common": {
+      "requests": {
+        "createfdTicket": {}
+      }
+    },
+    "support_ticket": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": "18.17.1",
+    "fdk": "9.5.1"
+  }
+}

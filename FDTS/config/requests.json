@@ -1,0 +1,13 @@
+{
+  "createfdTicket": {
+    "schema": {
+      "method": "POST",
+      "host": "<%= iparam.subdomain %>.freshdesk.com",
+      "path": "/api/v2/tickets",
+      "headers": {
+        "Authorization": "Basic <%= encode(iparam.api_key) %>",
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}

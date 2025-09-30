@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <title>Freshdesk Ticket Synchronization</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script async src="{{{appclient}}}"></script>
+  <link rel="stylesheet" type="text/css" href="styles/style.css" />
+</head>
+
+<body>
+
+      <!-- Main application container -->
+    <div id="app">
+      <!-- Sidebar container - fits within Freshdesk ticket sidebar -->
+      <div class="sidebar-container">
+        <!-- App header with title -->
+        <!-- <header class="sidebar-header">
+          <fw-label value="Fleurop Order Information" color="blue" size="large"></fw-label>
+        </header> -->
+        
+        <!-- Main content area with different states -->
+        <main class="sidebar-content">
+          <!-- Loading State - shown while fetching data from Freshdesk API -->
+          <div id="loading-state" class="loading-container">
+            <fw-spinner size="medium"></fw-spinner>
+            <fw-label value="Loading order information..." color="text-secondary"></fw-label>
+            
+          </div>
+
+          <!-- Error State - shown when API calls fail or data is invalid -->
+          <div id="error-state" class="error-container" style="display: none;">
+            <fw-icon name="alert-triangle" color="warning" size="24"></fw-icon>
+            <fw-label value="Unable to load order information" color="text-primary" size="large"></fw-label>
+            <fw-label value="Please check your connection and try again." color="text-secondary"></fw-label>
+            <fw-button id="retry-btn" color="primary" size="small">
+              <fw-icon name="refresh" slot="before-label"></fw-icon>
+              Retry
+            </fw-button>
+          </div>
+
+          <div id="content-container">
+            <fw-button size="normal" color="secondary" id="sync-btn" style="width: 195px;"> Synchronize  
+              <!-- <fw-icon name="items"></fw-icon> -->
+            </fw-button>
+          </div>
+  <!-- <div class="main">
+    <fw-button class="btn" id="sync-btn" color="primary">
+      Synchronize
+    </fw-button>
+  </div> -->
+
+        </main>
+      </div>
+    </div>
+</body>
+
+<script defer src="scripts/app.js"></script>
+<script async type="module" src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
+<script async nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
+</html>
