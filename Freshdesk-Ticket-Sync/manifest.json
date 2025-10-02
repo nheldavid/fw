@@ -3,7 +3,8 @@
   "modules": {
     "common": {
       "requests": {
-        "createfdTicket": {}
+        "createTicket": {},
+        "updateTicket": {}
       }
     },
     "support_ticket": {

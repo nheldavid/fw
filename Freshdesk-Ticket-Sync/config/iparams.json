@@ -1,0 +1,28 @@
+{
+  "subdomain": {
+    "display_name": "Subdomain",
+    "description": "Please enter your Subdomain",
+    "type": "text",
+    "required": true
+  },
+  "api_key": {
+    "display_name": "API key",
+    "description": "Please enter your API key",
+    "type": "text",
+    "secure": true,
+    "required": true
+  },
+    "target_subdomain": {
+    "display_name": "Subdomain",
+    "description": "Please enter your target Subdomain",
+    "type": "text",
+    "required": true
+  },
+  "target_api_key": {
+    "display_name": "API key",
+    "description": "Please enter your target API key",
+    "type": "text",
+    "secure": true,
+    "required": true
+  }
+}

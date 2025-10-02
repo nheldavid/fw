@@ -13,6 +13,7 @@
 
       <!-- Main application container -->
     <div id="app">
+      <fw-toast id="type_toast"></fw-toast>
       <!-- Sidebar container - fits within Freshdesk ticket sidebar -->
       <div class="sidebar-container">
         <!-- App header with title -->
@@ -26,7 +27,6 @@
           <div id="loading-state" class="loading-container">
             <fw-spinner size="medium"></fw-spinner>
             <fw-label value="Loading order information..." color="text-secondary"></fw-label>
-            
           </div>
 
           <!-- Error State - shown when API calls fail or data is invalid -->
