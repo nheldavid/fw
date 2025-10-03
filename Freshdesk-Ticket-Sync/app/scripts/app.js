@@ -88,7 +88,7 @@ function setupEventListeners() {
             elements.syncBtn.disabled = true;
             
             try {
-                await createTicket();
+                await syncTicket();
             } catch (error) {
                 console.error('Sync failed:', error);
             } finally {
@@ -142,298 +142,39 @@ function loadTicketData() {
 }
 
 /**
- * Create a Freshdesk ticket to a target domain
- * Creates ticket first, then adds attachments separately if present
+ * Sync ticket to target domain
+ * Calls serverless function to handle file operations
  */
-async function createTicket() {
+async function syncTicket() {
     try {
         const ticketdata = appState.currentTicket;
-        
         if (!ticketdata) {
-            showNotification("No ticket data found. Please refresh and try again.", "error");
-            return;
+            return showNotification("No ticket data found", "error");
         }
 
-        console.log(ticketdata)
+        // Show loading notification
+        showNotification("Syncing ticket with attachments...", "info");
 
-        return;
-
-        // Build ticket payload WITHOUT attachments
-        const ticketDetails = buildTicketDetails(ticketdata);
-
-        // Validate required fields
-        const validationError = validateTicketDetails(ticketDetails);
-        if (validationError) {
-            showNotification(validationError, "error");
-            return;
-        }
-
-        console.log("Creating ticket with payload:", ticketDetails);
-
-        // Step 1: Create ticket in target domain
-        const response = await appState.client.request.invokeTemplate("createTicket", {
-            body: JSON.stringify(ticketDetails)
-        });
-
-        // Check response status
-        if (response.status !== 201) {
-            throw new Error(`Unexpected response status: ${response.status}`);
-        }
-
-        console.log("Ticket created successfully:", response);
-
-        const responseData = JSON.parse(response.response);
-        const newTicketId = responseData.id;
-        
-        console.log('Created ticket ID:', newTicketId);
-
-        // Step 2: Add attachments if present
-        let attachmentResult = null;
-        if (ticketdata?.attachments && Array.isArray(ticketdata.attachments) && ticketdata.attachments.length > 0) {
-            console.log(`Adding ${ticketdata.attachments.length} attachment(s) to ticket ${newTicketId}...`);
-            attachmentResult = await addAttachmentsToTicket(newTicketId, ticketdata.attachments);
-        }
-
-        // Step 3: Update source ticket status to Transferred
-        console.log('Updating source ticket ID:', ticketdata.id);
-        await updateSourceTicketStatus(ticketdata.id, newTicketId);
-
-        // Show appropriate success message
-        let message = "Ticket synchronized and marked as transferred!";
-        if (attachmentResult) {
-            if (attachmentResult.successful.length > 0) {
-                message = `Ticket synchronized with ${attachmentResult.successful.length} attachment(s) and marked as transferred!`;
-            }
-            if (attachmentResult.failed.length > 0) {
-                message += ` (Warning: ${attachmentResult.failed.length} attachment(s) failed)`;
-            }
-        }
-        
-        showNotification(message, "success");
-        
-        return response;
-        
-    } catch (error) {
-        console.error("Error creating Freshdesk ticket:", error);
-        
-        // Extract detailed error message
-        const errorMessage = extractErrorMessage(error);
-        showNotification(errorMessage, "danger");
-        
-        throw error;
-    }
-}
-
-/**
- * Build ticket payload from current ticket
- * Returns plain JSON object WITHOUT attachments
- * @param {object} ticketdata - appState.currentTicket
- * @returns {object} Ticket details object
- */
-function buildTicketDetails(ticketdata) {
-    const today = new Date();
-    const formattedDate = today.toISOString().split("T")[0];
-
-    const details = {
-        subject: ticketdata?.subject || 'No Subject',
-        description: ticketdata?.description || '',
-        email: ticketdata?.sender_email,
-        status: ticketdata?.status || 2,
-        priority: ticketdata?.priority || 1,
-        custom_fields: {
-            cf_create_date: formattedDate
-        }
-    };
-    
-    // Add optional fields only if they exist
-    if (ticketdata?.type) {
-        details.type = ticketdata.type;
-    }
-    
-    // if (ticketdata?.group_id) {
-    //     details.group_id = ticketdata.group_id;
-    // }
-    
-    // if (ticketdata?.responder_id) {
-    //     details.agent_id = ticketdata.responder_id;
-    // }
-    
-    if (ticketdata?.tags && Array.isArray(ticketdata.tags) && ticketdata.tags.length > 0) {
-        details.tags = ticketdata.tags;
-    }
-    
-    if (ticketdata?.category) {
-        details.category = ticketdata.category;
-    }
-    
-    if (ticketdata?.source) {
-        details.source = ticketdata.source;
-    }
-    
-    // if (ticketdata?.product_id) {
-    //     details.product_id = ticketdata.product_id;
-    // }
-    
-    if (ticketdata?.company_id) {
-        details.company_id = ticketdata.company_id;
-    }
-    
-    // Merge existing custom fields if any
-    if (ticketdata?.custom_fields) {
-        const customFields = { ...ticketdata.custom_fields };
-        
-        // If cf_note is null or undefined, set it to empty string to avoid data type mismatch
-        if (customFields.cf_note === null || customFields.cf_note === undefined) {
-            customFields.cf_note = '';
-        }
-        
-        details.custom_fields = {
-            ...customFields,
-            cf_create_date: formattedDate
-        };
-    }
-    
-    return details;
-}
-
-/**
- * Validate ticket details
- * @param {object} ticketDetails - Ticket details to validate
- * @returns {string|null} Error message or null if valid
- */
-function validateTicketDetails(ticketDetails) {
-    const requiredFields = {
-        email: ticketDetails.email,
-        subject: ticketDetails.subject,
-        description: ticketDetails.description,
-        status: ticketDetails.status,
-        priority: ticketDetails.priority
-    };
-    
-    const emptyFields = Object.entries(requiredFields)
-        .filter(([, v]) => !v && v !== 0)
-        .map(([k]) => k);
-
-    if (emptyFields.length > 0) {
-        console.warn("Validation failed. Missing fields:", emptyFields);
-        return `Missing required fields: ${emptyFields.join(", ")}`;
-    }
-    
-    return null;
-}
-
-/**
- * Add attachments to an existing ticket using base64 encoding
- * @param {number} ticketId - The ticket ID to add attachments to
- * @param {Array} attachments - Array of attachment objects
- * @returns {Promise<object>} Object with successful and failed attachment names
- */
-async function addAttachmentsToTicket(ticketId, attachments) {
-    const successfulAttachments = [];
-    const failedAttachments = [];
-    
-    for (const attachment of attachments) {
-        try {
-            console.log(`Fetching attachment: ${attachment.name}`);
-            
-            // Fetch the attachment file
-            const response = await fetch(attachment.attachment_url || attachment.url);
-            
-            if (!response.ok) {
-                console.warn(`Failed to fetch attachment ${attachment.name}: ${response.status}`);
-                failedAttachments.push(attachment.name);
-                continue;
-            }
-            
-            // Convert to blob then to base64
-            const blob = await response.blob();
-            const base64 = await blobToBase64(blob);
-            
-            // Remove data URL prefix (data:image/png;base64,)
-            const base64Data = base64.split(',')[1] || base64;
-            
-            // Create note/reply with attachment
-            const notePayload = {
-                body: `Attachment from original ticket: ${attachment.name}`,
-                attachments: [{
-                    name: attachment.name,
-                    content: base64Data,
-                    content_type: attachment.content_type || blob.type || 'application/octet-stream'
-                }]
-            };
-            
-            console.log(`Uploading attachment: ${attachment.name} (${blob.size} bytes)`);
-            
-            // Add as private note with attachment
-            await appState.client.request.invokeTemplate("addNoteToTicket", {
-                context: { ticket_id: ticketId },
-                body: JSON.stringify(notePayload)
-            });
-            
-            successfulAttachments.push(attachment.name);
-            console.log(`Successfully uploaded attachment: ${attachment.name}`);
-            
-        } catch (error) {
-            console.error(`Error processing attachment ${attachment.name}:`, error);
-            failedAttachments.push(attachment.name);
-        }
-    }
-    
-    // Log summary
-    if (successfulAttachments.length > 0) {
-        console.log(`Successfully uploaded ${successfulAttachments.length} attachment(s):`, successfulAttachments);
-    }
-    
-    if (failedAttachments.length > 0) {
-        console.warn(`Failed to upload ${failedAttachments.length} attachment(s):`, failedAttachments);
-    }
-    
-    return {
-        successful: successfulAttachments,
-        failed: failedAttachments
-    };
-}
-
-/**
- * Convert Blob to base64 string
- * @param {Blob} blob - The blob to convert
- * @returns {Promise<string>} Base64 encoded string
- */
-function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-    });
-}
-
-/**
- * Update the source ticket status after sync
- * @param {number} sourceTicketId - Source ticket ID
- * @param {number} targetTicketId - Target ticket ID created
- * @param {number} statusId - The status ID to set (default: 5 for Closed)
- */
-async function updateSourceTicketStatus(sourceTicketId, targetTicketId, statusId = 5) {
-    try {
-        const response = await appState.client.request.invokeTemplate("updateTicket", {
-            context: { ticket_id: sourceTicketId },
+        // Call serverless function to handle the sync
+        const response = await appState.client.request.invoke("syncTicketWithAttachments", {
             body: JSON.stringify({
-                status: statusId,
-                type: "Transferred",
-                custom_fields: {
-                    cf_note: `Ticket ID: ${targetTicketId}` 
-                }
+                ticketId: ticketdata.id,
+                ticketData: ticketdata
             })
         });
+
+        const result = JSON.parse(response.response);
         
-        console.log(`Source ticket ${sourceTicketId} updated - Status: ${statusId}, Type: Transferred, Target Ticket: ${targetTicketId}`);
-        return response;
-        
-    } catch (error) {
-        console.error('Error updating source ticket status:', error);
-        // Log but don't throw - ticket was already created successfully
-        showNotification("Warning: Could not update source ticket status", "warning");
+        if (result.success) {
+            showNotification("Ticket synced with attachments successfully!", "success");
+        } else {
+            throw new Error(result.message || "Sync failed");
+        }
+
+    } catch (err) {
+        console.error('Sync error:', err);
+        showNotification(extractErrorMessage(err), "danger");
+        throw err;
     }
 }
 
@@ -504,7 +245,8 @@ function showNotification(message, type = "success") {
     const notificationType = type === "danger" ? "error" : type;
     
     const title = (notificationType === "success") ? "Success!!" : 
-                  (notificationType === "warning") ? "Warning" : "Failed!!";
+                  (notificationType === "warning") ? "Warning" : 
+                  (notificationType === "info") ? "Info" : "Failed!!";
     
     appState.client.interface.trigger("showNotify", {
         type: notificationType,

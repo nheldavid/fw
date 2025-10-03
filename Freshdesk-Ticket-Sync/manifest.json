@@ -4,7 +4,11 @@
     "common": {
       "requests": {
         "createTicket": {},
-        "updateTicket": {}
+        "updateTicket": {},
+        "getTicket": {}
+      },
+      "functions": {
+        "syncTicketWithAttachments": {}
       }
     },
     "support_ticket": {
@@ -18,6 +22,9 @@
   },
   "engines": {
     "node": "18.17.1",
-    "fdk": "9.5.1"
+    "fdk": "9.7.0"
+  },
+  "dependencies": {
+    "axios": "0.27.2"
   }
 }
