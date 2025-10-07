@@ -172,10 +172,7 @@ async function syncTicket() {
             showNotification(validationError, "error");
             return;
         }
-
-        //console.log("Creating ticket with payload:", ticketDetails);
-        // console.log("Creating ticket with payload:", JSON.stringify(ticketDetails));
-
+        
         // Create ticket in target domain
         const response = await appState.client.request.invokeTemplate("createTicket", {
             body: JSON.stringify(ticketDetails)
