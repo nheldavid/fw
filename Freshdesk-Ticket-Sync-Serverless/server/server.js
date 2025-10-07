@@ -27,24 +27,26 @@ exports = {
       // Step 3: Download attachments directly into memory
       let files = [];
       if (Array.isArray(fullTicket.attachments) && fullTicket.attachments.length > 0) {
-        console.log(`Downloading ${fullTicket.attachments.length} attachments...`);
-        for (const att of fullTicket.attachments) {
-          const buffer = await downloadFileToBuffer(att.attachment_url);
-          files.push({
-            filename: sanitizeFilename(att.name),
-            content: buffer.toString("base64"),
-            "content-type": getMimeType(att.name),
-          });
-        }
+        // console.log(`Downloading ${fullTicket.attachments.length} attachments...`);
+        // for (const att of fullTicket.attachments) {
+        //   const buffer = await downloadFileToBuffer(att.attachment_url);
+        //   files.push({
+        //     filename: sanitizeFilename(att.name),
+        //     content: buffer.toString("base64"),
+        //     "content-type": getMimeType(att.name),
+        //   });
+        // }
       }
 
       console.log(`Prepared ${files.length} files for upload`);
 
       // Step 4: Create new ticket
-      const response = await $request.invokeTemplate("createTicket", {
+      const requestPayload = {
         body: ticketDetails,
-        attachments: files,
-      });
+        ...(files.length > 0 && { attachments: files })
+      };
+
+      const response = await $request.invokeTemplate("createTicket", requestPayload);
 
       const newTicketId = JSON.parse(response.response).id;
       console.log(`New ticket created with ID: ${newTicketId}`);

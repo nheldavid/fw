@@ -149,161 +149,32 @@ async function syncTicket() {
     try {
         const ticketdata = appState.currentTicket;
         if (!ticketdata) {
-            showNotification("No ticket data found", "error");
-            return;
-        }
-
-        // Get ticket ID from current ticket
-        const ticketId = ticketdata.id;
-        if (!ticketId) {
-            showNotification("Ticket ID not found", "error");
-            return;
+            return showNotification("No ticket data found", "error");
         }
 
         // Show loading notification
         showNotification("Syncing ticket with attachments...", "info");
 
-        // Build ticket payload WITHOUT attachments
-        const ticketDetails = buildTicketDetails(ticketdata);
-
-        // Validate required fields
-        const validationError = validateTicketDetails(ticketDetails);
-        if (validationError) {
-            showNotification(validationError, "error");
-            return;
-        }
-
-        //console.log("Creating ticket with payload:", ticketDetails);
-        // console.log("Creating ticket with payload:", JSON.stringify(ticketDetails));
-
-        // Create ticket in target domain
-        const response = await appState.client.request.invokeTemplate("createTicket", {
-            body: JSON.stringify(ticketDetails)
+        // Call serverless function to handle the sync
+        const response = await appState.client.request.invoke("syncTicketWithAttachments", {
+            body: JSON.stringify({
+                ticketId: ticketdata.id,
+                ticketData: ticketdata
+            })
         });
 
-        // Parse response
         const result = JSON.parse(response.response);
-        const newTicketId = result.id;
         
-        if (!newTicketId) {
-            throw new Error(result.message || "Failed to get new ticket ID");
+        if (result.success) {
+            showNotification("Ticket synced with attachments successfully!", "success");
+        } else {
+            throw new Error(result.message || "Sync failed");
         }
-
-        console.log(`New ticket created with ID: ${newTicketId}`);
-
-        // Update source ticket status
-        await updateSourceTicketStatus(ticketId, newTicketId);
-
-        // Show success notification
-        showNotification("Ticket synced with attachments successfully!", "success");
 
     } catch (err) {
         console.error('Sync error:', err);
         showNotification(extractErrorMessage(err), "danger");
         throw err;
-    }
-}
-
-/**
- * Build ticket payload from current ticket
- * Returns plain JSON object WITHOUT attachments
- */
-function buildTicketDetails(ticketdata) {
-    const today = new Date();
-    const formattedDate = today.toISOString().split("T")[0];
-
-    const ticketDetails = {
-        subject: ticketdata?.subject || 'No Subject',
-        description: ticketdata?.description || '',
-        email: ticketdata?.sender_email,
-        status: ticketdata?.status || 2,
-        priority: ticketdata?.priority || 1,
-        custom_fields: {
-            cf_create_date: formattedDate
-        }
-    };
-    
-    // Add optional fields only if they exist
-    if (ticketdata?.type) {
-        ticketDetails.type = ticketdata.type;
-    }
-    
-    if (ticketdata?.tags && Array.isArray(ticketdata.tags) && ticketdata.tags.length > 0) {
-        ticketDetails.tags = ticketdata.tags;
-    }
-    
-    if (ticketdata?.category) {
-        ticketDetails.category = ticketdata.category;
-    }
-    
-    if (ticketdata?.source) {
-        ticketDetails.source = ticketdata.source;
-    }
-    
-    // Merge existing custom fields if any
-    if (ticketdata?.custom_fields) {
-        const customFields = { ...ticketdata.custom_fields };
-        
-        // If cf_note is null or undefined, set it to empty string to avoid data type mismatch
-        if (customFields.cf_note === null || customFields.cf_note === undefined) {
-            customFields.cf_note = '';
-        }
-        
-        ticketDetails.custom_fields = {
-            ...customFields,
-            cf_create_date: formattedDate
-        };
-    }
-    
-    return ticketDetails;
-}
-
-/**
- * Validate ticket ticketDetails
- */
-function validateTicketDetails(ticketDetails) {
-    const requiredFields = {
-        email: ticketDetails.email,
-        subject: ticketDetails.subject,
-        description: ticketDetails.description,
-        status: ticketDetails.status,
-        priority: ticketDetails.priority
-    };
-    
-    const emptyFields = Object.entries(requiredFields)
-        .filter(([, v]) => !v && v !== 0)
-        .map(([k]) => k);
-
-    if (emptyFields.length > 0) {
-        console.warn("Validation failed. Missing fields:", emptyFields);
-        return `Missing required fields: ${emptyFields.join(", ")}`;
-    }
-    
-    return null;
-}
-
-/**
- * Update the source ticket status after sync
- */
-async function updateSourceTicketStatus(sourceTicketId, targetTicketId, statusId = 5) {
-    try {
-        const response = await appState.client.request.invokeTemplate("updateTicket", {
-            context: { ticket_id: sourceTicketId },
-            body: JSON.stringify({
-                status: statusId,
-                type: "Transferred",
-                custom_fields: {
-                    cf_note: `Ticket ID: ${targetTicketId}` 
-                }
-            })
-        });
-        
-        console.log(`Source ticket ${sourceTicketId} updated - Status: ${statusId}, Type: Transferred, Target Ticket: ${targetTicketId}`);
-        return response;
-        
-    } catch (error) {
-        console.error('Error updating source ticket status:', error);
-        // Log but don't throw - ticket was already created successfully
     }
 }
 
