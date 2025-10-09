@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 const axios = require("axios");
 
 exports = {
@@ -24,32 +26,53 @@ exports = {
         return { success: false, message: validationError };
       }
 
-      // Step 3: Download attachments directly into memory
+      // Step 3: Download attachments and save locally
+      console.log("downloading files");
+
       let files = [];
       if (Array.isArray(fullTicket.attachments) && fullTicket.attachments.length > 0) {
-        // console.log(`Downloading ${fullTicket.attachments.length} attachments...`);
-        // for (const att of fullTicket.attachments) {
-        //   const buffer = await downloadFileToBuffer(att.attachment_url);
-        //   files.push({
-        //     filename: sanitizeFilename(att.name),
-        //     content: buffer.toString("base64"),
-        //     "content-type": getMimeType(att.name),
-        //   });
-        // }
+        console.log(`Downloading ${fullTicket.attachments.length} attachments...`);
+        for (const att of fullTicket.attachments) {
+          const localPath = await downloadFile(att.attachment_url);
+          files.push({
+            filename: sanitizeFilename(att.name),
+            path: localPath,
+            "content-type": getMimeType(att.name),
+          });
+        }
       }
 
+      console.log("File details", files);
       console.log(`Prepared ${files.length} files for upload`);
 
       // Step 4: Create new ticket
-      const requestPayload = {
-        body: ticketDetails,
-        ...(files.length > 0 && { attachments: files })
+      let response;
+      const hasAttachments = files.length > 0;
+
+      // Define headers dynamically
+      const headers = {
+        "Content-Type": hasAttachments ? "multipart/form-data" : "application/json",
       };
 
-      const response = await $request.invokeTemplate("createTicket", requestPayload);
+      // Use Freshdesk invokeTemplate
+      if (hasAttachments) {
+        // Attachments exist
+        response = await $request.invokeTemplate("createTicket", {
+          headers,
+          attachments: files,
+          body: JSON.stringify(ticketDetails),
+        });
+      } else {
+        // No attachments
+        response = await $request.invokeTemplate("createTicket", {
+          headers,
+          body: JSON.stringify(ticketDetails),
+        });
+      }
 
       const newTicketId = JSON.parse(response.response).id;
       console.log(`New ticket created with ID: ${newTicketId}`);
+
 
       // Step 5: Update source ticket
       await updateSourceTicketStatus(ticketId, newTicketId);
@@ -72,9 +95,46 @@ exports = {
 
 // ===== Helpers =====
 
+// Pure JavaScript base64 encoder (works in any environment)
+function arrayBufferToBase64(bytes) {
+  const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  let result = '';
+  let i;
+  
+  for (i = 0; i < bytes.length; i += 3) {
+    const a = bytes[i];
+    const b = i + 1 < bytes.length ? bytes[i + 1] : 0;
+    const c = i + 2 < bytes.length ? bytes[i + 2] : 0;
+    
+    const bitmap = (a << 16) | (b << 8) | c;
+    
+    result += base64Chars[(bitmap >> 18) & 63];
+    result += base64Chars[(bitmap >> 12) & 63];
+    result += base64Chars[(bitmap >> 6) & 63];
+    result += base64Chars[bitmap & 63];
+  }
+  
+  // Add padding
+  const padding = bytes.length % 3;
+  if (padding === 1) {
+    result = result.slice(0, -2) + '==';
+  } else if (padding === 2) {
+    result = result.slice(0, -1) + '=';
+  }
+  
+  return result;
+}
+
 async function downloadFileToBuffer(url) {
   const response = await axios.get(url, { responseType: "arraybuffer" });
-  return Buffer.from(response.data);
+  
+  // Convert ArrayBuffer to base64 using pure JavaScript
+  const uint8Array = new Uint8Array(response.data);
+  const base64 = arrayBufferToBase64(uint8Array);
+  
+  return {
+    toString: (encoding) => encoding === 'base64' ? base64 : ''
+  };
 }
 
 function sanitizeFilename(name) {

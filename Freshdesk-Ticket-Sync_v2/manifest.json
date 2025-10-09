@@ -1,0 +1,32 @@
+{
+  "platform-version": "3.0",
+  "modules": {
+    "common": {
+      "requests": {
+        "createTicket": {},
+        "updateTicket": {},
+        "getTicket": {}
+      },
+      "functions": {
+        "createTicketWithAttachments": {}
+      }
+    },
+    "support_ticket": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": "18.17.1",
+    "fdk": "9.7.0"
+  },
+  "dependencies": {
+    "axios": "0.27.2",
+    "buffer": "6.0.3",
+    "unirest": "0.6.0"
+  }
+}
